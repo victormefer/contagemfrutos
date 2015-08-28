@@ -20,6 +20,7 @@ void UserInterface::MainMenu()
 			<< "7. Adicionar imagem ao SIFT" << std::endl
 			<< "8. Testar SIFT" << std::endl
 			<< "9. Teste Batch" << std::endl
+			<< "10. Encontrar Extremos Locais" << std::endl
 			<< "0. Sair" << std::endl;
 
 		std::cout << std::endl << "Escolha uma opcao: ";
@@ -53,6 +54,9 @@ void UserInterface::MainMenu()
 				break;
 			case 9:
 				TesteBatch();
+				break;
+			case 10:
+				ExtremosLocais();
 				break;
 			case 0:
 				break;
@@ -270,7 +274,6 @@ void UserInterface::SeletorROIs(Mat img, Mat* dadosTreino, Mat* classesTreino, i
 
 void UserInterface::Classificar()
 {
-	Mat imagem, saida;
 	std::string nomeImagem;
 	int espacosCores;
 
@@ -301,22 +304,22 @@ void UserInterface::Classificar()
 		std::cout << "Informe o nome da imagem: ";
 		std::cin >> nomeImagem;
 
-		imagem = imread(nomeImagem);
-		if (imagem.data == NULL)
+		imgClassif = imread(nomeImagem);
+		if (imgClassif.data == NULL)
 			std::cout << std::endl << "Tente novamente. ";
 		else
 			break;
 	}
 
 	Classifier classifier = Classifier(nomeImagem, trainer.GetTree(), trainer.GetNClasses(), espacosCores);
-	classifier.Classify(&saida);
+	classifier.Classify(&resultClassif);
 
 	namedWindow("Imagem original", WINDOW_NORMAL);
 	namedWindow("Resultado classificação", WINDOW_NORMAL);
 	moveWindow("Imagem original", 0, 0);
 	moveWindow("Resultado classificação", 300, 0);
-	imshow("Imagem original", imagem);
-	imshow("Resultado classificação", saida);
+	imshow("Imagem original", imgClassif);
+	imshow("Resultado classificação", resultClassif);
 	waitKey();
 	destroyWindow("Imagem original");
 	destroyWindow("Resultado classificação");
@@ -330,7 +333,7 @@ void UserInterface::Classificar()
 		std::string nomeIm;
 		std::cout << "Digite o nome da imagem a ser salva: ";
 		std::cin >> nomeIm;
-		imwrite(nomeIm, saida);
+		imwrite(nomeIm, resultClassif);
 	}
 }
 
@@ -642,4 +645,30 @@ int UserInterface::Comparar(std::string nomeArq, Mat saida)
 			}
 		}
 	return positives;
+}
+
+
+void UserInterface::ExtremosLocais()
+{
+	cv::Mat saida, imgGray, maskGray;
+	cv::cvtColor(imgClassif, imgGray, CV_BGR2GRAY);
+	cv::cvtColor(resultClassif, maskGray, CV_BGR2GRAY);
+
+	cv::namedWindow("Resultado original", cv::WINDOW_NORMAL);
+	cv::moveWindow("Resultado original", 0, 0);
+	// cv::namedWindow("Mascara", cv::WINDOW_NORMAL);
+	// cv::moveWindow("Mascara", 500, 500);
+	cv::namedWindow("Extremos locais", cv::WINDOW_NORMAL);
+	cv::moveWindow("Extremos locais", 500, 0);
+
+	cv::imshow("Resultado original", imgClassif);
+	// cv::imshow("Mascara", maskGray);
+
+	LocalExtrema::LocalMaxima(imgGray, saida, 3);
+
+	saida = saida & maskGray;
+
+	cv::imshow("Extremos locais", saida);
+
+	cv::waitKey();
 }

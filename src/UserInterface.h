@@ -7,6 +7,7 @@
 #include "Trainer.h"
 #include "Classifier.h"
 #include "SiftMatcher.h"
+#include "LocalExtrema.h"
 
 class UserInterface
 {
@@ -29,6 +30,7 @@ private:
 	void TestarSIFT();
 	void TesteBatch();
 	int Comparar(std::string nomeArq, cv::Mat saida);
+	void ExtremosLocais();
 
 	Trainer trainer;
 
@@ -36,6 +38,7 @@ private:
 
 	SiftMatcher sift;
 
+	cv::Mat imgClassif, resultClassif;
 };
 
 

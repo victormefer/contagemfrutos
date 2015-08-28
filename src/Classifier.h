@@ -27,14 +27,15 @@ private:
 	bool rgb, lab, rgbEq, labEq;
 
 	std::vector<cv::Vec3b> classColors = {
+		cv::Vec3b(255, 255, 255),
+		cv::Vec3b(0, 0, 0),
 		cv::Vec3b(0, 255, 0), 
 		cv::Vec3b(0, 255, 255), 
 		cv::Vec3b(255, 0, 0), 
 		cv::Vec3b(0, 0, 255), 
-		cv::Vec3b(0, 0, 0),
+		// cv::Vec3b(0, 0, 0),
 		cv::Vec3b(255, 0, 255), 
-		cv::Vec3b(255, 255, 0),
-		cv::Vec3b(255, 255, 255)
+		cv::Vec3b(255, 255, 0)
 	};
 
 };
