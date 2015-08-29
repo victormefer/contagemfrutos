@@ -21,6 +21,8 @@ void UserInterface::MainMenu()
 			<< "8. Testar SIFT" << std::endl
 			<< "9. Teste Batch" << std::endl
 			<< "10. Encontrar Extremos Locais" << std::endl
+			<< "11. Watershed" << std::endl
+			<< "12. Watershed2" << std::endl
 			<< "0. Sair" << std::endl;
 
 		std::cout << std::endl << "Escolha uma opcao: ";
@@ -57,6 +59,12 @@ void UserInterface::MainMenu()
 				break;
 			case 10:
 				ExtremosLocais();
+				break;
+			case 11:
+				Watershed(0);
+				break;
+			case 12:
+				Watershed(1);
 				break;
 			case 0:
 				break;
@@ -668,7 +676,32 @@ void UserInterface::ExtremosLocais()
 
 	saida = saida & maskGray;
 
-	cv::imshow("Extremos locais", saida);
+	resultExtrem = cv::Mat(saida.size(), CV_32SC1);
+
+	threshold(saida, resultExtrem, 0, 255, THRESH_BINARY);
+
+	cv::imshow("Extremos locais", resultExtrem);
+
+	cv::waitKey();
+}
+
+void UserInterface::Watershed(int tipo)
+{
+	Mat wshed = Mat::zeros(imgClassif.size(), imgClassif.type());
+	if (tipo == 0)
+		Watershed::FindWatershed(imgClassif, resultExtrem, wshed);
+	else
+		Watershed::FindWatershed2(imgClassif, resultExtrem, wshed);
+	
+	cv::namedWindow("Resultado original", cv::WINDOW_NORMAL);
+	cv::moveWindow("Resultado original", 0, 0);
+	cv::imshow("Resultado original", imgClassif);
+	cv::namedWindow("Extremos locais", cv::WINDOW_NORMAL);
+	cv::moveWindow("Extremos locais", 500, 0);
+	cv::imshow("Extremos locais", resultExtrem);
+	cv::namedWindow("Watershed", cv::WINDOW_NORMAL);
+	cv::moveWindow("Watershed", 0, 500);
+	cv::imshow("Watershed", wshed);
 
 	cv::waitKey();
 }

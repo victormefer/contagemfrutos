@@ -8,6 +8,7 @@
 #include "Classifier.h"
 #include "SiftMatcher.h"
 #include "LocalExtrema.h"
+#include "Watershed.h"
 
 class UserInterface
 {
@@ -31,6 +32,7 @@ private:
 	void TesteBatch();
 	int Comparar(std::string nomeArq, cv::Mat saida);
 	void ExtremosLocais();
+	void Watershed(int tipo);
 
 	Trainer trainer;
 
@@ -38,7 +40,7 @@ private:
 
 	SiftMatcher sift;
 
-	cv::Mat imgClassif, resultClassif;
+	cv::Mat imgClassif, resultClassif, resultExtrem;
 };
 
 
