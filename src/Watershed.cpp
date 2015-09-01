@@ -66,30 +66,39 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 	addWeighted( wshed, 0.5, img_gray, 0.5, 0, wshed );
 	// imshow( "watershed transform", wshed );*/
 
+	Mat dst;
+	distanceTransform(mask,dst,CV_DIST_L2,CV_DIST_MASK_PRECISE);		// Aplicar em fg e bg para ver os resultados?
+	normalize(dst,dst,0,1, NORM_MINMAX,-1);
 
-	Mat kernel1 = Mat::ones(3, 3, CV_8UC1);
-	dilate(mask, mask, kernel1);
-	imshow("Peaks", mask);
+	threshold(dst, dst, .4, 1., CV_THRESH_BINARY);
+
+	// Mat kernel1 = Mat::ones(3, 3, CV_8UC1);
+	// dilate(dst, dst, kernel1);
+	// imshow("Peaks", dst);
+
+	Mat dist_8u;
+	dst.convertTo(dist_8u, CV_8U);
 
 	std::vector<std::vector<Point>> contours;
-	findContours(mask, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+	findContours(dist_8u, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
 	 // Create the marker image for the watershed algorithm
-	Mat markers = Mat::zeros(mask.size(), CV_32SC1);
+	Mat markers = Mat::zeros(dst.size(), CV_32SC1);
 	// Draw the foreground markers
 	for (size_t i = 0; i < contours.size(); i++)
 		drawContours(markers, contours, static_cast<int>(i), Scalar::all(static_cast<int>(i)+1), -1);
 
-	imshow("Drawn contours", markers*10000);
+	// imshow("Drawn contours", markers*10000);
 
 	// Draw the background marker
 	circle(markers, Point(5,5), 3, CV_RGB(255,255,255), -1);
-	imshow("Markers", markers*10000);
 
+	namedWindow("Markers", WINDOW_NORMAL);
+	imshow("Markers", markers*10000);
 
 	watershed(img, markers);
 
-	imshow("Markers after watershed", markers*10000);
+	// imshow("Markers after watershed", markers*10000);
 
 	Mat mark = Mat::zeros(markers.size(), CV_8UC1);
 	markers.convertTo(mark, CV_8UC1);
@@ -122,7 +131,7 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 }
 
 
-void Watershed::FindWatershed(Mat img, Mat mask, Mat& wshed)
+/*void Watershed::FindWatershed(Mat img, Mat mask, Mat& wshed)
 {
 	// Eliminate noise and smaller objects
 	Mat fg;
@@ -141,4 +150,47 @@ void Watershed::FindWatershed(Mat img, Mat mask, Mat& wshed)
 	watershed(img, wshed);
 
 	wshed.convertTo(wshed, CV_8U);
+}
+*/
+void Watershed::FindWatershed(Mat img, Mat mask, Mat& wshed)
+{
+	// Eliminate noise and smaller objects
+	Mat fg;										// fg: Foreground
+	erode(mask, fg, Mat(), Point(-1,-1), 2);
+
+	// Identify image pixels without objects
+	Mat bg;										// bg: Background
+	dilate(mask, bg, Mat(), Point(-1,-1), 3);
+	threshold(bg, bg, 1, 128, THRESH_BINARY_INV);
+
+	// Distance transform
+	Mat dst;
+	distanceTransform(bg,dst,CV_DIST_L2,CV_DIST_MASK_PRECISE);		// Aplicar em fg e bg para ver os resultados?
+	normalize(dst,dst,0,1, NORM_MINMAX,-1);
+	
+	imshow("Distance Transformed and Normalized",dst);
+	
+	//Para criar os marcadores do foreground
+	threshold(dst,dst,.4,1.,CV_THRESH_BINARY);
+	
+	imshow("Thresholded",dst);
+	
+	//Converter a imagem para uso no findContours
+	Mat dst_8u;
+	dst.convertTo(dst_8u,CV_8U);
+	
+	//Achar os marcadores
+	std::vector<std::vector<Point>> contours;
+	findContours(dst_8u, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+	
+	// Create markers image
+	wshed = Mat::zeros(mask.size(), CV_8U);
+	wshed = fg + bg;
+
+	//wshed.convertTo(wshed, CV_32S);
+	//watershed(img, wshed);
+
+	//wshed.convertTo(wshed, CV_8U);
+	
+	// waitKey(8000);
 }

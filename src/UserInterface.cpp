@@ -688,17 +688,22 @@ void UserInterface::ExtremosLocais()
 void UserInterface::Watershed(int tipo)
 {
 	Mat wshed = Mat::zeros(imgClassif.size(), imgClassif.type());
+
+	cv::cvtColor(resultClassif, resultClassif, CV_BGR2GRAY);
+
+	// resultClassif.convertTo(resultClassif, CV_8U);
+
 	if (tipo == 0)
-		Watershed::FindWatershed(imgClassif, resultExtrem, wshed);
+		Watershed::FindWatershed(imgClassif, resultClassif, wshed);
 	else
-		Watershed::FindWatershed2(imgClassif, resultExtrem, wshed);
+		Watershed::FindWatershed2(imgClassif, resultClassif, wshed);
 	
 	cv::namedWindow("Resultado original", cv::WINDOW_NORMAL);
 	cv::moveWindow("Resultado original", 0, 0);
 	cv::imshow("Resultado original", imgClassif);
-	cv::namedWindow("Extremos locais", cv::WINDOW_NORMAL);
-	cv::moveWindow("Extremos locais", 500, 0);
-	cv::imshow("Extremos locais", resultExtrem);
+	cv::namedWindow("Classificacao", cv::WINDOW_NORMAL);
+	cv::moveWindow("Classificacao", 500, 0);
+	cv::imshow("Classificacao", resultClassif);
 	cv::namedWindow("Watershed", cv::WINDOW_NORMAL);
 	cv::moveWindow("Watershed", 0, 500);
 	cv::imshow("Watershed", wshed);
