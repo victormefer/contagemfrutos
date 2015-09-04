@@ -6,7 +6,7 @@ void UserInterface::MainMenu()
 {
 
 	int opcao;
-	do
+/*	do
 	{
 		system("clear");
 
@@ -64,6 +64,50 @@ void UserInterface::MainMenu()
 				Watershed(0);
 				break;
 			case 12:
+				Watershed(1);
+				break;
+			case 0:
+				break;
+			default:
+				std::cout << "Opcao invalida" << std::endl;
+				std::cin.get();
+				break;
+		}
+
+	} while (opcao != 0);*/	
+
+	do
+	{
+		system("clear");
+
+		std::cout << "*** Menu principal ***" << std::endl << std::endl
+			<< "1. Treino Manual da Arvore" << std::endl
+			<< "2. Carregar Treino de um Arquivo" << std::endl
+			<< "3. Classificar imagem" << std::endl
+			<< "4. Watershed" << std::endl
+			<< "5. Procedimento completo" << std::endl
+			<< "0. Sair" << std::endl;
+
+		std::cout << std::endl << "Escolha uma opcao: ";
+		std::cin >> opcao;
+
+		switch(opcao)
+		{
+			case 1:
+				TreinoManual();
+				break;
+			case 2:
+				CarregarTreino();
+				break;
+			case 3:
+				Classificar();
+				break;
+			case 4:
+				Watershed(1);
+				break;
+			case 5:
+				CarregarTreino();
+				Classificar();
 				Watershed(1);
 				break;
 			case 0:
@@ -150,6 +194,12 @@ void UserInterface::TreinoManual()
 	} while (opcao != 'n' && opcao != 'N');
 
 	trainer.Train();
+
+	char salvar;
+	std::cout << "Deseja salvar o treino realizado? (S/N): ";
+	std::cin >> salvar;
+	if (salvar == 's' || salvar == 'S')
+		SalvarTreino();
 }
 
 

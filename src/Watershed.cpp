@@ -4,68 +4,6 @@ using namespace cv;
 
 void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 {
-/*	std::vector<std::vector<Point>> contours;
-	// CvSeq* contours;
-	Mat* color_tab = 0;
-	int i, j, comp_count = 0;
-	CvMemStorage* storage = cvCreateMemStorage(0);
-	CvRNG rng = cvRNG(-1);
-	Mat img_gray, markers;
-
-	cvtColor( img, mask, CV_BGR2GRAY );
-	cvtColor( mask, img_gray, CV_GRAY2BGR );
-
-	//cvSaveImage( "wshed_mask.png", mask );
-	//mask = imread( "wshed_mask.png", 0 );
-	findContours( mask, contours, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE );
-	
-	markers = Mat::zeros(img.size(), CV_32S);
-	for( int k = 0; k < contours.size(); k++, comp_count++ )
-	{
-		drawContours( markers, contours, Scalar::all(comp_count+1),
-			Scalar::all(comp_count+1), -1, -1, 8, Point(0,0) );
-	}
-
-	// if( comp_count == 0 )
-	// 	continue;
-
-	color_tab->create( 1, comp_count, CV_8UC3 );
-	for( i = 0; i < comp_count; i++ )
-	{
-		uchar* ptr = color_tab->data.ptr + i*3;
-		ptr[0] = (uchar)(cvRandInt(&rng)%180 + 50);
-		ptr[1] = (uchar)(cvRandInt(&rng)%180 + 50);
-		ptr[2] = (uchar)(cvRandInt(&rng)%180 + 50);1
-	}
-
-	watershed( img, markers );
-	mask.convertTo(mask, CV_32S);
-	watershed( img, mask );
-
-	paint the watershed image
-	for( i = 0; i < markers.rows; i++ )
-		for( j = 0; j < markers.cols; j++ )
-		{
-			// int idx = CV_IMAGE_ELEM( markers, int, i, j );
-			int idx = markers.at<int>(i, j);
-			Vec3b dst = wshed.at<Vec3b>(i, j*3);
-			// uchar* dst = &CV_IMAGE_ELEM( wshed, uchar, i, j*3 );
-			if( idx == -1 )
-				// dst[0] = dst[1] = dst[2] = (uchar)255;
-				dst = Vecb(255, 255, 255);
-			else if( idx <= 0 || idx > comp_count )
-				// dst[0] = dst[1] = dst[2] = (uchar)0; // should not get here
-				dst = Vec3b(0, 0, 0);
-			else
-			{
-				uchar* ptr = color_tab->data.ptr + (idx-1)*3;
-				dst[0] = ptr[0]; dst[1] = ptr[1]; dst[2] = ptr[2];
-			}
-		}
-
-	addWeighted( wshed, 0.5, img_gray, 0.5, 0, wshed );
-	// imshow( "watershed transform", wshed );*/
-
 	Mat dst;
 	distanceTransform(mask,dst,CV_DIST_L2,CV_DIST_MASK_PRECISE);		// Aplicar em fg e bg para ver os resultados?
 	normalize(dst,dst,0,1, NORM_MINMAX,-1);
@@ -82,16 +20,26 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 	std::vector<std::vector<Point>> contours;
 	findContours(dist_8u, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
-	 // Create the marker image for the watershed algorithm
+
+	// Create the marker image for the watershed algorithm
 	Mat markers = Mat::zeros(dst.size(), CV_32SC1);
+
+
+	std::vector<Moments> mu(contours.size());
+	std::vector<Point2f> massCenters(contours.size());
 	// Draw the foreground markers
 	for (size_t i = 0; i < contours.size(); i++)
+	{
+		mu[i] = moments(contours[i], false);
+		massCenters[i] = Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 );
 		drawContours(markers, contours, static_cast<int>(i), Scalar::all(static_cast<int>(i)+1), -1);
+		circle( markers, massCenters[i], 4, Scalar(0, 0, 0), -1, 8, 0 );
+	}
 
 	// imshow("Drawn contours", markers*10000);
 
 	// Draw the background marker
-	circle(markers, Point(5,5), 3, CV_RGB(255,255,255), -1);
+	// circle(markers, Point(5,5), 3, CV_RGB(255,255,255), -1);
 
 	namedWindow("Markers", WINDOW_NORMAL);
 	imshow("Markers", markers*10000);
