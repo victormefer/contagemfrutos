@@ -2,24 +2,6 @@
 
 using namespace cv;
 
-template <typename T>
-cv::Mat plotGraph(std::vector<T>& vals, int YRange[2])
-{
-
-	auto it = minmax_element(vals.begin(), vals.end());
-	float scale = 1./ceil(*it.second - *it.first); 
-	float bias = *it.first;
-	int rows = YRange[1] - YRange[0] + 1;
-	cv::Mat image = Mat::zeros( rows, vals.size(), CV_8UC3 );
-	image.setTo(0);
-	for (int i = 0; i < (int)vals.size()-1; i++)
-	{
-		cv::line(image, cv::Point(i, rows - 1 - (vals[i] - bias)*scale*YRange[1]), cv::Point(i+1, rows - 1 - (vals[i+1] - bias)*scale*YRange[1]), Scalar(255, 0, 0), 1);
-	}
-
-	return image;
-}
-
 void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 {
 	Mat dst;
@@ -51,6 +33,7 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 		mu[i] = moments(contours[i], false);
 		// Calcula centro de massa da área
 		massCenters[i] = Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 );
+		std::cout << "Mass center pos: " << (int)massCenters[i].x << ", " << (int)massCenters[i].y << std::endl;
 		drawContours(markers, contours, static_cast<int>(i), Scalar::all((static_cast<int>(i)+1)), -1);
 		// Desenha ponto no centro de massa
 		// circle( markers, massCenters[i], 4, Scalar(0, 0, 0), -1, 8, 0 );
@@ -78,9 +61,10 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 	// Plotar gráficos Y, Cb e Cr nas 4 direções de cada região encontrada
 	for (size_t i = 0; i < contours.size(); i++)
 	{
-		// std::vector< std::vector<int> > yValues(4);
-		// std::vector< std::vector<int> > cbValues(4);
-		// std::vector< std::vector<int> > crValues(4);
+
+		if ((int)massCenters[i].x < 0 || (int)massCenters[i].y < 0)
+			continue;
+
 		std::vector < std::vector < std::vector<int> > > values(4);
 		std::vector < std::vector < std::vector<int> > > variation(4);
 //      4 direções    canais ycbcr      valores
@@ -111,7 +95,7 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 				inRegion = true;
 			}
 			// Right direction
-			if ( (int)massCenters[i].x + k <= img.cols && markers.at<int>((int)massCenters[i].y, (int)massCenters[i].x + k) != 0 )
+			if ( (int)massCenters[i].x + k < img.cols && markers.at<int>((int)massCenters[i].y, (int)massCenters[i].x + k) != 0 )
 			{
 				values[1][0].push_back( (int)channels[0].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x + k) );
 				values[1][1].push_back( (int)channels[1].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x + k) );
@@ -125,7 +109,7 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 				inRegion = true;
 			}
 			// Down direction
-			if ( (int)massCenters[i].y + k <= img.rows && markers.at<int>((int)massCenters[i].y + k, (int)massCenters[i].x) != 0 )
+			if ( (int)massCenters[i].y + k < img.rows && markers.at<int>((int)massCenters[i].y + k, (int)massCenters[i].x) != 0 )
 			{
 				values[2][0].push_back( (int)channels[0].at<uchar>((int)massCenters[i].y + k, (int)massCenters[i].x) );
 				values[2][1].push_back( (int)channels[1].at<uchar>((int)massCenters[i].y + k, (int)massCenters[i].x) );
@@ -156,6 +140,10 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 			if (!inRegion)
 				break;
 		}
+
+		//Calcular o minimo e o maximo local das derivadas nas quatro direcoes
+		//Escolher um range de valores para checar se o minimo e o maximo esta dentro de um patamar
+		//Localizado um ponto fora do patamar, marcar na imagem a regiao de divisao das frutas
 
 		CvPlot::plot("Y", &values[0][0][0], values[0][0].size(), 1);
 		CvPlot::label("Up");
