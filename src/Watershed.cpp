@@ -231,12 +231,12 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 
 		waitKey();
 
-		CvPlot::clear("Y, Regiao " + std::to_string(i));
-		CvPlot::clear("Cr, Regiao " + std::to_string(i));
-		CvPlot::clear("Cb, Regiao " + std::to_string(i));
-		CvPlot::clear("Y variation, Regiao " + std::to_string(i));
-		CvPlot::clear("Cr variation, Regiao " + std::to_string(i));
-		CvPlot::clear("Cb variation, Regiao " + std::to_string(i));
+		CvPlot::clear("Y");
+		CvPlot::clear("Cr");
+		CvPlot::clear("Cb");
+		CvPlot::clear("Y variation");
+		CvPlot::clear("Cr variation");
+		CvPlot::clear("Cb variation");
 	}
 
 
