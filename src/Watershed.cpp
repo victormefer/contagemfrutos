@@ -2,6 +2,24 @@
 
 using namespace cv;
 
+template <typename T>
+cv::Mat plotGraph(std::vector<T>& vals, int YRange[2])
+{
+
+	auto it = minmax_element(vals.begin(), vals.end());
+	float scale = 1./ceil(*it.second - *it.first); 
+	float bias = *it.first;
+	int rows = YRange[1] - YRange[0] + 1;
+	cv::Mat image = Mat::zeros( rows, vals.size(), CV_8UC3 );
+	image.setTo(0);
+	for (int i = 0; i < (int)vals.size()-1; i++)
+	{
+		cv::line(image, cv::Point(i, rows - 1 - (vals[i] - bias)*scale*YRange[1]), cv::Point(i+1, rows - 1 - (vals[i+1] - bias)*scale*YRange[1]), Scalar(255, 0, 0), 1);
+	}
+
+	return image;
+}
+
 void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 {
 	Mat dst;
@@ -31,9 +49,90 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 	for (size_t i = 0; i < contours.size(); i++)
 	{
 		mu[i] = moments(contours[i], false);
+		// Calcula centro de massa da área
 		massCenters[i] = Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 );
-		drawContours(markers, contours, static_cast<int>(i), Scalar::all(static_cast<int>(i)+1), -1);
-		circle( markers, massCenters[i], 4, Scalar(0, 0, 0), -1, 8, 0 );
+		drawContours(markers, contours, static_cast<int>(i), Scalar::all((static_cast<int>(i)+1)), -1);
+		// Desenha ponto no centro de massa
+		// circle( markers, massCenters[i], 4, Scalar(0, 0, 0), -1, 8, 0 );
+	}
+
+
+	Mat imgYCbCr;
+	cvtColor(img, imgYCbCr, CV_BGR2YCrCb);
+
+	// markers = markers * 10000;
+
+	for (size_t i = 0; i < contours.size(); i++)
+	{
+		std::vector<int> upDirY, downDirY, leftDirY, rightDirY;
+		int k = 0;
+		while(1)
+		{
+			bool inRegion = false;
+			// std::cout << "markers at mass center = " << markers.at<int>((int)massCenters[i].y, (int)massCenters[i].x) << std::endl;
+			if ( (int)massCenters[i].y - k >= 0 && markers.at<int>((int)massCenters[i].y - k, (int)massCenters[i].x) != 0 )
+			{
+				// std::cout << "ENTROU UP" << std::endl;
+				upDirY.push_back((int)imgYCbCr.at<uchar>((int)massCenters[i].y - k, (int)massCenters[i].x, 0));
+				inRegion = true;
+			}
+			if ( (int)massCenters[i].y + k <= img.rows && markers.at<int>((int)massCenters[i].y + k, (int)massCenters[i].x) != 0 )
+			{
+				// std::cout << "ENTROU DOWN" << std::endl;
+				downDirY.push_back((int)imgYCbCr.at<uchar>((int)massCenters[i].y + k, (int)massCenters[i].x, 0));
+				inRegion = true;
+			}
+			if ( (int)massCenters[i].x - k >= 0 && markers.at<int>((int)massCenters[i].y, (int)massCenters[i].x - k) != 0 )
+			{
+				// std::cout << "ENTROU LEFT" << std::endl;
+				leftDirY.push_back((int)imgYCbCr.at<uchar>((int)massCenters[i].y, (int)massCenters[i].x - k, 0));
+				inRegion = true;
+			}
+			if ( (int)massCenters[i].x + k <= img.cols && markers.at<int>((int)massCenters[i].y, (int)massCenters[i].x + k) != 0 )
+			{
+				// std::cout << "ENTROU RIGHT" << std::endl;
+				rightDirY.push_back((int)imgYCbCr.at<uchar>((int)massCenters[i].y, (int)massCenters[i].x + k, 0));
+				inRegion = true;
+			}
+			k++;
+			if (!inRegion)
+				break;
+		}
+
+		CvPlot::plot("Regiao " + std::to_string(i), &upDirY[0], upDirY.size(), 1);
+		CvPlot::label("Up");
+		CvPlot::plot("Regiao " + std::to_string(i), &downDirY[0], downDirY.size(), 1);
+		CvPlot::label("Down");
+		CvPlot::plot("Regiao " + std::to_string(i), &leftDirY[0], leftDirY.size(), 1);
+		CvPlot::label("Left");
+		CvPlot::plot("Regiao " + std::to_string(i), &rightDirY[0], rightDirY.size(), 1);
+		CvPlot::label("Right");
+
+		// for (int i = 0; i < upDirY.size(); i++)
+		// 	std::cout << upDirY[i] << " ";
+		// std::cout << std::endl;
+
+		// namedWindow("Up", WINDOW_NORMAL);
+		// namedWindow("Down", WINDOW_NORMAL);
+		// namedWindow("Left", WINDOW_NORMAL);
+		// namedWindow("Right", WINDOW_NORMAL);
+
+		// int coisa = upDirY.size();
+		// int range[2] = {0, coisa};
+		// imshow("Up", plotGraph(upDirY, range));
+		// range[1] = downDirY.size();
+		// imshow("Down", plotGraph(downDirY, range));
+		// range[1] = leftDirY.size();
+		// imshow("Left", plotGraph(leftDirY, range));
+		// range[1] = rightDirY.size();
+		// imshow("Right", plotGraph(rightDirY, range));
+
+		// showIntGraph("Up", &upDirY[0], upDirY.size(), 0);
+		// showIntGraph("Down", &downDirY[0], downDirY.size(), 0);
+		// showIntGraph("Left", &leftDirY[0], leftDirY.size(), 0);
+		// showIntGraph("Right", &rightDirY[0], rightDirY.size(), 0);
+
+		// waitKey();
 	}
 
 	// imshow("Drawn contours", markers*10000);
@@ -42,9 +141,11 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 	// circle(markers, Point(5,5), 3, CV_RGB(255,255,255), -1);
 
 	namedWindow("Markers", WINDOW_NORMAL);
-	imshow("Markers", markers*10000);
+	imshow("Markers", markers * 10000);
 
-	watershed(img, markers);
+
+
+/*	watershed(img, markers);
 
 	// imshow("Markers after watershed", markers*10000);
 
@@ -75,7 +176,7 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 			else
 				wshed.at<Vec3b>(i,j) = Vec3b(0,0,0);
 		}
-	}
+	}*/
 }
 
 
