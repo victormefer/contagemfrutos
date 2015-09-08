@@ -60,38 +60,96 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 	Mat imgYCbCr;
 	cvtColor(img, imgYCbCr, CV_BGR2YCrCb);
 
+	Mat channels[3];
+	split(imgYCbCr, channels);
+	// imshow("YCrCb", imgYCbCr);
+	// waitKey();
+
 	// markers = markers * 10000;
 
+	// imshow("Drawn contours", markers*10000);
+
+	// Draw the background marker
+	// circle(markers, Point(5,5), 3, CV_RGB(255,255,255), -1);
+
+	namedWindow("Markers", WINDOW_NORMAL);
+	imshow("Markers", markers * 10000);
+
+	// Plotar gráficos Y, Cb e Cr nas 4 direções de cada região encontrada
 	for (size_t i = 0; i < contours.size(); i++)
 	{
-		std::vector<int> upDirY, downDirY, leftDirY, rightDirY;
+		// std::vector< std::vector<int> > yValues(4);
+		// std::vector< std::vector<int> > cbValues(4);
+		// std::vector< std::vector<int> > crValues(4);
+		std::vector < std::vector < std::vector<int> > > values(4);
+		std::vector < std::vector < std::vector<int> > > variation(4);
+//      4 direções    canais ycbcr      valores
+
+		// Inicializar vetor
+		for (int j = 0; j < 4; j++)
+		{
+			values[j] = std::vector<std::vector<int>>(3);
+			variation[j] = std::vector<std::vector<int>>(3);
+		}
+
 		int k = 0;
 		while(1)
 		{
 			bool inRegion = false;
-			// std::cout << "markers at mass center = " << markers.at<int>((int)massCenters[i].y, (int)massCenters[i].x) << std::endl;
+			// Up direction
 			if ( (int)massCenters[i].y - k >= 0 && markers.at<int>((int)massCenters[i].y - k, (int)massCenters[i].x) != 0 )
 			{
-				// std::cout << "ENTROU UP" << std::endl;
-				upDirY.push_back((int)imgYCbCr.at<uchar>((int)massCenters[i].y - k, (int)massCenters[i].x, 0));
+				values[0][0].push_back( (int)channels[0].at<uchar>((int)massCenters[i].y - k, (int)massCenters[i].x) );
+				values[0][1].push_back( (int)channels[1].at<uchar>((int)massCenters[i].y - k, (int)massCenters[i].x) );
+				values[0][2].push_back( (int)channels[2].at<uchar>((int)massCenters[i].y - k, (int)massCenters[i].x) );
+				if (k > 0)
+				{
+					variation[0][0].push_back( values[0][0][k] - values[0][0][k-1] );
+					variation[0][1].push_back( values[0][1][k] - values[0][1][k-1] );
+					variation[0][2].push_back( values[0][2][k] - values[0][2][k-1] );
+				}
 				inRegion = true;
 			}
-			if ( (int)massCenters[i].y + k <= img.rows && markers.at<int>((int)massCenters[i].y + k, (int)massCenters[i].x) != 0 )
-			{
-				// std::cout << "ENTROU DOWN" << std::endl;
-				downDirY.push_back((int)imgYCbCr.at<uchar>((int)massCenters[i].y + k, (int)massCenters[i].x, 0));
-				inRegion = true;
-			}
-			if ( (int)massCenters[i].x - k >= 0 && markers.at<int>((int)massCenters[i].y, (int)massCenters[i].x - k) != 0 )
-			{
-				// std::cout << "ENTROU LEFT" << std::endl;
-				leftDirY.push_back((int)imgYCbCr.at<uchar>((int)massCenters[i].y, (int)massCenters[i].x - k, 0));
-				inRegion = true;
-			}
+			// Right direction
 			if ( (int)massCenters[i].x + k <= img.cols && markers.at<int>((int)massCenters[i].y, (int)massCenters[i].x + k) != 0 )
 			{
-				// std::cout << "ENTROU RIGHT" << std::endl;
-				rightDirY.push_back((int)imgYCbCr.at<uchar>((int)massCenters[i].y, (int)massCenters[i].x + k, 0));
+				values[1][0].push_back( (int)channels[0].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x + k) );
+				values[1][1].push_back( (int)channels[1].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x + k) );
+				values[1][2].push_back( (int)channels[2].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x + k) );
+				if (k > 0)
+				{
+					variation[1][0].push_back( values[1][0][k] - values[1][0][k-1] );
+					variation[1][1].push_back( values[1][1][k] - values[1][1][k-1] );
+					variation[1][2].push_back( values[1][2][k] - values[1][2][k-1] );
+				}
+				inRegion = true;
+			}
+			// Down direction
+			if ( (int)massCenters[i].y + k <= img.rows && markers.at<int>((int)massCenters[i].y + k, (int)massCenters[i].x) != 0 )
+			{
+				values[2][0].push_back( (int)channels[0].at<uchar>((int)massCenters[i].y + k, (int)massCenters[i].x) );
+				values[2][1].push_back( (int)channels[1].at<uchar>((int)massCenters[i].y + k, (int)massCenters[i].x) );
+				values[2][2].push_back( (int)channels[2].at<uchar>((int)massCenters[i].y + k, (int)massCenters[i].x) );
+				if (k > 0)
+				{
+					variation[2][0].push_back( values[2][0][k] - values[2][0][k-1] );
+					variation[2][1].push_back( values[2][1][k] - values[2][1][k-1] );
+					variation[2][2].push_back( values[2][2][k] - values[2][2][k-1] );
+				}
+				inRegion = true;
+			}
+			// Left direction
+			if ( (int)massCenters[i].x - k >= 0 && markers.at<int>((int)massCenters[i].y, (int)massCenters[i].x - k) != 0 )
+			{
+				values[3][0].push_back( (int)channels[0].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x - k) );
+				values[3][1].push_back( (int)channels[1].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x - k) );
+				values[3][2].push_back( (int)channels[2].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x - k) );
+				if (k > 0)
+				{
+					variation[3][0].push_back( values[3][0][k] - values[3][0][k-1] );
+					variation[3][1].push_back( values[3][1][k] - values[3][1][k-1] );
+					variation[3][2].push_back( values[3][2][k] - values[3][2][k-1] );
+				}
 				inRegion = true;
 			}
 			k++;
@@ -99,18 +157,62 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 				break;
 		}
 
-		CvPlot::plot("Regiao " + std::to_string(i), &upDirY[0], upDirY.size(), 1);
+		CvPlot::plot("Y", &values[0][0][0], values[0][0].size(), 1);
 		CvPlot::label("Up");
-		CvPlot::plot("Regiao " + std::to_string(i), &downDirY[0], downDirY.size(), 1);
-		CvPlot::label("Down");
-		CvPlot::plot("Regiao " + std::to_string(i), &leftDirY[0], leftDirY.size(), 1);
-		CvPlot::label("Left");
-		CvPlot::plot("Regiao " + std::to_string(i), &rightDirY[0], rightDirY.size(), 1);
+		CvPlot::plot("Y", &values[1][0][0], values[1][0].size(), 1);
 		CvPlot::label("Right");
+		CvPlot::plot("Y", &values[2][0][0], values[2][0].size(), 1);
+		CvPlot::label("Down");
+		CvPlot::plot("Y", &values[3][0][0], values[3][0].size(), 1);
+		CvPlot::label("Left");
 
-		// for (int i = 0; i < upDirY.size(); i++)
-		// 	std::cout << upDirY[i] << " ";
-		// std::cout << std::endl;
+		CvPlot::plot("Cr", &values[0][1][0], values[0][1].size(), 1);
+		CvPlot::label("Up");
+		CvPlot::plot("Cr", &values[1][1][0], values[1][1].size(), 1);
+		CvPlot::label("Right");
+		CvPlot::plot("Cr", &values[2][1][0], values[2][1].size(), 1);
+		CvPlot::label("Down");
+		CvPlot::plot("Cr", &values[3][1][0], values[3][1].size(), 1);
+		CvPlot::label("Left");
+
+		CvPlot::plot("Cb", &values[0][2][0], values[0][2].size(), 1);
+		CvPlot::label("Up");
+		CvPlot::plot("Cb", &values[1][2][0], values[1][2].size(), 1);
+		CvPlot::label("Right");
+		CvPlot::plot("Cb", &values[2][2][0], values[2][2].size(), 1);
+		CvPlot::label("Down");
+		CvPlot::plot("Cb", &values[3][2][0], values[3][2].size(), 1);
+		CvPlot::label("Left");
+
+		waitKey();
+
+		// Plotar derivadas
+		CvPlot::plot("Y variation", &variation[0][0][0], variation[0][0].size(), 1);
+		CvPlot::label("Up");
+		CvPlot::plot("Y variation", &variation[1][0][0], variation[1][0].size(), 1);
+		CvPlot::label("Right");
+		CvPlot::plot("Y variation", &variation[2][0][0], variation[2][0].size(), 1);
+		CvPlot::label("Down");
+		CvPlot::plot("Y variation", &variation[3][0][0], variation[3][0].size(), 1);
+		CvPlot::label("Left");
+
+		CvPlot::plot("Cr variation", &variation[0][1][0], variation[0][1].size(), 1);
+		CvPlot::label("Up");
+		CvPlot::plot("Cr variation", &variation[1][1][0], variation[1][1].size(), 1);
+		CvPlot::label("Right");
+		CvPlot::plot("Cr variation", &variation[2][1][0], variation[2][1].size(), 1);
+		CvPlot::label("Down");
+		CvPlot::plot("Cr variation", &variation[3][1][0], variation[3][1].size(), 1);
+		CvPlot::label("Left");
+
+		CvPlot::plot("Cb variation", &variation[0][2][0], variation[0][2].size(), 1);
+		CvPlot::label("Up");
+		CvPlot::plot("Cb variation", &variation[1][2][0], variation[1][2].size(), 1);
+		CvPlot::label("Right");
+		CvPlot::plot("Cb variation", &variation[2][2][0], variation[2][2].size(), 1);
+		CvPlot::label("Down");
+		CvPlot::plot("Cb variation", &variation[3][2][0], variation[3][2].size(), 1);
+		CvPlot::label("Left");
 
 		// namedWindow("Up", WINDOW_NORMAL);
 		// namedWindow("Down", WINDOW_NORMAL);
@@ -127,22 +229,15 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 		// range[1] = rightDirY.size();
 		// imshow("Right", plotGraph(rightDirY, range));
 
-		// showIntGraph("Up", &upDirY[0], upDirY.size(), 0);
-		// showIntGraph("Down", &downDirY[0], downDirY.size(), 0);
-		// showIntGraph("Left", &leftDirY[0], leftDirY.size(), 0);
-		// showIntGraph("Right", &rightDirY[0], rightDirY.size(), 0);
+		waitKey();
 
-		// waitKey();
+		CvPlot::clear("Y, Regiao " + std::to_string(i));
+		CvPlot::clear("Cr, Regiao " + std::to_string(i));
+		CvPlot::clear("Cb, Regiao " + std::to_string(i));
+		CvPlot::clear("Y variation, Regiao " + std::to_string(i));
+		CvPlot::clear("Cr variation, Regiao " + std::to_string(i));
+		CvPlot::clear("Cb variation, Regiao " + std::to_string(i));
 	}
-
-	// imshow("Drawn contours", markers*10000);
-
-	// Draw the background marker
-	// circle(markers, Point(5,5), 3, CV_RGB(255,255,255), -1);
-
-	namedWindow("Markers", WINDOW_NORMAL);
-	imshow("Markers", markers * 10000);
-
 
 
 /*	watershed(img, markers);
