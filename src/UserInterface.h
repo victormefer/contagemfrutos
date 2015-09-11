@@ -9,6 +9,7 @@
 #include "SiftMatcher.h"
 #include "LocalExtrema.h"
 #include "Watershed.h"
+#include "Superpixel.h"
 
 class UserInterface
 {
@@ -33,6 +34,7 @@ private:
 	int Comparar(std::string nomeArq, cv::Mat saida);
 	void ExtremosLocais();
 	void Watershed(int tipo);
+	void Superpixel(int nr_superpixels,int nc);
 
 	Trainer trainer;
 

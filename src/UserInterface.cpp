@@ -86,6 +86,7 @@ void UserInterface::MainMenu()
 			<< "3. Classificar imagem" << std::endl
 			<< "4. Watershed" << std::endl
 			<< "5. Procedimento completo" << std::endl
+			<< "6. Superpixel" << std::endl
 			<< "0. Sair" << std::endl;
 
 		std::cout << std::endl << "Escolha uma opcao: ";
@@ -109,6 +110,9 @@ void UserInterface::MainMenu()
 				CarregarTreino();
 				Classificar();
 				Watershed(1);
+				break;
+			case 6:
+				
 				break;
 			case 0:
 				break;
@@ -759,4 +763,26 @@ void UserInterface::Watershed(int tipo)
 	cv::imshow("Watershed", wshed);
 
 	cv::waitKey();
+}
+
+void UserInterface::Superpixel(int nr_superpixels,int nc)
+{
+	Mat img,img2,lab_img;
+	double step;
+
+	img = CarregarImagem();
+	system("clear");
+
+	cv::cvtColor(img,lab_img,COLOR_BGR2Lab);
+	step = sqrt((image.total()) / (double) nr_superpixels);
+
+	/* Perform the SLIC superpixel algorithm. */
+	Slic slic;
+	slic.generate_superpixels(lab_img,step,nc);
+	slic.create_connectivity(lab_img);
+
+	/* Display the contours and show the result. */
+	slic.display_contours(img2,cv::Vec3b(0,0,255));
+	imshow("result", img2);
+	waitKey(0);
 }

@@ -80,27 +80,29 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 		while(1)
 		{
 			bool inRegion = false;
-			// Up direction
+			// Plotted points in up direction
 			if ( (int)massCenters[i].y - k >= 0 && markers.at<int>((int)massCenters[i].y - k, (int)massCenters[i].x) != 0 )
 			{
 				values[0][0].push_back( (int)channels[0].at<uchar>((int)massCenters[i].y - k, (int)massCenters[i].x) );
 				values[0][1].push_back( (int)channels[1].at<uchar>((int)massCenters[i].y - k, (int)massCenters[i].x) );
 				values[0][2].push_back( (int)channels[2].at<uchar>((int)massCenters[i].y - k, (int)massCenters[i].x) );
-				if (k > 0)
+				if (k > 0)					// Derivada dos pontos para cima
 				{
 					variation[0][0].push_back( values[0][0][k] - values[0][0][k-1] );
 					variation[0][1].push_back( values[0][1][k] - values[0][1][k-1] );
 					variation[0][2].push_back( values[0][2][k] - values[0][2][k-1] );
 				}
 				inRegion = true;
+
+				//minMaxLoc(InputArray src, double* minVal, double* maxVal=0, Point* minLoc=0, Point* maxLoc=0, InputArray mask=noArray())
 			}
-			// Right direction
+			// Plotted points in right direction
 			if ( (int)massCenters[i].x + k < img.cols && markers.at<int>((int)massCenters[i].y, (int)massCenters[i].x + k) != 0 )
 			{
 				values[1][0].push_back( (int)channels[0].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x + k) );
 				values[1][1].push_back( (int)channels[1].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x + k) );
 				values[1][2].push_back( (int)channels[2].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x + k) );
-				if (k > 0)
+				if (k > 0)					// Derivada dos pontos para a direita
 				{
 					variation[1][0].push_back( values[1][0][k] - values[1][0][k-1] );
 					variation[1][1].push_back( values[1][1][k] - values[1][1][k-1] );
@@ -108,13 +110,13 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 				}
 				inRegion = true;
 			}
-			// Down direction
+			// Plotted points in down direction
 			if ( (int)massCenters[i].y + k < img.rows && markers.at<int>((int)massCenters[i].y + k, (int)massCenters[i].x) != 0 )
 			{
 				values[2][0].push_back( (int)channels[0].at<uchar>((int)massCenters[i].y + k, (int)massCenters[i].x) );
 				values[2][1].push_back( (int)channels[1].at<uchar>((int)massCenters[i].y + k, (int)massCenters[i].x) );
 				values[2][2].push_back( (int)channels[2].at<uchar>((int)massCenters[i].y + k, (int)massCenters[i].x) );
-				if (k > 0)
+				if (k > 0)					// Derivada dos pontos para baixo
 				{
 					variation[2][0].push_back( values[2][0][k] - values[2][0][k-1] );
 					variation[2][1].push_back( values[2][1][k] - values[2][1][k-1] );
@@ -122,13 +124,13 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 				}
 				inRegion = true;
 			}
-			// Left direction
+			// Plotted points in left direction
 			if ( (int)massCenters[i].x - k >= 0 && markers.at<int>((int)massCenters[i].y, (int)massCenters[i].x - k) != 0 )
 			{
 				values[3][0].push_back( (int)channels[0].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x - k) );
 				values[3][1].push_back( (int)channels[1].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x - k) );
 				values[3][2].push_back( (int)channels[2].at<uchar>((int)massCenters[i].y, (int)massCenters[i].x - k) );
-				if (k > 0)
+				if (k > 0)					// Derivada dos pontos para a esquerda
 				{
 					variation[3][0].push_back( values[3][0][k] - values[3][0][k-1] );
 					variation[3][1].push_back( values[3][1][k] - values[3][1][k-1] );
