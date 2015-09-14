@@ -5,6 +5,7 @@ using namespace cv;
 void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 {
 	Mat dst;
+	int blob=1;
 	std::vector< std::vector<double> > minVal(4);						// Valor minimo
 	std::vector< std::vector<double> > maxVal(4);						// Valor maximo
 	std::vector< std::vector<Point> > minLoc(4);						// Minimo local 
@@ -219,26 +220,44 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 		CvPlot::plot("Cb variation", &variation[3][2][0], variation[3][2].size(), 1);
 		CvPlot::label("Left");
 
-		int tresh=6;			// Patamar para testar os valores das derivadas
+		int tresh=6;			// Patamar para testar as derivadas. Definir um valor para cada componente Y, Cb e Cr?
+		std::cout << std::endl;
+		std::cout << "- Blob " << blob << "-" << std::endl;
+		blob++;
 
 		for(int j=0;j < 4;j++)
 		{
+			switch(j)
+			{
+				case 0:
+					std::cout << "Up:" << std::endl;
+					break;
+				case 1:
+					std::cout << "Right:" << std::endl;
+					break;
+				case 2:
+					std::cout << "Down:" << std::endl;
+					break;
+				case 3:
+					std::cout << "Left:" << std::endl;
+					break;
+			}
 			for(int i=0;i < 3;i++)
 			{
 				if(maxVal[j][i] > tresh)
 				{
-				switch(i)
-				{
-					case 0:
-						std::cout << " Y - ";
-						break;
-					case 1:
-						std::cout << "Cr - ";
-						break;
-					case 2:
-						std::cout << "Cb - ";
-						break;
-				}
+					switch(i)
+					{
+						case 0:
+							std::cout << " Y - ";
+							break;
+						case 1:
+							std::cout << "Cr - ";
+							break;
+						case 2:
+							std::cout << "Cb - ";
+							break;
+					}
 					std::cout << "minVal: " << minVal[j][i] << " maxVal: " << maxVal[j][i] << " minLoc: " <<
 							 minLoc[j][i] << " maxLoc: " << maxLoc[j][i] << std::endl;
 				}
@@ -247,7 +266,7 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 		}
 
 		// 1. Escolher um range de valores para checar se o maximo esta dentro de um patamar
-		// 2. Localizado um ponto fora do patamar, marcar na imagem a regiao de divisao das frutas observando as quatro direcoes
+		// 2. Localizado um ponto acima do patamar, marcar na imagem a regiao de divisao das frutas observando as quatro direcoes
 
 		waitKey();
 
