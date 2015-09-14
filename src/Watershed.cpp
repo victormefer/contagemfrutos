@@ -159,7 +159,7 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 		{
 			for(int i=0;i < 3;i++)
 			{
-				minMaxLoc(values[j][i],&minVal[j][i],&maxVal[j][i],&minLoc[j][i],&maxLoc[j][i],Mat());
+				minMaxLoc(variation[j][i],&minVal[j][i],&maxVal[j][i],&minLoc[j][i],&maxLoc[j][i],Mat());
 			}
 		}
 
@@ -222,7 +222,7 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 
 		int tresh=6;			// Patamar para testar as derivadas. Definir um valor para cada componente Y, Cb e Cr?
 		std::cout << std::endl;
-		std::cout << "- Blob " << blob << "-" << std::endl;
+		std::cout << "- Blob " << blob << " -" << std::endl;
 		blob++;
 
 		for(int j=0;j < 4;j++)
