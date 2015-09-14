@@ -112,7 +112,7 @@ void UserInterface::MainMenu()
 				Watershed(1);
 				break;
 			case 6:
-				
+				Superpixel(30,5);
 				break;
 			case 0:
 				break;
