@@ -74,7 +74,11 @@ void UserInterface::MainMenu()
 				break;
 		}
 
-	} while (opcao != 0);*/	
+	} while (opcao != 0);*/
+
+	cv::namedWindow("Imagem original", WINDOW_NORMAL);
+	cv::namedWindow("Resultado classificacao", WINDOW_NORMAL);
+	cv::namedWindow("Resultado blobs", WINDOW_NORMAL);
 
 	do
 	{
@@ -87,6 +91,7 @@ void UserInterface::MainMenu()
 			<< "4. Watershed" << std::endl
 			<< "5. Procedimento completo" << std::endl
 			<< "6. Superpixel" << std::endl
+			<< "7. Teste Batch" << std::endl
 			<< "0. Sair" << std::endl;
 
 		std::cout << std::endl << "Escolha uma opcao: ";
@@ -104,15 +109,18 @@ void UserInterface::MainMenu()
 				Classificar();
 				break;
 			case 4:
-				Watershed(1);
+				Watershed();
 				break;
 			case 5:
 				CarregarTreino();
 				Classificar();
-				Watershed(1);
+				Watershed();
 				break;
 			case 6:
 				Superpixel(30,5);
+				break;
+			case 7:
+				TesteBatch();
 				break;
 			case 0:
 				break;
@@ -366,8 +374,8 @@ void UserInterface::Classificar()
 		std::cout << "Informe o nome da imagem: ";
 		std::cin >> nomeImagem;
 
-		imgClassif = imread(nomeImagem);
-		if (imgClassif.data == NULL)
+		imgOriginal = imread(nomeImagem);
+		if (imgOriginal.data == NULL)
 			std::cout << std::endl << "Tente novamente. ";
 		else
 			break;
@@ -376,16 +384,9 @@ void UserInterface::Classificar()
 	Classifier classifier = Classifier(nomeImagem, trainer.GetTree(), trainer.GetNClasses(), espacosCores);
 	classifier.Classify(&resultClassif);
 
-	namedWindow("Imagem original", WINDOW_NORMAL);
-	namedWindow("Resultado classificação", WINDOW_NORMAL);
-	moveWindow("Imagem original", 0, 0);
-	moveWindow("Resultado classificação", 300, 0);
-	imshow("Imagem original", imgClassif);
-	imshow("Resultado classificação", resultClassif);
+	imshow("Imagem original", imgOriginal);
+	imshow("Resultado classificacao", resultClassif);
 	waitKey();
-	destroyWindow("Imagem original");
-	destroyWindow("Resultado classificação");
-
 
 	char salvar;
 	std::cout << "Deseja salvar a imagem resultante? (S/N): ";
@@ -450,7 +451,7 @@ void UserInterface::CarregarTreino()
 	}
 	catch (std::string& ex)
 	{
-		std::cout << "Nao foi possivel abrir essa imagem.";
+		std::cout << "Nao foi possivel abrir esse treino.";
 		std::cin.get();
 	}
 	trainer.Train();
@@ -563,135 +564,6 @@ void UserInterface::TestarSIFT()
 	}
 }
 
-void UserInterface::TesteBatch()
-{
-	std::list<int> acuracias;
-	std::vector<std::string> nomeArqs;
-	std::string nomeSaida;
-
-	// std::string treinos[5];
-
-	Mat img = imread("dados/P5300907.JPG");
-	// for (int i = 0; i < 5;)
-	// trainer.LoadTree("treinos/arvore_treino5_2.xml");
-	canaisTreino = 2;
-
-	for (int i = 0; i <= 15; i++)
-	{
-		for (int j = 1; j <= 2; j++)
-		{
-			trainer.LoadTrainingData("treinos/treino5_2.xml");
-			if (j < canaisTreino)
-			{
-				Mat aux;
-				trainer.trainAttributes.copyTo(aux);
-				trainer.trainAttributes.release();
-				trainer.trainAttributes.create(aux.rows, (j+1)*3, CV_32FC1);
-				for (int m = 0; m < aux.rows; m++)
-					for (int n = 0; n < (j+1)*3; n++)
-					{
-						float coisa = aux.at<float>(m, n);
-						trainer.trainAttributes.at<float>(m, n) = coisa;
-					}
-			}
-			canaisTreino = j;
-			trainer.SetNumberAttributes((canaisTreino + 1) * 3);
-			std::string canais = "";
-			switch(canaisTreino)
-			{
-				case 3: canais += "_labeq";
-				case 2: canais += "_rgbeq";
-				case 1: canais += "_rgb_lab";
-					break;
-			}
-
-			Mat saida;
-
-			int espacosCores;
-			switch(canaisTreino)
-			{
-				case 1:
-					espacosCores = 3;
-					break;
-				case 2:
-					espacosCores = 7;
-					break;
-				case 3:
-					espacosCores = 15;
-					break;
-			}
-
-			Classifier* classifier;
-
-			trainer.Train(false, i, false);
-			classifier = new Classifier("dados/P5300907.JPG", trainer.GetTree(), trainer.GetNClasses(), espacosCores);
-			classifier->Classify(&saida);
-
-			nomeSaida = "p907" + canais + "_nosurro_" + std::to_string(i) + "cv_0se";
-			imwrite("resultados/" + nomeSaida + ".png", saida);
-
-			nomeArqs.push_back(nomeSaida);
-			acuracias.push_back(Comparar("dados/p907_ground_truth.png", saida));
-
-
-
-			trainer.Train(false, i, false);
-			delete classifier;
-			classifier = new Classifier("dados/P5300907.JPG", trainer.GetTree(), trainer.GetNClasses(), espacosCores);
-			classifier->Classify(&saida);
-
-			nomeSaida = "p907" + canais + "_nosurro_" + std::to_string(i) + "cv_1se";
-			imwrite("resultados/" + nomeSaida + ".png", saida);
-
-			nomeArqs.push_back(nomeSaida);
-			acuracias.push_back(Comparar("dados/p907_ground_truth.png", saida));
-			
-
-
-			trainer.Train(false, i, false);
-			delete classifier;
-			classifier = new Classifier("dados/P5300907.JPG", trainer.GetTree(), trainer.GetNClasses(), espacosCores);
-			classifier->Classify(&saida);
-
-			nomeSaida = "p907" + canais + "_surro_" + std::to_string(i) + "cv_0se";
-			imwrite("resultados/" + nomeSaida + ".png", saida);
-
-			nomeArqs.push_back(nomeSaida);
-			acuracias.push_back(Comparar("dados/p907_ground_truth.png", saida));
-			
-
-
-			trainer.Train(false, i, false);
-			delete classifier;
-			classifier = new Classifier("dados/P5300907.JPG", trainer.GetTree(), trainer.GetNClasses(), espacosCores);
-			classifier->Classify(&saida);
-
-			nomeSaida = "p907" + canais + "_surro_" + std::to_string(i) + "cv_1se";
-			imwrite("resultados/" + nomeSaida + ".png", saida);
-
-			nomeArqs.push_back(nomeSaida);
-			acuracias.push_back(Comparar("dados/p907_ground_truth.png", saida));
-		}
-	}
-
-	//acuracias.std::list<int>::sort();
-	acuracias.sort();
-
-	std::ofstream arqLog;
-	arqLog.open("treinoBatch.log", std::ofstream::app);
-	if (!arqLog.is_open())
-		return;
-
-	// arqLog << "Maior acuracia: " << maior.nomeArq << endl << endl;
-	int i = 0;
-	for (auto it = acuracias.begin(); it != acuracias.end(); ++it, i++)
-	{
-		arqLog << nomeArqs[i] << ": " << std::endl;
-		arqLog << "Positivos = " << *it << std::endl << std::endl;
-	}
-	arqLog.close();
-}
-
 
 int UserInterface::Comparar(std::string nomeArq, Mat saida)
 {
@@ -713,17 +585,14 @@ int UserInterface::Comparar(std::string nomeArq, Mat saida)
 void UserInterface::ExtremosLocais()
 {
 	cv::Mat saida, imgGray, maskGray;
-	cv::cvtColor(imgClassif, imgGray, CV_BGR2GRAY);
+	cv::cvtColor(imgOriginal, imgGray, CV_BGR2GRAY);
 	cv::cvtColor(resultClassif, maskGray, CV_BGR2GRAY);
 
-	cv::namedWindow("Resultado original", cv::WINDOW_NORMAL);
-	cv::moveWindow("Resultado original", 0, 0);
 	// cv::namedWindow("Mascara", cv::WINDOW_NORMAL);
 	// cv::moveWindow("Mascara", 500, 500);
 	cv::namedWindow("Extremos locais", cv::WINDOW_NORMAL);
 	cv::moveWindow("Extremos locais", 500, 0);
 
-	cv::imshow("Resultado original", imgClassif);
 	// cv::imshow("Mascara", maskGray);
 
 	LocalExtrema::LocalMaxima(imgGray, saida, 3);
@@ -739,30 +608,21 @@ void UserInterface::ExtremosLocais()
 	cv::waitKey();
 }
 
-void UserInterface::Watershed(int tipo)
+void UserInterface::Watershed()
 {
-	Mat wshed = Mat::zeros(imgClassif.size(), imgClassif.type());
+	// Mat markers = Mat::zeros(imgOriginal.size(), imgOriginal.type());
 
 	cv::cvtColor(resultClassif, resultClassif, CV_BGR2GRAY);
 
 	// resultClassif.convertTo(resultClassif, CV_8U);
 
-	if (tipo == 0)
-		Watershed::FindWatershed(imgClassif, resultClassif, wshed);
-	else
-		Watershed::FindWatershed2(imgClassif, resultClassif, wshed);
-	
-	cv::namedWindow("Resultado original", cv::WINDOW_NORMAL);
-	cv::moveWindow("Resultado original", 0, 0);
-	cv::imshow("Resultado original", imgClassif);
-	cv::namedWindow("Classificacao", cv::WINDOW_NORMAL);
-	cv::moveWindow("Classificacao", 500, 0);
-	cv::imshow("Classificacao", resultClassif);
-	cv::namedWindow("Watershed", cv::WINDOW_NORMAL);
-	cv::moveWindow("Watershed", 0, 500);
-	cv::imshow("Watershed", wshed);
+	numFruits = Watershed::FindWatershed(imgOriginal, resultClassif, resultBlobs, blobMassCenters);
 
+	cv::imshow("Resultado blobs", resultBlobs/* * 10000*/);
 	cv::waitKey();
+
+	BlobSplit::SplitBlobs(imgOriginal, resultBlobs, blobMassCenters);
+
 }
 
 void UserInterface::Superpixel(int nr_superpixels,int nc)
@@ -785,4 +645,147 @@ void UserInterface::Superpixel(int nr_superpixels,int nc)
 	slic.display_contours(img2,cv::Vec3b(0,0,255));
 	imshow("result", img2);
 	waitKey(0);
+}
+
+
+void UserInterface::TesteBatch()
+{
+	int opcao;
+	std::string nomeArqTreino, imgDir, groundTruthDir;
+	int espacosCores;
+	int TP = 0, FP = 0, FN = 0;
+	double precision, recall, fmeasure;
+
+	system("clear");
+
+	std::cout << "Bases de frutas" << std::endl << std::endl
+		<< "1. Acerola" << std::endl
+		<< "2. Laranja" << std::endl
+		<< "3. Morango" << std::endl;
+
+	std::cout << std::endl << "Escolha uma opcao: ";
+	std::cin >> opcao;
+
+	switch(opcao)
+	{
+		case 1:
+			nomeArqTreino = "treinos/acerola_01.xml";
+			imgDir = "fruit-database/frutas/Acerola/";
+			groundTruthDir = "fruit-database/rotulamento/Acerola/";
+			break;
+		case 2:
+			nomeArqTreino = "treinos/laranja_01.xml";
+			imgDir = "fruit-database/frutas/Laranja/";
+			groundTruthDir = "fruit-database/rotulamento/Laranja/";
+			break;
+		case 3:
+			nomeArqTreino = "treinos/morango_03.xml";
+			imgDir = "fruit-database/frutas/Morango/";
+			groundTruthDir = "fruit-database/rotulamento/Morango/";
+			break;
+		default:
+			return;
+	}
+
+	// Carregar arquivo de treino
+	try
+	{
+		trainer.LoadTrainingData(nomeArqTreino);
+	}
+	catch (std::string& ex)
+	{
+		std::cout << "Nao foi possivel abrir esse treino.";
+		getchar();
+	}
+
+	trainer.Train();
+
+	switch(trainer.GetNAttributes())
+	{
+		case 6:
+			espacosCores = 3;
+			break;
+		case 9:
+			espacosCores = 7;
+			break;
+		case 12:
+			espacosCores = 15;
+			break;
+	}
+
+	std::vector<std::string> filenames;
+	std::ifstream ifs;
+
+	// Retornar nomes dos arquivos
+	if (BuscarArquivos(imgDir, filenames))
+	{
+		std::cout << "Erro ao abrir os arquivos no diretorio." << std::endl;
+		getchar();
+		return;
+	}
+
+	for (int i = 0; i < filenames.size(); i++)
+	{
+		if( (filenames[i].compare(".") != 0) && (filenames[i].compare("..") != 0) )		// Filtra o '.' e o '..'
+		{
+			imgOriginal = imread(imgDir + filenames[i]);
+			if (imgOriginal.data == NULL)
+			{
+				std::cout << "Nao foi possivel abrir a imagem " << filenames[i] << std::endl;
+				continue;
+			}
+			imshow("Imagem original", imgOriginal);
+
+			Classifier classifier = Classifier(imgDir + filenames[i], trainer.GetTree(), trainer.GetNClasses(), espacosCores);
+			classifier.Classify(&resultClassif);
+
+			imshow("Resultado classificacao", resultClassif);
+
+			Watershed();
+
+			ifs.open( groundTruthDir + filenames[i].substr(0, filenames[i].find('.')) + ".txt" );
+			if (!ifs.is_open())
+			{
+				std::cout << "Nao foi possivel abrir o arquivo de ground truth da imagem " << filenames[i] << std::endl;
+				continue;
+			}
+
+			int groundTruth;
+			ifs >> groundTruth;
+
+			ifs.close();
+
+			if (groundTruth == numFruits)
+				TP += numFruits;
+			else if (groundTruth > numFruits)
+			{
+				FN += groundTruth - numFruits;
+				TP += numFruits;
+			}
+			else
+			{
+				FP += numFruits - groundTruth;
+				TP += groundTruth;
+			}
+		}
+	}
+
+	precision = (double)TP / ((double)TP + (double)FP);
+	recall = (double)TP / ((double)TP + (double)FN);
+	fmeasure = 2 * precision * recall / (precision + recall);
+
+	system("clear");
+
+	std::ofstream ofs;
+	ofs.open("saida.txt");
+
+	ofs << std::endl << "True positives: " << TP << std::endl
+		<< "False positives: " << FP << std::endl
+		<< "False negatives: " << FN << std::endl << std::endl
+		<< "Precision: " << precision << std::endl
+		<< "Recall: " << recall << std::endl
+		<< "F-measure: " << fmeasure << std::endl;
+	getchar();
+
+	ofs.close();
 }

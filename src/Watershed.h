@@ -8,8 +8,10 @@
 class Watershed
 {
 public:
-	static void FindWatershed(cv::Mat img, cv::Mat mask, cv::Mat& wshed);
-	static void FindWatershed2(cv::Mat img, cv::Mat mask, cv::Mat& wshed);
+	// Retorna matriz markers, uma mascara com blobs q são possíveis locais de frutos,
+	// e um inteiro com a quantidade desses blobs
+	static int FindWatershed(cv::Mat img, cv::Mat mask, cv::Mat& markers, std::vector<cv::Point2f>& massCenters);
+	// static void FindWatershed2(cv::Mat img, cv::Mat mask, cv::Mat& wshed);
 };
 
 

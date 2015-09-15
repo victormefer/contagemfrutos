@@ -2,14 +2,18 @@
 #define USERINTERFACE_H
 
 #include <opencv2/opencv.hpp>
+#include <cstdio>
 #include <iostream>
+#include <fstream>
 #include <list>
 #include "Trainer.h"
 #include "Classifier.h"
 #include "SiftMatcher.h"
 #include "LocalExtrema.h"
 #include "Watershed.h"
+#include "BlobSplit.h"
 #include "Superpixel.h"
+#include "Arquivos.h"
 
 class UserInterface
 {
@@ -33,7 +37,7 @@ private:
 	void TesteBatch();
 	int Comparar(std::string nomeArq, cv::Mat saida);
 	void ExtremosLocais();
-	void Watershed(int tipo);
+	void Watershed();
 	void Superpixel(int nr_superpixels,int nc);
 
 	Trainer trainer;
@@ -42,7 +46,9 @@ private:
 
 	SiftMatcher sift;
 
-	cv::Mat imgClassif, resultClassif, resultExtrem;
+	cv::Mat imgOriginal, resultClassif, resultExtrem, resultBlobs;
+	std::vector<cv::Point2f> blobMassCenters;
+	int numFruits;
 };
 
 
