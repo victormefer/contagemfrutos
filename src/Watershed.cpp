@@ -24,7 +24,6 @@ void Watershed::FindWatershed2(Mat img, Mat mask, Mat& wshed)
 	// Create the marker image for the watershed algorithm
 	Mat markers = Mat::zeros(dst.size(), CV_32SC1);
 
-
 	std::vector<Moments> mu(contours.size());
 	std::vector<Point2f> massCenters(contours.size());
 	// Draw the foreground markers
