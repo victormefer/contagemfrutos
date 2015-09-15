@@ -112,7 +112,7 @@ void UserInterface::MainMenu()
 				Watershed(1);
 				break;
 			case 6:
-				Superpixel(30,5);
+				
 				break;
 			case 0:
 				break;
@@ -774,7 +774,7 @@ void UserInterface::Superpixel(int nr_superpixels,int nc)
 	system("clear");
 
 	cv::cvtColor(img,lab_img,COLOR_BGR2Lab);
-	step = sqrt((img.total()) / (double) nr_superpixels);
+	step = sqrt((image.total()) / (double) nr_superpixels);
 
 	/* Perform the SLIC superpixel algorithm. */
 	Slic slic;
