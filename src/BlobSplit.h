@@ -5,6 +5,7 @@
 #include "cvplot/cvplot.h"
 
 #define N_DIRECTIONS 8
+// #define _DEBUG
 
 class BlobSplit
 {
