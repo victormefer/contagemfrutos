@@ -225,6 +225,7 @@ void UserInterface::SeletorROIs(Mat img, Mat* dadosTreino, Mat* classesTreino, i
 	// Converter imagem para os espaços de cor
 	Mat imgLab, imgRgbEq, imgLabEq;
 	cvtColor(img, imgLab, CV_BGR2Lab);
+	imshow("LAB", imgLab);
 	if (canaisTreino >= 2)
 	{
 		std::vector<Mat> RGBChannels;
@@ -619,7 +620,9 @@ void UserInterface::Watershed()
 	numFruits = Watershed::FindWatershed(imgOriginal, resultClassif, resultBlobs, blobMassCenters);
 
 	cv::imshow("Resultado blobs", resultBlobs/* * 10000*/);
+	#ifdef _DEBUG
 	cv::waitKey();
+	#endif
 
 	BlobSplit::SplitBlobs(imgOriginal, resultBlobs, blobMassCenters);
 
@@ -679,7 +682,7 @@ void UserInterface::TesteBatch()
 			groundTruthDir = "fruit-database/rotulamento/Laranja/";
 			break;
 		case 3:
-			nomeArqTreino = "treinos/morango_03.xml";
+			nomeArqTreino = "treinos/morango.xml";
 			imgDir = "fruit-database/frutas/Morango/";
 			groundTruthDir = "fruit-database/rotulamento/Morango/";
 			break;

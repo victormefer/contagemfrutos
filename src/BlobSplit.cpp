@@ -185,12 +185,16 @@ void BlobSplit::SplitBlobs(cv::Mat img, cv::Mat& markers, std::vector<cv::Point2
 		int tresh = 8;			// Patamar para testar as derivadas. Definir um valor para cada componente Y, Cb e Cr?
 		
 		system("clear");
+		#ifdef _DEBUG
 		std::cout << "- Blob " << i << " -" << std::endl;
+		#endif
 
 		std::string plotName, label;
 
-		std::vector<double> minOfMax, maxOfMax;
-		std::vector<cv::Point> minOfMaxLoc, maxOfMaxLoc;
+		std::vector<double> minOfMax(3), maxOfMax(3);
+		std::vector<cv::Point> minOfMaxLoc(3), maxOfMaxLoc(3);
+		double absoluteMax;
+		int absMaxPos;
 
 		// Plotar gráficos e imprimir maximos encontrados
 		for(int j = 0; j < 3; j++)
@@ -207,7 +211,9 @@ void BlobSplit::SplitBlobs(cv::Mat img, cv::Mat& markers, std::vector<cv::Point2
 					plotName = "Cb";
 					break;
 			}
+			#ifdef _DEBUG
 			std::cout << plotName << ':' << std::endl;
+			#endif
 			for(int l = 0; l < N_DIRECTIONS; l++)
 			{
 				switch(l)
@@ -245,25 +251,33 @@ void BlobSplit::SplitBlobs(cv::Mat img, cv::Mat& markers, std::vector<cv::Point2
 				CvPlot::label(label);
 
 				// Encontrar maximos e minimos das derivadas
-				cv::minMaxLoc( variation[l][j], &minVal[l][j], &maxVal[l][j], &minLoc[l][j], &maxLoc[l][j], cv::Mat() );
+				cv::minMaxLoc( variation[l][j], &minVal[l][j], &maxVal[l][j], &minLoc[l][j], &maxLoc[l][j] );
 
 				if(maxVal[l][j] > tresh || minVal[l][j] < -tresh)
 				{
+					#ifdef _DEBUG
 					std::cout << '\t' << label << ':' << std::endl;
 					std::cout << "minVal: " << minVal[l][j] << " maxVal: " << maxVal[l][j] << " minLoc: " <<
 							 minLoc[l][j] << " maxLoc: " << maxLoc[l][j] << std::endl;
+					#endif
 				}
 			}
+			#ifdef _DEBUG
 			std::cout << std::endl;
+			#endif
 
-			// cv::minMaxLoc( minVal[j], &minOfMax[j], NULL, &minOfMaxLoc[j], NULL, cv::Mat() );
-			// cv::minMaxLoc( maxVal[j], NULL, &maxOfMax[j], NULL, &maxOfMaxLoc[j], cv::Mat() );
+			cv::minMaxLoc( minVal[j], &minOfMax[j], NULL, &minOfMaxLoc[j], NULL );
+			cv::minMaxLoc( maxVal[j], NULL, &maxOfMax[j], NULL, &maxOfMaxLoc[j] );
+
+
 		}
 
 		// 1. Escolher um range de valores para checar se o maximo esta dentro de um patamar
 		// 2. Localizado um ponto acima do patamar, marcar na imagem a regiao de divisao das frutas observando as quatro direcoes
 
+		#ifdef _DEBUG
 		cv::waitKey();
+		#endif
 
 		CvPlot::clear("Y");
 		CvPlot::clear("Cr");
