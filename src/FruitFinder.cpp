@@ -352,7 +352,10 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 			CvPlot::label(label);
 
 			// Encontrar maximos e minimos das derivadas
-			cv::minMaxLoc( variation[l][j], &minVal[l][j], &maxVal[l][j], &minLoc[l][j], &maxLoc[l][j] );
+			std::vector<int> absVariation (variation[l][j].size());
+			for (int k = 0; k < variation[l][j].size(); k++)
+				absVariation.push_back(abs(variation[l][j][k]));
+			cv::minMaxLoc( absVariation, NULL, &maxVal[l][j], NULL, &maxLoc[l][j] );
 
 			if(maxVal[l][j] > tresh || minVal[l][j] < -tresh)
 			{
@@ -368,27 +371,31 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 		std::cout << std::endl;
 		#endif
 
-		cv::minMaxLoc( minVal[j], &minOfMax[j], NULL, &minOfMaxLoc[j], NULL );
+		// Encontrar direcao q mais variou
+		// cv::minMaxLoc( minVal[j], &minOfMax[j], NULL, &minOfMaxLoc[j], NULL );
 		cv::minMaxLoc( maxVal[j], NULL, &maxOfMax[j], NULL, &maxOfMaxLoc[j] );
-		if (abs(minOfMax[j]) > abs(maxOfMax[j]))
-		{
-			absoluteMax = minOfMax[j];
-			absMaxPos = minLoc[ minOfMaxLoc[j].x ][j].x;
-			absMaxDir = minOfMaxLoc[j].x;
-		}
-		else
-		{
+		// if (abs(minOfMax[j]) > abs(maxOfMax[j]))
+		// {
+		// 	absoluteMax = minOfMax[j];
+		// 	absMaxPos = minLoc[ minOfMaxLoc[j].x ][j].x;
+		// 	absMaxDir = minOfMaxLoc[j].x;
+		// }
+		// else
+		// {
 			absoluteMax = maxOfMax[j];
 			absMaxPos = maxLoc[ maxOfMaxLoc[j].x ][j].x;
-			absMaxDir = minOfMaxLoc[j].x;
-		}
+			absMaxDir = maxOfMaxLoc[j].x;
+		// }
 		if (overThresh)
 		{
 			// hasSplit = true;
 
 			#ifdef _DEBUG
-			std::cout << "Canal " << plotName << " vai cortar na direcao " << absMaxPos << ", ponto " << absMaxPos << std::endl;
+			std::cout << "Canal " << plotName << " vai cortar na direcao " << absMaxDir << ", ponto " << absMaxPos << std::endl;
 			#endif
+
+			// pega maximo entre minimo e maximo das 2 retas imediatamente proximas à reta do maximo
+			
 		}
 	}
 	// 1. Escolher um range de valores para checar se o maximo esta dentro de um patamar
