@@ -11,7 +11,7 @@
 #include "SiftMatcher.h"
 #include "LocalExtrema.h"
 #include "Watershed.h"
-#include "BlobSplit.h"
+#include "FruitFinder.h"
 #include "Superpixel.h"
 #include "Arquivos.h"
 
@@ -24,7 +24,7 @@ public:
 	void MainMenu();
 
 private:
-	cv::Mat CarregarImagem();
+	std::string CarregarImagem();
 	void TreinoManual();
 	void SeletorROIs(cv::Mat img, cv::Mat* dadosTreino, cv::Mat* classesTreino, int nClasses);
 	void CarregarArvore();
@@ -47,7 +47,6 @@ private:
 	SiftMatcher sift;
 
 	cv::Mat imgOriginal, resultClassif, resultExtrem, resultBlobs;
-	std::vector<cv::Point2f> blobMassCenters;
 	int numFruits;
 };
 

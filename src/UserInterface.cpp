@@ -134,10 +134,10 @@ void UserInterface::MainMenu()
 }
 
 
-Mat UserInterface::CarregarImagem()
+std::string UserInterface::CarregarImagem()
 {
 	std::string nomeImagem;
-	Mat img;
+	// Mat img;
 
 	system("clear");
 	while (1)
@@ -145,13 +145,20 @@ Mat UserInterface::CarregarImagem()
 		std::cout << "Informe o nome da imagem: ";
 		std::cin >> nomeImagem;
 
-		img = imread(nomeImagem);
-		if (img.data == NULL)
+		imgOriginal = imread(nomeImagem);
+		if (imgOriginal.data == NULL)
 			std::cout << std::endl << "Tente novamente. ";
 		else
 			break;
 	}
-	return img;
+
+	// Mat imgGammaCorrected(imgOriginal.rows, imgOriginal.cols, CV_32FC3);
+	// pow(imgOriginal, 1.2, imgGammaCorrected);
+	// convertScaleAbs(imgGammaCorrected, imgGammaCorrected);
+	// imgGammaCorrected.convertTo(imgGammaCorrected, CV_8UC3);
+	// imshow("Gamma correction", imgGammaCorrected);
+	// return img;
+	return nomeImagem;
 }
 
 
@@ -163,7 +170,8 @@ void UserInterface::TreinoManual()
 
 	do
 	{
-		Mat img = CarregarImagem();
+		imgOriginal.release();
+		CarregarImagem();
 		system("clear");
 
 		int nClasses;
@@ -196,9 +204,8 @@ void UserInterface::TreinoManual()
 			}
 		} while (flag);
 
-		SeletorROIs(img, &dadosTreino, &classesTreino, nClasses);
+		SeletorROIs(imgOriginal, &dadosTreino, &classesTreino, nClasses);
 		trainer.AddTrainingData(&dadosTreino, &classesTreino);
-		img.release();
 
 		std::cout << std::endl << "Deseja adicionar outra imagem ao treino? (S/N): ";
 		std::cin >> opcao;
@@ -345,7 +352,7 @@ void UserInterface::SeletorROIs(Mat img, Mat* dadosTreino, Mat* classesTreino, i
 
 void UserInterface::Classificar()
 {
-	std::string nomeImagem;
+	// std::string nomeImagem;
 	int espacosCores;
 
 	system("clear");
@@ -370,17 +377,18 @@ void UserInterface::Classificar()
 			break;
 	}
 
-	while (1)
-	{
-		std::cout << "Informe o nome da imagem: ";
-		std::cin >> nomeImagem;
+	std::string nomeImagem = CarregarImagem();
+	// while (1)
+	// {
+	// 	std::cout << "Informe o nome da imagem: ";
+	// 	std::cin >> nomeImagem;
 
-		imgOriginal = imread(nomeImagem);
-		if (imgOriginal.data == NULL)
-			std::cout << std::endl << "Tente novamente. ";
-		else
-			break;
-	}
+	// 	imgOriginal = imread(nomeImagem);
+	// 	if (imgOriginal.data == NULL)
+	// 		std::cout << std::endl << "Tente novamente. ";
+	// 	else
+	// 		break;
+	// }
 
 	Classifier classifier = Classifier(nomeImagem, trainer.GetTree(), trainer.GetNClasses(), espacosCores);
 	classifier.Classify(&resultClassif);
@@ -449,13 +457,13 @@ void UserInterface::CarregarTreino()
 	try
 	{
 		trainer.LoadTrainingData(nomeArq);
+		trainer.Train();
 	}
 	catch (std::string& ex)
 	{
 		std::cout << "Nao foi possivel abrir esse treino.";
 		std::cin.get();
 	}
-	trainer.Train();
 }
 
 
@@ -617,27 +625,24 @@ void UserInterface::Watershed()
 
 	// resultClassif.convertTo(resultClassif, CV_8U);
 
-	numFruits = Watershed::FindWatershed(imgOriginal, resultClassif, resultBlobs, blobMassCenters);
+	numFruits = FruitFinder::FindFruits(imgOriginal, resultClassif, resultBlobs);
 
 	cv::imshow("Resultado blobs", resultBlobs/* * 10000*/);
 	#ifdef _DEBUG
 	cv::waitKey();
 	#endif
-
-	BlobSplit::SplitBlobs(imgOriginal, resultBlobs, blobMassCenters);
-
 }
 
 void UserInterface::Superpixel(int nr_superpixels,int nc)
 {
-	Mat img,img2,lab_img;
+	Mat img2,lab_img;
 	double step;
 
-	img = CarregarImagem();
+	CarregarImagem();
 	system("clear");
 
-	cv::cvtColor(img,lab_img,COLOR_BGR2Lab);
-	step = sqrt((img.total()) / (double) nr_superpixels);
+	cv::cvtColor(imgOriginal,lab_img,COLOR_BGR2Lab);
+	step = sqrt((imgOriginal.total()) / (double) nr_superpixels);
 
 	/* Perform the SLIC superpixel algorithm. */
 	Slic slic;
