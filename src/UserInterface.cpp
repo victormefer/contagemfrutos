@@ -6,75 +6,6 @@ void UserInterface::MainMenu()
 {
 
 	int opcao;
-/*	do
-	{
-		system("clear");
-
-		std::cout << "*** Treinamento da arvore de decisao ***" << std::endl << std::endl
-			<< "1. Treino Manual da Arvore" << std::endl
-			<< "2. Carregar Arvore de um Arquivo" << std::endl
-			<< "3. Salvar Arvore em Arquivo" << std::endl
-			<< "4. Carregar Treino de um Arquivo" << std::endl
-			<< "5. Salvar Treino em Arquivo" << std::endl
-			<< "6. Classificar imagem" << std::endl
-			<< "7. Adicionar imagem ao SIFT" << std::endl
-			<< "8. Testar SIFT" << std::endl
-			<< "9. Teste Batch" << std::endl
-			<< "10. Encontrar Extremos Locais" << std::endl
-			<< "11. Watershed" << std::endl
-			<< "12. Watershed2" << std::endl
-			<< "0. Sair" << std::endl;
-
-		std::cout << std::endl << "Escolha uma opcao: ";
-		std::cin >> opcao;
-
-		switch(opcao)
-		{
-			case 1:
-				TreinoManual();
-				break;
-			case 2:
-				CarregarArvore();
-				break;
-			case 3:
-				SalvarArvore();
-				break;
-			case 4:
-				CarregarTreino();
-				break;
-			case 5:
-				SalvarTreino();
-				break;
-			case 6:
-				Classificar();
-				break;
-			case 7:
-				AddSIFT();
-				break;
-			case 8:
-				TestarSIFT();
-				break;
-			case 9:
-				TesteBatch();
-				break;
-			case 10:
-				ExtremosLocais();
-				break;
-			case 11:
-				Watershed(0);
-				break;
-			case 12:
-				Watershed(1);
-				break;
-			case 0:
-				break;
-			default:
-				std::cout << "Opcao invalida" << std::endl;
-				std::cin.get();
-				break;
-		}
-
-	} while (opcao != 0);*/
 
 	cv::namedWindow("Imagem original", WINDOW_NORMAL);
 	cv::namedWindow("Resultado classificacao", WINDOW_NORMAL);
@@ -677,23 +608,26 @@ void UserInterface::TesteBatch()
 	switch(opcao)
 	{
 		case 1:
-			nomeArqTreino = "treinos/acerola_01.xml";
+			// nomeArqTreino = "treinos/acerola_01.xml";
 			imgDir = "fruit-database/frutas/Acerola/";
 			groundTruthDir = "fruit-database/rotulamento/Acerola/";
 			break;
 		case 2:
-			nomeArqTreino = "treinos/laranja_01.xml";
+			// nomeArqTreino = "treinos/laranja_01.xml";
 			imgDir = "fruit-database/frutas/Laranja/";
 			groundTruthDir = "fruit-database/rotulamento/Laranja/";
 			break;
 		case 3:
-			nomeArqTreino = "treinos/morango.xml";
+			// nomeArqTreino = "treinos/morango.xml";
 			imgDir = "fruit-database/frutas/Morango/";
 			groundTruthDir = "fruit-database/rotulamento/Morango/";
 			break;
 		default:
 			return;
 	}
+
+	std::cout << std::endl << "Informe o arquivo de treino: ";
+	std::cin >> nomeArqTreino;
 
 	// Carregar arquivo de treino
 	try
@@ -704,6 +638,7 @@ void UserInterface::TesteBatch()
 	{
 		std::cout << "Nao foi possivel abrir esse treino.";
 		getchar();
+		return;
 	}
 
 	trainer.Train();

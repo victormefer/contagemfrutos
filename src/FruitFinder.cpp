@@ -1,102 +1,86 @@
 #include "FruitFinder.h"
 
 cv::Mat FruitFinder::imgYCbCr, FruitFinder::markers, FruitFinder::channels[3];
-std::vector<cv::Point2f> FruitFinder::massCenters;
-std::vector<std::vector<cv::Point>> FruitFinder::contours;
-
+int FruitFinder::thresh = 8;
+// std::vector<cv::Vec3b> FruitFinder::colors;
 
 int FruitFinder::FindFruits(cv::Mat img, cv::Mat mask, cv::Mat& outputMarkers)
 {
-	cv::cvtColor(img, imgYCbCr, CV_BGR2YCrCb);
-	cv::Mat dst;
-	cv::distanceTransform(mask, dst, CV_DIST_L2, CV_DIST_MASK_PRECISE);		// Aplicar em fg e bg para ver os resultados?
-	cv::normalize(dst, dst, 0, 1, cv::NORM_MINMAX,-1);
+	std::vector<cv::Point2f> massCenters;
+	std::vector<std::vector<cv::Point>> contours;
+	bool hasSplit;
 
-	cv::threshold(dst, dst, .4, 1., CV_THRESH_BINARY);
+	cv::distanceTransform(mask, markers, CV_DIST_L2, CV_DIST_MASK_PRECISE);		// Aplicar em fg e bg para ver os resultados?
+	cv::normalize(markers, markers, 0, 1, cv::NORM_MINMAX,-1);
+
+	cv::threshold(markers, markers, .4, 1., CV_THRESH_BINARY);
 
 	// cv::Mat kernel1 = cv::Mat::ones(3, 3, CV_8UC1);
 	// dilate(dst, dst, kernel1);
 	// imshow("Peaks", dst);
 
-	cv::Mat dist_8u;
-	dst.convertTo(dist_8u, CV_8U);
+	// cv::Mat dist_8u;
+	// dst.convertTo(dist_8u, CV_8U);
+	markers.convertTo(markers, CV_8U);
+	outputMarkers = cv::Mat::zeros(markers.size(), CV_8UC3);
 
-	cv::findContours(dist_8u, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
-
-	// Create the marker image for the watershed algorithm
-	markers = cv::Mat::zeros(dst.size(), CV_8UC3);
-
-	std::vector<cv::Moments> mu(contours.size());
-	// Inicializa vetor de centros de massa
-	massCenters = std::vector<cv::Point2f>(contours.size());
-
-	// Generate random colors
-	vector<cv::Vec3b> colors;
-	for (size_t i = 0; i < contours.size(); i++)
-	{
-		int b = cv::theRNG().uniform(1, 254);
-		int g = cv::theRNG().uniform(1, 254);
-		int r = cv::theRNG().uniform(1, 254);
-		colors.push_back(cv::Vec3b((uchar)b, (uchar)g, (uchar)r));
-	}
-
-	// Draw the foreground markers
-	for (int i = 0; i < contours.size(); i++)
-	{
-		mu[i] = cv::moments(contours[i], false);
-
-		// Calcula centro de massa da área
-		massCenters[i] = cv::Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 );
-		cv::drawContours(markers, contours, i, cv::Scalar(colors[i])/*::all(i+1))*/, -1);
-	}
-
-	BeginBlobSplit();
-
-	outputMarkers.release();
-	markers.copyTo(outputMarkers);
-
-	for (int i = 0; i < massCenters.size(); i++)
-	{
-		// Desenha ponto no centro de massa
-		cv::circle( outputMarkers, massCenters[i], 4, cv::Scalar(255, 255, 255), -1, 8, 0 );
-
-		// Desenha texto com o indice da região
-		cv::putText( outputMarkers, std::to_string(i), massCenters[i] + cv::Point2f(-10, -10), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255, 255, 255) );
-	}
-	
-	return massCenters.size();
-}
-
-
-void FruitFinder::BeginBlobSplit()
-{
+	cv::cvtColor(img, imgYCbCr, CV_BGR2YCrCb);
 	cv::split(imgYCbCr, channels);
 
-	bool hasSplit = false;;
+	cv::namedWindow("Marcadores de regiao", cv::WINDOW_NORMAL);
 
-	// // Pegar valores de Y, Cb e Cr nas 8 direções de cada região encontrada
-	for (int i = 0; i < massCenters.size(); i++)
-	{
-		// Para ignorar regiões com poucos pixels
-		if ((int)massCenters[i].x < 0 || (int)massCenters[i].y < 0)
-			continue;
+	// cv::findContours(dist_8u, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
-		if( SplitBlobs((int)massCenters[i].y, (int)massCenters[i].x) )
-			hasSplit = true;
-	}
+	// // Create the marker image for the watershed algorithm
+	// markers = cv::Mat::zeros(dst.size(), CV_8U);
 
-	while (hasSplit)
+	// std::vector<cv::Moments> mu(contours.size());
+	// // Inicializa vetor de centros de massa
+	// massCenters = std::vector<cv::Point2f>(contours.size());
+
+	// // Generate random colors
+	// for (size_t i = 0; i < contours.size(); i++)
+	// {
+	// 	int b = cv::theRNG().uniform(1, 254);
+	// 	int g = cv::theRNG().uniform(1, 254);
+	// 	int r = cv::theRNG().uniform(1, 254);
+	// 	colors.push_back(cv::Vec3b((uchar)b, (uchar)g, (uchar)r));
+	// }
+
+	// // Draw the foreground markers
+	// for (int i = 0; i < contours.size(); i++)
+	// {
+	// 	mu[i] = cv::moments(contours[i], false);
+
+	// 	// Calcula centro de massa da área
+	// 	massCenters[i] = cv::Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 );
+	// 	cv::drawContours(markers, contours, i, cv::Scalar(colors[i])/*::all(i+1))*/, -1);
+	// }
+
+	// BeginBlobSplit();
+
+	// outputMarkers.release();
+	// markers.copyTo(outputMarkers);
+
+	// for (int i = 0; i < massCenters.size(); i++)
+	// {
+	// 	// Desenha ponto no centro de massa
+	// 	cv::circle( outputMarkers, massCenters[i], 4, cv::Scalar(255, 255, 255), -1, 8, 0 );
+
+	// 	// Desenha texto com o indice da região
+	// 	cv::putText( outputMarkers, std::to_string(i), massCenters[i] + cv::Point2f(-10, -10), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255, 255, 255) );
+	// }
+
+
+	do
 	{
 		hasSplit = false;
 
-		cv::Mat markers8u;
-		markers.convertTo(markers8u, CV_8U);
-
 		contours.clear();
-		cv::findContours(markers8u, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+		cv::findContours(markers, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
+		// Encontrar centros de massa
 		std::vector<cv::Moments> mu(contours.size());
-		// Inicializa vetor de centros de massa
 		std::vector<cv::Point2f> newMassCenters(contours.size());
 
 		for (int i = 0; i < contours.size(); i++)
@@ -104,20 +88,170 @@ void FruitFinder::BeginBlobSplit()
 			// Calcula centro de massa da área
 			mu[i] = cv::moments(contours[i], false);
 			newMassCenters[i] = cv::Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 );
+			cv::drawContours(markers, contours, i, cv::Scalar::all(255), -1);
 
+			// Desenhar contornos para visualizacao
+			cv::drawContours(outputMarkers, contours, i, cv::Scalar( cv::theRNG().uniform(1, 254), cv::theRNG().uniform(1, 254), cv::theRNG().uniform(1, 254) ), -1);
+			cv::circle( outputMarkers, newMassCenters[i], 4, cv::Scalar(255, 255, 255), -1, 8, 0 );	// desenha centro de massa
+			cv::putText( outputMarkers, std::to_string(i), newMassCenters[i] + cv::Point2f(-10, -10), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255, 255, 255) );	// desenha texto com índice da regiao
+		}
+
+		cv::imshow("Marcadores de regiao", outputMarkers);
+		#ifdef _DEBUG
+		cv::waitKey();
+		#endif
+
+		for (int i = 0; i < contours.size(); i++)
+		{
 			// Para ignorar regiões com poucos pixels
 			if ((int)newMassCenters[i].x < 0 || (int)newMassCenters[i].y < 0)
 				continue;
 
-			int j;
 			// Procurar novo centro de massa na lista antiga
+			int j;
 			for (j = 0; j < massCenters.size(); j++)
 			{
 				if (massCenters[j] == newMassCenters[i])
 					break;
 			}
+			// Nao achou o mesmo centro de massa, logo é uma nova regiao, tenta dividir ela
+			if (j == massCenters.size())
+			{
+				#ifdef _DEBUG
+				system("clear");
+				std::cout << "*** BLOB " << i << " ***" << std::endl;
+				#endif
 
-			// Nao achou, nova regiao, tenta dividir ela
+				if ( SplitBlobs((int)newMassCenters[i].y, (int)newMassCenters[i].x) )
+				{
+					hasSplit = true;
+					#ifdef _DEBUG
+					cv::imshow("Coisa", markers);
+					cv::waitKey();
+					#endif
+				}
+			}
+		}
+
+		massCenters = newMassCenters;
+
+	} while (hasSplit);
+	
+	return massCenters.size();
+}
+
+/*
+void FruitFinder::BeginBlobSplit()
+{
+	cv::split(imgYCbCr, channels);
+
+	bool hasSplit;
+
+	cv::namedWindow("Marcadores de regiao", cv::WINDOW_NORMAL);
+
+	// // // Pegar valores de Y, Cb e Cr nas 8 direções de cada região encontrada
+	// for (int i = 0; i < massCenters.size(); i++)
+	// {
+	// 	// Para ignorar regiões com poucos pixels
+	// 	if ((int)massCenters[i].x < 0 || (int)massCenters[i].y < 0)
+	// 		continue;
+
+	// 	if( SplitBlobs((int)massCenters[i].y, (int)massCenters[i].x) )
+	// 		hasSplit = true;
+	// }
+
+	// while (hasSplit)
+	// {
+	// 	hasSplit = false;
+
+	// 	cv::Mat markers8u;
+	// 	markers.convertTo(markers8u, CV_8UC1);
+
+	// 	contours.clear();
+	// 	cv::findContours(markers8u, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+
+	// 	std::vector<cv::Moments> mu(contours.size());
+	// 	// Inicializa vetor de centros de massa
+	// 	std::vector<cv::Point2f> newMassCenters(contours.size());
+
+	// 	for (int i = 0; i < contours.size(); i++)
+	// 	{
+	// 		// Calcula centro de massa da área
+	// 		mu[i] = cv::moments(contours[i], false);
+	// 		newMassCenters[i] = cv::Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 );
+
+	// 		// Para ignorar regiões com poucos pixels
+	// 		if ((int)newMassCenters[i].x < 0 || (int)newMassCenters[i].y < 0)
+	// 			continue;
+
+	// 		int j;
+	// 		// Procurar novo centro de massa na lista antiga
+	// 		for (j = 0; j < massCenters.size(); j++)
+	// 		{
+	// 			if (massCenters[j] == newMassCenters[i])
+	// 				break;
+	// 		}
+
+	// 		// Nao achou, nova regiao, tenta dividir ela
+	// 		if (j == massCenters.size())
+	// 		{
+	// 			if ( SplitBlobs((int)newMassCenters[i].y, (int)newMassCenters[i].x) )
+	// 				hasSplit = true;
+	// 		}
+	// 	}
+
+	// 	massCenters = newMassCenters;
+
+	// 	cv::imshow("Marcadores de regiao", markers);
+	// 	#ifdef _DEBUG
+	// 	cv::waitKey();
+	// 	#endif
+
+	// }
+
+	do
+	{
+		hasSplit = false;
+
+		contours.clear();
+		cv::findContours(markers, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+
+		// Encontrar centros de massa
+		std::vector<cv::Moments> mu(contours.size());
+		std::vector<cv::Point2f> newMassCenters(contours.size());
+
+		for (int i = 0; i < contours.size(); i++)
+		{
+			// Calcula centro de massa da área
+			mu[i] = cv::moments(contours[i], false);
+			newMassCenters[i] = cv::Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 );
+			cv::drawContours(markers, contours, i, cv::Scalar::all(255)), -1);
+
+			// Desenhar contornos para visualizacao
+			cv::drawContours(outputMarkers, contours, i, cv::Scalar( cv::theRNG().uniform(1, 254), cv::theRNG().uniform(1, 254), cv::theRNG().uniform(1, 254) ), -1);
+			cv::circle( outputMarkers, massCenters[i], 4, cv::Scalar(255, 255, 255), -1, 8, 0 );	// desenha centro de massa
+			cv::putText( outputMarkers, std::to_string(i), massCenters[i] + cv::Point2f(-10, -10), cv::FONT_HERSHEY_SIMPLEX, 1, cv::Scalar(255, 255, 255) );	// desenha texto com índice da regiao
+		}
+
+		cv::imshow("Marcadores de regiao", outputMarkers);
+		#ifdef _DEBUG
+		cv::waitKey();
+		#endif
+
+		for (int i = 0; i < contours.size(); i++)
+		{
+			// Para ignorar regiões com poucos pixels
+			if ((int)newMassCenters[i].x < 0 || (int)newMassCenters[i].y < 0)
+				continue;
+
+			// Procurar novo centro de massa na lista antiga
+			int j;
+			for (j = 0; j < massCenters.size(); j++)
+			{
+				if (massCenters[j] == newMassCenters[i])
+					break;
+			}
+			// Nao achou o mesmo centro de massa, logo é uma nova regiao, tenta dividir ela
 			if (j == massCenters.size())
 			{
 				if ( SplitBlobs((int)newMassCenters[i].y, (int)newMassCenters[i].x) )
@@ -126,13 +260,195 @@ void FruitFinder::BeginBlobSplit()
 		}
 
 		massCenters = newMassCenters;
-	}
-}
+
+	} while (hasSplit);
+
+}*/
 
 
 bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 {
 	bool hasSplit = false;
+
+	// int massCenterRow = (int)newMassCenters[i].y; 
+	// int massCenterCol = (int)newMassCenters[i].x;
+
+//	8 direções   vetor dos valores
+	std::vector< std::vector<int> > values(N_DIRECTIONS);
+	std::vector< std::vector<int> > variation(N_DIRECTIONS);
+
+	bool inRegion = true;
+
+	// Preencher vetores de valores e variação (derivada) nas 8 direções enquanto uma das 8 estiver dentro da região
+	for (int i = 0; inRegion == true; i++)
+	{
+		inRegion = false;
+		for (int j = 0; j < N_DIRECTIONS; j++)
+		{
+			// Incrementos para x e y dependendo da direção
+			int incX, incY;
+
+			if (j == 7 || j == 0 || j == 1)
+				incY = -1;
+			else if (j == 2 || j == 6)
+				incY = 0;
+			else
+				incY = 1;
+
+			if (j == 1 || j == 2 || j == 3)
+				incX = 1;
+			else if (j == 0 || j == 4)
+				incX = 0;
+			else
+				incX = -1;
+
+			if( massCenterRow + (i*incY) >= 0 && massCenterRow + (i*incY) < markers.rows && 
+				massCenterCol + (i*incX) >= 0 && massCenterCol + (i*incX) < markers.cols && 
+				markers.at<uchar>(massCenterRow + (i*incY), massCenterCol + (i*incX)) != 0 )
+			{
+				// Insere valor do canal CHANNEL da imagem no vetor da direção i
+				values[j].push_back( (int)channels[CHANNEL].at<uchar>(massCenterRow + (i*incY), massCenterCol + (i*incX)) );
+				// Se não é o primeiro valor inserido, insere tbm derivada (variação do valor com relação ao anterior)
+				if (i > 0)					// Derivada dos pontos para cima
+					variation[j].push_back( values[j][i] - values[j][i-1] );
+				inRegion = true;
+			}
+		}
+	}
+
+	// Vetor de maximos da derivada para cada direcao
+	std::vector<double> maxValues(N_DIRECTIONS);
+	std::vector<cv::Point> maxLoc(N_DIRECTIONS);
+
+	double absoluteMax;
+	int absMaxPos;
+	cv::Point absMaxDir;
+	bool overThresh;
+
+	// Plotar gráficos e imprimir maximos encontrados
+	std::string label;
+	for (int i = 0; i < N_DIRECTIONS; i++)
+	{
+		switch(i)
+		{
+			case 0:
+				label = "Up";
+				break;
+			case 1:
+				label = "UpRight";
+				break;
+			case 2:
+				label = "Right";
+				break;
+			case 3:
+				label = "DownRight";
+				break;
+			case 4:
+				label = "Down";
+				break;
+			case 5:
+				label = "DownLeft";
+				break;
+			case 6:
+				label = "Left";
+				break;
+			case 7:
+				label = "UpLeft";
+				break;
+		}
+
+		// Plotar valores e derivadas
+		if ( values[i].size() <= 0 || variation[i].size() <= 0 )
+			continue;
+		CvPlot::plot("Valores", &values[i][0], values[i].size(), 1);
+		CvPlot::label(label);
+		CvPlot::plot("Derivada", &variation[i][0], variation[i].size(), 1);
+		CvPlot::label(label);
+
+		// Encontrar maximos da derivada em cada direção
+		std::vector<int> absVariation (variation[i].size());
+		for (int k = 0; k < variation[i].size(); k++)
+			absVariation.push_back(abs(variation[i][k]));
+		cv::minMaxLoc( absVariation, NULL, &maxValues[i], NULL, &maxLoc[i] );
+
+		#ifdef _DEBUG
+		std::cout << "Direcao " << label << ':' << std::endl
+			<< "\tValor máximo : " << maxValues[i] << "  Local: " << maxLoc[i] << std::endl;
+		#endif
+	}
+
+	// Encontrar direção que mais variou
+	cv::minMaxLoc( maxValues, NULL, &absoluteMax, NULL, &absMaxDir );
+	absMaxPos = maxLoc[ absMaxDir.x ].x;
+
+	// Variação máxima acima do threshold, 
+	if (absoluteMax > thresh)
+	{
+		#ifdef _DEBUG
+		std::cout << "Vai cortar na direcao " << absMaxDir.x << ", ponto " << absMaxPos << std::endl;
+		#endif
+
+		// definir direçoes de distanciamento dos dois pontos dependendo da direção q vai ser cortada
+		int incX, incY;
+
+		// incrementos para andar na direção do maximo valor e encontrar o ponto de corte
+		if (absMaxDir.x == 7 || absMaxDir.x == 0 || absMaxDir.x == 1)
+			incY = -1;
+		else if (absMaxDir.x == 2 || absMaxDir.x == 6)
+			incY = 0;
+		else
+			incY = 1;
+
+		if (absMaxDir.x == 1 || absMaxDir.x == 2 || absMaxDir.x == 3)
+			incX = 1;
+		else if (absMaxDir.x == 0 || absMaxDir.x == 4)
+			incX = 0;
+		else
+			incX = -1;
+
+		// ponto de corte
+		cv::Point2i cutPoint ( massCenterCol + (incX * absMaxPos), massCenterRow + (incY * absMaxPos) );
+		cv::Point2i auxPoint = cutPoint;
+
+		// Incrementos para distanciar os dois pontos na reta perpendicular à direção do valor máximo
+		if (absMaxDir.x == 2 || absMaxDir.x == 6) // para a esquerda ou direita
+			incX = 0;
+		else
+			incX = 1;
+
+		if (absMaxDir.x == 0 || absMaxDir.x == 4) // para cima ou para baixo
+			incY = 0;
+		else if (absMaxDir.x == 3 || absMaxDir.x == 7) // baixo e direita ou cima e esquerda
+			incY = -1;
+		else
+			incY = 1;
+
+		// distancia os dois pontos enquanto estiverem dentro da regiao
+		while ( cutPoint.x >= 0 && cutPoint.y >= 0 && cutPoint.x < markers.cols && cutPoint.y < markers.cols &&
+			markers.at<uchar>(cutPoint.y, cutPoint.x) != 0 )
+		{
+			cutPoint.x += (float)incX;
+			cutPoint.y += (float)incY;
+		}
+		while ( auxPoint.x >= 0 && auxPoint.y >= 0 && auxPoint.x < markers.cols && auxPoint.y < markers.cols &&
+			markers.at<uchar>(auxPoint.y, auxPoint.x) != 0 )
+		{
+			auxPoint.x -= (float)incX;
+			auxPoint.y -= (float)incY;
+		}
+
+		// desenha linha separatória
+		cv::line(markers, cutPoint, auxPoint, cv::Scalar(0), 2);
+
+		hasSplit = true;
+	}
+
+	CvPlot::clear("Valores");
+	CvPlot::clear("Derivada");
+
+	return hasSplit;
+
+/*	bool hasSplit = false;
 
 //  8 direções    canais ycbcr      valores
 	std::vector < std::vector < std::vector<int> > > values(N_DIRECTIONS);			// Valores dos 3 canais nas 8 direções
@@ -158,7 +474,7 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 	{
 		bool inRegion = false;
 		// Plotted points in up direction (values[0])
-		if ( massCenterRow - k >= 0 && markers.at<cv::Vec3b>(massCenterRow - k, massCenterCol) != cv::Vec3b(0,0,0) )
+		if ( massCenterRow - k >= 0 && markers.at<uchar>(massCenterRow - k, massCenterCol) != 0 )
 		{
 			values[0][0].push_back( (int)channels[0].at<uchar>(massCenterRow - k, massCenterCol) );
 			values[0][1].push_back( (int)channels[1].at<uchar>(massCenterRow - k, massCenterCol) );
@@ -173,7 +489,7 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 		}
 		// Plotted points in upright direction
 		if ( massCenterRow - k >= 0 && massCenterCol + k < imgYCbCr.cols && 
-			markers.at<cv::Vec3b>(massCenterRow - k, massCenterCol) != cv::Vec3b(0,0,0) )
+			markers.at<uchar>(massCenterRow - k, massCenterCol) != 0 )
 		{
 			values[1][0].push_back( (int)channels[0].at<uchar>(massCenterRow - k, massCenterCol + k) );
 			values[1][1].push_back( (int)channels[1].at<uchar>(massCenterRow - k, massCenterCol + k) );
@@ -187,7 +503,7 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 			inRegion = true;
 		}
 		// Plotted points in right direction
-		if ( massCenterCol + k < imgYCbCr.cols && markers.at<cv::Vec3b>(massCenterRow, massCenterCol + k) != cv::Vec3b(0,0,0) )
+		if ( massCenterCol + k < imgYCbCr.cols && markers.at<uchar>(massCenterRow, massCenterCol + k) != 0 )
 		{
 			values[2][0].push_back( (int)channels[0].at<uchar>(massCenterRow, massCenterCol + k) );
 			values[2][1].push_back( (int)channels[1].at<uchar>(massCenterRow, massCenterCol + k) );
@@ -202,7 +518,7 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 		}
 		// Plotted points in downright direction
 		if ( massCenterCol + k < imgYCbCr.cols  && massCenterRow + k < imgYCbCr.rows && 
-			markers.at<cv::Vec3b>(massCenterRow + k, massCenterCol + k) != cv::Vec3b(0,0,0) )
+			markers.at<uchar>(massCenterRow + k, massCenterCol + k) != 0 )
 		{
 			values[3][0].push_back( (int)channels[0].at<uchar>(massCenterRow + k, massCenterCol + k) );
 			values[3][1].push_back( (int)channels[1].at<uchar>(massCenterRow + k, massCenterCol + k) );
@@ -216,7 +532,7 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 			inRegion = true;
 		}
 		// Plotted points in down direction
-		if ( massCenterRow + k < imgYCbCr.rows && markers.at<cv::Vec3b>(massCenterRow + k, massCenterCol) != cv::Vec3b(0,0,0) )
+		if ( massCenterRow + k < imgYCbCr.rows && markers.at<uchar>(massCenterRow + k, massCenterCol) != 0 )
 		{
 			values[4][0].push_back( (int)channels[0].at<uchar>(massCenterRow + k, massCenterCol) );
 			values[4][1].push_back( (int)channels[1].at<uchar>(massCenterRow + k, massCenterCol) );
@@ -231,7 +547,7 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 		}
 		// Plotted points in downleft direction
 		if ( massCenterRow + k < imgYCbCr.rows && massCenterCol - k >= 0 && 
-			markers.at<cv::Vec3b>(massCenterRow + k, massCenterCol - k) != cv::Vec3b(0,0,0) )
+			markers.at<uchar>(massCenterRow + k, massCenterCol - k) != 0 )
 		{
 			values[5][0].push_back( (int)channels[0].at<uchar>(massCenterRow + k, massCenterCol - k) );
 			values[5][1].push_back( (int)channels[1].at<uchar>(massCenterRow + k, massCenterCol - k) );
@@ -245,7 +561,7 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 			inRegion = true;
 		}
 		// Plotted points in left direction
-		if ( massCenterCol - k >= 0 && markers.at<cv::Vec3b>(massCenterRow, massCenterCol - k) != cv::Vec3b(0,0,0) )
+		if ( massCenterCol - k >= 0 && markers.at<uchar>(massCenterRow, massCenterCol - k) != 0 )
 		{
 			values[6][0].push_back( (int)channels[0].at<uchar>(massCenterRow, massCenterCol - k) );
 			values[6][1].push_back( (int)channels[1].at<uchar>(massCenterRow, massCenterCol - k) );
@@ -260,7 +576,7 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 		}
 		// Plotted points in upleft direction
 		if ( massCenterCol - k >= 0 && massCenterRow - k >= 0 && 
-			markers.at<cv::Vec3b>(massCenterRow - k, massCenterCol - k) != cv::Vec3b(0,0,0) )
+			markers.at<uchar>(massCenterRow - k, massCenterCol - k) != 0 )
 		{
 			values[7][0].push_back( (int)channels[0].at<uchar>(massCenterRow - k, massCenterCol - k) );
 			values[7][1].push_back( (int)channels[1].at<uchar>(massCenterRow - k, massCenterCol - k) );
@@ -277,8 +593,6 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 		if (!inRegion)
 			break;
 	}
-
-	int tresh = 8;			// Patamar para testar as derivadas. Definir um valor para cada componente Y, Cb e Cr?
 	
 	system("clear");
 
@@ -294,8 +608,10 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 	bool overThresh;
 
 	// Plotar gráficos e imprimir maximos encontrados
-	for(int j = 0; j < 3; j++)
-	{
+
+	// for(int j = 0; j < 3; j++)
+	// {
+	int j = 0; // CORTAR SEMPRE NO Y
 		switch(j)
 		{
 			case 0:
@@ -346,6 +662,8 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 			}
 
 			// Plotar valores e derivadas
+			if ( values[l][j].size() <= 0 || variation[l][j].size() <= 0 )
+				continue;
 			CvPlot::plot(plotName, &values[l][j][0], values[l][j].size(), 1);
 			CvPlot::label(label);
 			CvPlot::plot(plotName + " variation", &variation[l][j][0], variation[l][j].size(), 1);
@@ -386,23 +704,53 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 			absMaxPos = maxLoc[ maxOfMaxLoc[j].x ][j].x;
 			absMaxDir = maxOfMaxLoc[j].x;
 		// }
+
+		// Tem uma direcao que muda drasticamente de valor, acima do threshold
+		// Cortar região a partir desse ponto de maior mudança
 		if (overThresh)
 		{
-			// hasSplit = true;
-
 			#ifdef _DEBUG
 			std::cout << "Canal " << plotName << " vai cortar na direcao " << absMaxDir << ", ponto " << absMaxPos << std::endl;
 			#endif
 
-			// pega maximo entre minimo e maximo das 2 retas imediatamente proximas à reta do maximo
-			
+			// definir direçoes de distanciamento dos dois pontos dependendo da direção q vai ser cortada
+			int incX, incY;
+			if (absMaxDir == 2 || absMaxDir == 6) // para a esquerda ou direita
+				incX = 0;
+			else
+				incX = 1;
+
+			if (absMaxDir == 0 || absMaxDir == 4) // para cima ou para baixo
+				incY = 0;
+			else if (absMaxDir == 3 || absMaxDir == 7) // baixo e direita ou cima e esquerda
+				incY = -1;
+			else
+				incY = 1;
+
+			// ponto de corte
+			cv::Point2f cutPoint ( massCenterCol + (incX * absMaxPos), massCenterRow + (incY * absMaxPos) );
+			cv::Point2f auxPoint = cutPoint;
+
+			// distancia os dois pontos enquanto estiverem dentro da regiao
+			while ( cutPoint.x >= 0 && cutPoint.y >= 0 && cutPoint.x < markers.cols && cutPoint.y < markers.cols &&
+				markers.at<uchar>(cutPoint.y, cutPoint.x) != 0 )
+			{
+				cutPoint.x += (float)incX;
+				cutPoint.y += (float)incY;
+			}
+			while ( auxPoint.x >= 0 && auxPoint.y >= 0 && auxPoint.x < markers.cols && auxPoint.y < markers.cols &&
+				markers.at<uchar>(auxPoint.y, auxPoint.x) != 0 )
+			{
+				auxPoint.x -= (float)incX;
+				auxPoint.y -= (float)incY;
+			}
+
+			// desenha linha separatória
+			cv::line(markers, cutPoint, auxPoint, cv::Scalar::all(0), 2);
+
+			hasSplit = true;
 		}
-	}
-	// 1. Escolher um range de valores para checar se o maximo esta dentro de um patamar
-	// 2. Localizado um ponto acima do patamar, marcar na imagem a regiao de divisao das frutas observando as quatro direcoes
-	#ifdef _DEBUG
-	cv::waitKey();
-	#endif
+	// }
 
 	CvPlot::clear("Y");
 	CvPlot::clear("Cr");
@@ -411,7 +759,7 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 	CvPlot::clear("Cr variation");
 	CvPlot::clear("Cb variation");
 
-	return hasSplit;
+	return hasSplit;*/
 }
 
 
