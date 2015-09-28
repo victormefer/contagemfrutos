@@ -8,7 +8,7 @@
 #include <list>
 #include "Trainer.h"
 #include "Classifier.h"
-#include "SiftMatcher.h"
+// #include "SiftMatcher.h"
 #include "LocalExtrema.h"
 #include "Watershed.h"
 #include "FruitFinder.h"
@@ -18,7 +18,7 @@
 class UserInterface
 {
 public:
-	UserInterface() : trainer(), sift() {}
+	UserInterface() : trainer()/*, sift()*/ {}
 	~UserInterface(){}
 
 	void MainMenu();
@@ -32,8 +32,8 @@ private:
 	void CarregarTreino();
 	void SalvarTreino();
 	void Classificar();
-	void AddSIFT();
-	void TestarSIFT();
+	// void AddSIFT();
+	// void TestarSIFT();
 	void TesteBatch();
 	int Comparar(std::string nomeArq, cv::Mat saida);
 	void ExtremosLocais();
@@ -44,7 +44,7 @@ private:
 
 	int canaisTreino;
 
-	SiftMatcher sift;
+	// SiftMatcher sift;
 
 	cv::Mat imgOriginal, resultClassif, resultExtrem, resultBlobs;
 	int numFruits;

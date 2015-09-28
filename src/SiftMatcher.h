@@ -1,38 +1,38 @@
-#ifndef SIFTMATCHER_H
-#define SIFTMATCHER_H
+// #ifndef SIFTMATCHER_H
+// #define SIFTMATCHER_H
 
-#include <opencv2/opencv.hpp>
-#include <opencv2/nonfree/features2d.hpp>
-#include <list>
-#include <vector>
-#include <string>
-#include <fstream>
+// #include <opencv2/opencv.hpp>
+// #include <opencv2/nonfree/features2d.hpp>
+// #include <list>
+// #include <vector>
+// #include <string>
+// #include <fstream>
 
 
-class SiftMatcher
-{
-public:
-	SiftMatcher();
-	~SiftMatcher();
+// class SiftMatcher
+// {
+// public:
+// 	SiftMatcher();
+// 	~SiftMatcher();
 
-	void AddImageToDatabase(std::string imageName);
+// 	void AddImageToDatabase(std::string imageName);
 
-	/*std::list<cv::Mat>*/cv::Mat TestSift(cv::Mat image);
+// 	/*std::list<cv::Mat>*/cv::Mat TestSift(cv::Mat image);
 
-private:
-	class SiftImage
-	{
-	public:
-		SiftImage();
-		SiftImage(std::string name);
-		std::string imageName;
-		std::vector<cv::KeyPoint> keypoints;
-		cv::Mat descriptors;
-	};
+// private:
+// 	class SiftImage
+// 	{
+// 	public:
+// 		SiftImage();
+// 		SiftImage(std::string name);
+// 		std::string imageName;
+// 		std::vector<cv::KeyPoint> keypoints;
+// 		cv::Mat descriptors;
+// 	};
 	
-	std::list<SiftImage> imageDatabase;
+// 	std::list<SiftImage> imageDatabase;
 
-};
+// };
 
 
-#endif // SIFTMATCHER_H
+// #endif // SIFTMATCHER_H

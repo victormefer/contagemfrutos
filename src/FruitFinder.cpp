@@ -1,7 +1,7 @@
 #include "FruitFinder.h"
 
-cv::Mat FruitFinder::imgYCbCr, FruitFinder::markers, FruitFinder::channels[3];
-int FruitFinder::thresh = 8;
+// cv::Mat FruitFinder::imgYCbCr, FruitFinder::markers, FruitFinder::channels[3];
+// int FruitFinder::thresh = THRESHOLD;
 // std::vector<cv::Vec3b> FruitFinder::colors;
 
 int FruitFinder::FindFruits(cv::Mat img, cv::Mat mask, cv::Mat& outputMarkers)
@@ -80,10 +80,10 @@ int FruitFinder::FindFruits(cv::Mat img, cv::Mat mask, cv::Mat& outputMarkers)
 				if ( SplitBlobs((int)newMassCenters[i].y, (int)newMassCenters[i].x) )
 				{
 					hasSplit = true;
-					#ifdef _DEBUG
-					cv::imshow("Coisa", markers);
-					cv::waitKey();
-					#endif
+					// #ifdef _DEBUG
+					// cv::imshow("Coisa", markers);
+					// cv::waitKey();
+					// #endif
 				}
 			}
 		}
@@ -100,19 +100,35 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 {
 	bool hasSplit = false;
 
-	// int massCenterRow = (int)newMassCenters[i].y; 
-	// int massCenterCol = (int)newMassCenters[i].x;
-
 //	8 direções   vetor dos valores
-	std::vector< std::vector<int> > values(N_DIRECTIONS);
-	std::vector< std::vector<int> > variation(N_DIRECTIONS);
+	// std::vector< std::vector<int> > values(N_DIRECTIONS);
+	// std::vector< std::vector<int> > variation(N_DIRECTIONS);
+	std::vector<int> values;
+	std::vector<int> variation;
+
+	// Vetor de maximos da derivada para cada direcao
+	std::vector<double> maxValues(N_DIRECTIONS);
+	std::vector<cv::Point> maxLoc(N_DIRECTIONS);
+
+	double absoluteMax;
+	int absMaxPos;
+	cv::Point absMaxDir;
+
+	// for (int i = 0; i < N_DIRECTIONS; i++)
+	// {
+	// 	values[i] = std::vector<int>();
+	// 	variation[i] = std::vector<int>();
+	// }
 
 	bool inRegion = true;
 
 	// Preencher vetores de valores e variação (derivada) nas 8 direções enquanto uma das 8 estiver dentro da região
-	for (int i = 0; inRegion == true; i++)
+/*	for (int i = 0; inRegion == true; i++)
 	{
 		inRegion = false;
+		#ifdef _DEBUG
+		std::cout << "At distance from mass center = " << i << std::endl;
+		#endif
 		for (int j = 0; j < N_DIRECTIONS; j++)
 		{
 			// Incrementos para x e y dependendo da direção
@@ -137,28 +153,85 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 				markers.at<uchar>(massCenterRow + (i*incY), massCenterCol + (i*incX)) != 0 )
 			{
 				// Insere valor do canal CHANNEL da imagem no vetor da direção i
-				values[j].push_back( (int)channels[CHANNEL].at<uchar>(massCenterRow + (i*incY), massCenterCol + (i*incX)) );
-				// Se não é o primeiro valor inserido, insere tbm derivada (variação do valor com relação ao anterior)
-				if (i > 0)					// Derivada dos pontos para cima
+				try
+				{
+					values[j].push_back( (int)channels[CHANNEL].at<uchar>(massCenterRow + (i*incY), massCenterCol + (i*incX)) );
+				}
+				catch (std::exception& e)
+				{
+					std::cout << "EXCECAO: " << e.what() << std::endl;
+				}
+
+				#ifdef _DEBUG
+				std::cout << "Direcao: " << j << std::endl;
+				std::cout << "  Value: " << (int)channels[CHANNEL].at<uchar>(massCenterRow + (i*incY), massCenterCol + (i*incX)) << ", " << values[j][i] << std::endl;
+				#endif
+				// Se não é o primeiro valor inserido, insere tbm derivada (variation)
+				if (i > 0)
+				{
 					variation[j].push_back( values[j][i] - values[j][i-1] );
+					#ifdef _DEBUG
+					std::cout << "Variation: " << values[j][i] - values[j][i-1] << std::endl;
+					#endif
+				}
+
 				inRegion = true;
 			}
 		}
-	}
+	}*/
 
-	// Vetor de maximos da derivada para cada direcao
-	std::vector<double> maxValues(N_DIRECTIONS);
-	std::vector<cv::Point> maxLoc(N_DIRECTIONS);
-
-	double absoluteMax;
-	int absMaxPos;
-	cv::Point absMaxDir;
-	bool overThresh;
 
 	// Plotar gráficos e imprimir maximos encontrados
 	std::string label;
 	for (int i = 0; i < N_DIRECTIONS; i++)
 	{
+
+		// Incrementos para x e y dependendo da direção
+		int incX, incY;
+
+		if (i == 7 || i == 0 || i == 1)
+			incY = -1;
+		else if (i == 2 || i == 6)
+			incY = 0;
+		else
+			incY = 1;
+
+		if (i == 1 || i == 2 || i == 3)
+			incX = 1;
+		else if (i == 0 || i == 4)
+			incX = 0;
+		else
+			incX = -1;
+
+		bool inRegion = true;
+
+		for (int j = 0; inRegion == true; j++)
+		{
+			if( massCenterRow + (j*incY) >= 0 && massCenterRow + (j*incY) < markers.rows && 
+				massCenterCol + (j*incX) >= 0 && massCenterCol + (j*incX) < markers.cols && 
+				markers.at<uchar>(massCenterRow + (j*incY), massCenterCol + (j*incX)) != 0 )
+			{
+				// Insere valor do canal CHANNEL da imagem no vetor da direção j
+				values.push_back( (int)channels[CHANNEL].at<uchar>(massCenterRow + (j*incY), massCenterCol + (j*incX)) );
+
+				#ifdef _DEBUG
+				std::cout << "Direcao: " << i << std::endl;
+				std::cout << "  Value: " << (int)channels[CHANNEL].at<uchar>(massCenterRow + (j*incY), massCenterCol + (j*incX)) << ", " << values[j] << std::endl;
+				#endif
+				// Se não é o primeiro valor inserido, insere tbm derivada (variation)
+				if (j > 0)
+				{
+					variation.push_back( values[j] - values[j-1] );
+					#ifdef _DEBUG
+					std::cout << "Variation: " << values[j] - values[j-1] << std::endl;
+					#endif
+				}
+
+				inRegion = true;
+			}
+		}
+
+
 		switch(i)
 		{
 			case 0:
@@ -188,23 +261,29 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 		}
 
 		// Plotar valores e derivadas
-		if ( values[i].size() <= 0 || variation[i].size() <= 0 )
+		if ( values.size() <= 0 || variation.size() <= 0 )
 			continue;
-		CvPlot::plot("Valores", &values[i][0], values[i].size(), 1);
+		CvPlot::plot("Valores", &values[0], values.size(), 1);
 		CvPlot::label(label);
-		CvPlot::plot("Derivada", &variation[i][0], variation[i].size(), 1);
+		CvPlot::plot("Derivada", &variation[0], variation.size(), 1);
 		CvPlot::label(label);
 
 		// Encontrar maximos da derivada em cada direção
-		std::vector<int> absVariation (variation[i].size());
-		for (int k = 0; k < variation[i].size(); k++)
-			absVariation.push_back(abs(variation[i][k]));
+		// std::vector<int> absVariation (variation[i].size());
+		cv::Mat absVariation = cv::Mat(1, variation.size(), CV_64F);
+		for (int k = 0; k < variation.size(); k++)
+			absVariation.at<double>(0, k) = (double)abs(variation[k]);
 		cv::minMaxLoc( absVariation, NULL, &maxValues[i], NULL, &maxLoc[i] );
 
 		#ifdef _DEBUG
 		std::cout << "Direcao " << label << ':' << std::endl
-			<< "\tValor máximo : " << maxValues[i] << "  Local: " << maxLoc[i] << std::endl;
+			<< "\tValor máximo : " << maxValues[i] << "  Local: " << maxLoc[i].x << std::endl;
+			// << "Qt valores:" << values.size() << "  Qt derivada: " << absVariation.cols << std::endl;
 		#endif
+
+		absVariation.release();
+		values.clear();
+		variation.clear();
 	}
 
 	// Encontrar direção que mais variou
@@ -212,10 +291,10 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 	absMaxPos = maxLoc[ absMaxDir.x ].x;
 
 	// Variação máxima acima do threshold, 
-	if (abs(absoluteMax) > (double)thresh)
+	if (absoluteMax > thresh)
 	{
 		#ifdef _DEBUG
-		std::cout << "Vai cortar na direcao " << absMaxDir.x << ", ponto " << absMaxPos << std::endl;
+		std::cout << "Vai cortar na direcao " << absMaxDir.x << ", ponto " << absMaxPos << ", valor " << absoluteMax << std::endl;
 		#endif
 
 		// definir direçoes de distanciamento dos dois pontos dependendo da direção q vai ser cortada
@@ -253,28 +332,12 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 		else
 			incY = 1;
 
-		#ifdef _DEBUG
-		cv::Mat temp;
-		markers.copyTo(temp);
-		cv::circle( temp, cutPoint, 4, cv::Scalar(0), -1, 8, 0 );
-		cv::imshow("cutPoint", temp);
-		cv::waitKey();
-		markers.copyTo(temp);
-
-		std::cout << markers.at<uchar>(cutPoint.y, cutPoint.x) << std::endl;
-		#endif
 		// distancia os dois pontos enquanto estiverem dentro da regiao
 		while ( cutPoint.x >= 0 && cutPoint.y >= 0 && cutPoint.x < markers.cols && cutPoint.y < markers.cols &&
 			markers.at<uchar>(cutPoint.y, cutPoint.x) != 0 )
 		{
 			cutPoint.x += (float)incX;
 			cutPoint.y += (float)incY;
-			#ifdef _DEBUG
-			cv::circle( temp, cutPoint, 4, cv::Scalar(0), -1, 8, 0 );
-			cv::imshow("cutPoint", temp);
-			cv::waitKey();
-			markers.copyTo(temp);
-			#endif
 		}
 		while ( auxPoint.x >= 0 && auxPoint.y >= 0 && auxPoint.x < markers.cols && auxPoint.y < markers.cols &&
 			markers.at<uchar>(auxPoint.y, auxPoint.x) != 0 )
@@ -284,7 +347,7 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 		}
 
 		// desenha linha separatória
-		cv::line(markers, cutPoint, auxPoint, cv::Scalar(0), 2);
+		cv::line(markers, cutPoint, auxPoint, cv::Scalar(0), 3);
 
 		hasSplit = true;
 	}

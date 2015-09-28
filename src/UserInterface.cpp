@@ -413,7 +413,7 @@ void UserInterface::SalvarTreino()
 }
 
 
-void UserInterface::AddSIFT()
+/*void UserInterface::AddSIFT()
 {
 	std::string nomeArq;
 	char opcao;
@@ -436,73 +436,72 @@ void UserInterface::AddSIFT()
 		std::cout << "Deseja acrescentar outra imagem a base? (S/N): ";
 		std::cin >> opcao;
 	} while (opcao == 's' || opcao == 'S');
-
 }
-
-
-
-void UserInterface::TestarSIFT()
-{
-	std::string nomeArq;
-	//char opcao;
-	//SiftMatcher sift;
-/*
-	do
-	{
-		system("clear");
-		std::cout << "Informe o nome da imagem do objeto a ser acrescentado na base de dados: ";
-		std::cin >> nomeArq;
-
-		try
-		{
-			sift.AddImageToDatabase(nomeArq);
-		}
-		catch (std::string& ex)
-		{
-			std::cout << "Nao foi possivel abrir a imagem." << std::endl;
-		}
-
-		std::cout << "Deseja acrescentar outra imagem a base? (S/N): ";
-		std::cin >> opcao;
-	} while (opcao == 's' || opcao == 'S');
-
 */
-	system("clear");
-
-	Mat img;
-	while (1)
-	{
-		std::cout << "Informe o nome da imagem de teste a ser detectada: ";
-		std::cin >> nomeArq;
-
-		img = imread(nomeArq);
-		if (img.data == NULL)
-			std::cout << std::endl << "Tente novamente. ";
-		else
-			break;
-	}
-	Mat saida = sift.TestSift(img);
-
-	namedWindow("Resultado SIFT", WINDOW_NORMAL);
-	moveWindow("Resultado SIFT", 0, 0);
-
-	imshow("Resultado SIFT", saida);
-	waitKey();
-
-	destroyWindow("Resultado SIFT");
 
 
-	char salvar;
-	std::cout << "Deseja salvar a imagem resultante? (S/N): ";
-	std::cin >> salvar;
-	if (salvar == 's' || salvar == 'S')
-	{
-		std::string nomeIm;
-		std::cout << "Digite o nome da imagem a ser salva: ";
-		std::cin >> nomeIm;
-		imwrite(nomeIm, saida);
-	}
-}
+// void UserInterface::TestarSIFT()
+// {
+// 	std::string nomeArq;
+// 	//char opcao;
+// 	//SiftMatcher sift;
+// /*
+// 	do
+// 	{
+// 		system("clear");
+// 		std::cout << "Informe o nome da imagem do objeto a ser acrescentado na base de dados: ";
+// 		std::cin >> nomeArq;
+
+// 		try
+// 		{
+// 			sift.AddImageToDatabase(nomeArq);
+// 		}
+// 		catch (std::string& ex)
+// 		{
+// 			std::cout << "Nao foi possivel abrir a imagem." << std::endl;
+// 		}
+
+// 		std::cout << "Deseja acrescentar outra imagem a base? (S/N): ";
+// 		std::cin >> opcao;
+// 	} while (opcao == 's' || opcao == 'S');
+
+// */
+// 	system("clear");
+
+// 	Mat img;
+// 	while (1)
+// 	{
+// 		std::cout << "Informe o nome da imagem de teste a ser detectada: ";
+// 		std::cin >> nomeArq;
+
+// 		img = imread(nomeArq);
+// 		if (img.data == NULL)
+// 			std::cout << std::endl << "Tente novamente. ";
+// 		else
+// 			break;
+// 	}
+// 	Mat saida = sift.TestSift(img);
+
+// 	namedWindow("Resultado SIFT", WINDOW_NORMAL);
+// 	moveWindow("Resultado SIFT", 0, 0);
+
+// 	imshow("Resultado SIFT", saida);
+// 	waitKey();
+
+// 	destroyWindow("Resultado SIFT");
+
+
+// 	char salvar;
+// 	std::cout << "Deseja salvar a imagem resultante? (S/N): ";
+// 	std::cin >> salvar;
+// 	if (salvar == 's' || salvar == 'S')
+// 	{
+// 		std::string nomeIm;
+// 		std::cout << "Digite o nome da imagem a ser salva: ";
+// 		std::cin >> nomeIm;
+// 		imwrite(nomeIm, saida);
+// 	}
+// }
 
 
 int UserInterface::Comparar(std::string nomeArq, Mat saida)
@@ -556,7 +555,8 @@ void UserInterface::Watershed()
 
 	// resultClassif.convertTo(resultClassif, CV_8U);
 
-	numFruits = FruitFinder::FindFruits(imgOriginal, resultClassif, resultBlobs);
+	FruitFinder finder;
+	numFruits = finder.FindFruits(imgOriginal, resultClassif, resultBlobs);
 
 	cv::imshow("Resultado blobs", resultBlobs/* * 10000*/);
 	#ifdef _DEBUG
