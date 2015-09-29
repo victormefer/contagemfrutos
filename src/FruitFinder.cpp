@@ -15,11 +15,11 @@ int FruitFinder::FindFruits(cv::Mat img, cv::Mat mask, cv::Mat& outputMarkers)
 
 	cv::threshold(markers, markers, .4, 1., CV_THRESH_BINARY);
 
-	cv::Mat kernel1 = cv::Mat::ones(3, 3, CV_8UC1);
-	cv::dilate(markers, markers, kernel1);
-	// imshow("Peaks", dst);
+	// cv::Mat kernel1 = cv::Mat::ones(3, 3, CV_8UC1);
+	// cv::dilate(markers, markers, kernel1);
 
 	markers.convertTo(markers, CV_8U);
+	// mask.convertTo(markers, CV_8U);
 	outputMarkers = cv::Mat::zeros(markers.size(), CV_8UC3);
 
 	cv::cvtColor(img, imgYCbCr, CV_BGR2YCrCb);
@@ -265,10 +265,13 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 		// Plotar valores e derivadas
 		if ( values.size() <= 0 || variation.size() <= 0 )
 			continue;
+
+		#ifdef _DEBUG
 		CvPlot::plot("Valores", &values[0], values.size(), 1);
 		CvPlot::label(label);
 		CvPlot::plot("Derivada", &variation[0], variation.size(), 1);
 		CvPlot::label(label);
+		#endif
 
 		// Encontrar maximos da derivada em cada direção
 		// std::vector<int> absVariation (variation[i].size());
@@ -354,8 +357,10 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 		hasSplit = true;
 	}
 
+	#ifdef _DEBUG
 	CvPlot::clear("Valores");
 	CvPlot::clear("Derivada");
+	#endif
 
 	return hasSplit;
 }

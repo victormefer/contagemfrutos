@@ -150,8 +150,8 @@ void Classifier::Classify(Mat* output)
 			output->at<Vec3b>(i, j) = classColors[(int)noResult->value];
 		}
 	}
-	// ImproveWithWatershed(output);
-	erode(*output, *output, cv::Mat(), cv::Point(-1,-1), 2);
+	ImproveWithWatershed(output);
+	// erode(*output, *output, cv::Mat(), cv::Point(-1,-1), 2);
 }
 
 
@@ -161,23 +161,27 @@ void Classifier::SetTree(CvDTree* tree)
 }
 
 
-// void Classifier::ImproveWithWatershed(Mat* output)
-// {
-// 	// Eliminate noise and smaller objects
-// 	cv::Mat fg;
-// 	erode(*output, fg, cv::Mat(), cv::Point(-1,-1), 2);
+void Classifier::ImproveWithWatershed(cv::Mat* output)
+{
+	// Eliminate noise and smaller objects
+	cv::Mat fg;
+	cv::erode(*output, fg, cv::Mat(), cv::Point(-1,-1), 2);
 
-// 	// Identify image pixels without objects
-// 	cv::Mat bg;
-// 	dilate(*output, bg, cv::Mat(), cv::Point(-1,-1), 3);
-// 	threshold(bg, bg, 1, 128, THRESH_BINARY_INV);
+	// Identify image pixels without objects
+	cv::Mat bg;
+	cv::dilate(*output, bg, cv::Mat(), cv::Point(-1,-1), 3);
+	cv::threshold(bg, bg, 1, 128, THRESH_BINARY_INV);
 
-// 	// Create markers image
-// 	wshed = cv::Mat::zeros(mask.size(), CV_8U);
-// 	wshed = fg + bg;
+	// Create markers image
+	cv::Mat wshed = cv::Mat::zeros(output->size(), CV_8U);
+	wshed = fg + bg;
 
-// 	wshed.convertTo(wshed, CV_32S);
-// 	watershed(img, wshed);
+	wshed.convertTo(wshed, CV_32S);
+	cv::watershed(img, wshed);
 
-// 	wshed.convertTo(wshed, CV_8U);
-// }
+	cv::imshow("oi", wshed);
+	cv::waitKey();
+
+	wshed.convertTo(*output, CV_8U);
+	cv::threshold(*output, *output, 129, 255, CV_THRESH_BINARY);
+}

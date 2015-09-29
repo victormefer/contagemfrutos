@@ -68,3 +68,83 @@ acerola_1_imagem_treino_mask_dilate_canal_y_threshold_30
 	Precision: 0.861174
 	Recall: 0.367357
 	F-measure: 0.515019
+
+manga_5_im_treino_canal_y_threshold_30_dilate_mask
+
+	True positives: 231
+	False positives: 239
+	False negatives: 151
+
+	Precision: 0.491489
+	Recall: 0.604712
+	F-measure: 0.542254
+
+manga_5im_treino_sem_dist_trans_canal_y_thresh_30
+
+	True positives: 376
+	False positives: 8907
+	False negatives: 6
+
+	Precision: 0.0405041
+	Recall: 0.984293
+	F-measure: 0.0778065
+
+manga_5im_treino_mask_dilate_canal_y_thresh_30
+
+	True positives: 256
+	False positives: 388
+	False negatives: 126
+
+	Precision: 0.397516
+	Recall: 0.670157
+	F-measure: 0.499025
+
+goiaba_5im_treino_mask_dilate_canal_y_thresh_30
+
+	True positives: 121
+	False positives: 1882
+	False negatives: 15
+
+	Precision: 0.0604094
+	Recall: 0.889706
+	F-measure: 0.113137
+
+acerola_1im_treino_sem_dist_transf_canal_y_thresh_30
+
+	True positives: 1618
+	False positives: 1632
+	False negatives: 459
+
+	Precision: 0.497846
+	Recall: 0.779008
+	F-measure: 0.607471
+
+pessego_5im_treino_sem_dist_transf_canal_y_thresh_30
+
+	True positives: 345
+	False positives: 19411
+	False negatives: 0
+
+	Precision: 0.017463
+	Recall: 1
+	F-measure: 0.0343267
+
+acerola_1im_treino_sem_dist_transf_sem_erode_canal_y_thresh_30
+
+	True positives: 2043
+	False positives: 13485
+	False negatives: 34
+
+	Precision: 0.131569
+	Recall: 0.98363
+	F-measure: 0.232093
+
+goiaba_5im_treino_canal_y_thresh_30_dist_transf_sem_erode_sem_dilate
+
+	True positives: 122
+	False positives: 4600
+	False negatives: 14
+
+	Precision: 0.0258365
+	Recall: 0.897059
+	F-measure: 0.0502264

@@ -561,6 +561,8 @@ void UserInterface::Watershed()
 	cv::imshow("Resultado blobs", resultBlobs/* * 10000*/);
 	#ifdef _DEBUG
 	cv::waitKey();
+	#else
+	cv::waitKey(500);
 	#endif
 }
 
@@ -600,7 +602,10 @@ void UserInterface::TesteBatch()
 	std::cout << "Bases de frutas" << std::endl << std::endl
 		<< "1. Acerola" << std::endl
 		<< "2. Laranja" << std::endl
-		<< "3. Morango" << std::endl;
+		<< "3. Morango" << std::endl
+		<< "4. Goiaba" << std::endl
+		<< "5. Manga Rosa" << std::endl
+		<< "6. Pessego" << std::endl;
 
 	std::cout << std::endl << "Escolha uma opcao: ";
 	std::cin >> opcao;
@@ -621,6 +626,21 @@ void UserInterface::TesteBatch()
 			// nomeArqTreino = "treinos/morango.xml";
 			imgDir = "fruit-database/frutas/Morango/";
 			groundTruthDir = "fruit-database/rotulamento/Morango/";
+			break;
+		case 4:
+			// nomeArqTreino = "treinos/morango.xml";
+			imgDir = "fruit-database/frutas/Goiaba/";
+			groundTruthDir = "fruit-database/rotulamento/Goiaba/";
+			break;
+		case 5:
+			// nomeArqTreino = "treinos/morango.xml";
+			imgDir = "fruit-database/frutas/Manga_Rosa/";
+			groundTruthDir = "fruit-database/rotulamento/Manga_Rosa/";
+			break;
+		case 6:
+			// nomeArqTreino = "treinos/morango.xml";
+			imgDir = "fruit-database/frutas/Pessego/";
+			groundTruthDir = "fruit-database/rotulamento/Pessego/";
 			break;
 		default:
 			return;
