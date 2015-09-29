@@ -19,6 +19,8 @@ public:
 
 	void SetTree(CvDTree* tree);
 
+	void ImproveWithWatershed(cv::Mat* output);
+
 private:
 	CvDTree* tree;
 	cv::Mat img, imgLab, imgRgbEq, imgLabEq;

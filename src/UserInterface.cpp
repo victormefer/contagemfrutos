@@ -719,16 +719,21 @@ void UserInterface::TesteBatch()
 
 	system("clear");
 
-	std::ofstream ofs;
-	ofs.open("saida.txt");
+	std::string nomeTeste;
 
-	ofs << std::endl << "True positives: " << TP << std::endl
-		<< "False positives: " << FP << std::endl
-		<< "False negatives: " << FN << std::endl << std::endl
-		<< "Precision: " << precision << std::endl
-		<< "Recall: " << recall << std::endl
-		<< "F-measure: " << fmeasure << std::endl;
-	getchar();
+	std::cout << "Informe uma descricao deste teste:" << std::endl;
+	std::cin >> nomeTeste;
+
+	std::ofstream ofs;
+	ofs.open("saida.log", std::ofstream::app);
+
+	ofs << std::endl << nomeTeste << std::endl << std::endl 
+		<< "\tTrue positives: " << TP << std::endl
+		<< "\tFalse positives: " << FP << std::endl
+		<< "\tFalse negatives: " << FN << std::endl << std::endl
+		<< "\tPrecision: " << precision << std::endl
+		<< "\tRecall: " << recall << std::endl
+		<< "\tF-measure: " << fmeasure << std::endl;
 
 	ofs.close();
 }

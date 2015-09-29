@@ -12,7 +12,7 @@
 class FruitFinder
 {
 public:
-	FruitFinder() {}
+	FruitFinder() { thresh = THRESHOLD; }
 	/*static*/ int FindFruits(cv::Mat img, cv::Mat mask, cv::Mat& outputMarkers);
 
 private:

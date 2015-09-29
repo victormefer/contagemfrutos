@@ -15,8 +15,8 @@ int FruitFinder::FindFruits(cv::Mat img, cv::Mat mask, cv::Mat& outputMarkers)
 
 	cv::threshold(markers, markers, .4, 1., CV_THRESH_BINARY);
 
-	// cv::Mat kernel1 = cv::Mat::ones(3, 3, CV_8UC1);
-	// dilate(dst, dst, kernel1);
+	cv::Mat kernel1 = cv::Mat::ones(3, 3, CV_8UC1);
+	cv::dilate(markers, markers, kernel1);
 	// imshow("Peaks", dst);
 
 	markers.convertTo(markers, CV_8U);
@@ -207,6 +207,8 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 
 		for (int j = 0; inRegion == true; j++)
 		{
+			inRegion = false;
+
 			if( massCenterRow + (j*incY) >= 0 && massCenterRow + (j*incY) < markers.rows && 
 				massCenterCol + (j*incX) >= 0 && massCenterCol + (j*incX) < markers.cols && 
 				markers.at<uchar>(massCenterRow + (j*incY), massCenterCol + (j*incX)) != 0 )
@@ -291,7 +293,7 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 	absMaxPos = maxLoc[ absMaxDir.x ].x;
 
 	// Variação máxima acima do threshold, 
-	if (absoluteMax > thresh)
+	if ((int)absoluteMax > thresh)
 	{
 		#ifdef _DEBUG
 		std::cout << "Vai cortar na direcao " << absMaxDir.x << ", ponto " << absMaxPos << ", valor " << absoluteMax << std::endl;

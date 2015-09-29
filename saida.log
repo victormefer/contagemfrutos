@@ -1,0 +1,70 @@
+
+acerola_1_imagem_teste_canal_y_threshold_30
+
+	True positives: 1067
+	False positives: 182
+	False negatives: 1010
+
+	Precision: 0.854283
+	Recall: 0.513722
+	F-measure: 0.641612
+
+laranja_1_imagem_treino_canal_Y_threshold_30
+
+	True positives: 1246
+	False positives: 459
+	False negatives: 1092
+
+	Precision: 0.730792
+	Recall: 0.532934
+	F-measure: 0.616374
+
+morango_3_imagens_treino_acho_canal_Y_threshold_30
+
+	True positives: 1823
+	False positives: 3065
+	False negatives: 2103
+
+	Precision: 0.372954
+	Recall: 0.46434
+	F-measure: 0.41366
+
+acerola_1_imagem_treino_canal_Cr_threshold_30
+
+	True positives: 906
+	False positives: 81
+	False negatives: 1171
+
+	Precision: 0.917933
+	Recall: 0.436206
+	F-measure: 0.591384
+
+laranja_1_imagem_treino_canal_Cr_threshold_30
+
+	True positives: 1152
+	False positives: 352
+	False negatives: 1186
+
+	Precision: 0.765957
+	Recall: 0.492729
+	F-measure: 0.599688
+
+acerola_1_imagem_treino_erodida_canal_Cr_threshold_30
+
+	True positives: 631
+	False positives: 49
+	False negatives: 1446
+
+	Precision: 0.927941
+	Recall: 0.303804
+	F-measure: 0.457744
+
+acerola_1_imagem_treino_mask_dilate_canal_y_threshold_30
+
+	True positives: 763
+	False positives: 123
+	False negatives: 1314
+
+	Precision: 0.861174
+	Recall: 0.367357
+	F-measure: 0.515019
