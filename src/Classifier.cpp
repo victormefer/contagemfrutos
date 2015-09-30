@@ -101,12 +101,12 @@ void Classifier::LoadIMG(std::string filename)
 }
 
 
-void Classifier::Classify(Mat* output)
+Mat Classifier::Classify()
 {
 	// Nó de resultado da classificacao
 	CvDTreeNode* noResult;
 	// Matriz de resultado da classificacao
-	*output = Mat(img.rows, img.cols, CV_8UC3);
+	Mat output (img.rows, img.cols, CV_8UC3);
 	// Matriz q guarda um pixel a ser classificado
 	Mat pixelTeste = Mat( 1, nAttributes, CV_32FC1 );
 
@@ -147,10 +147,11 @@ void Classifier::Classify(Mat* output)
 			noResult = tree->predict(pixelTeste, Mat(), false);
 
 			// Pinta cada classe de uma cor
-			output->at<Vec3b>(i, j) = classColors[(int)noResult->value];
+			output.at<Vec3b>(i, j) = classColors[(int)noResult->value];
 		}
 	}
 	ImproveWithWatershed(output);
+	return output;
 	// erode(*output, *output, cv::Mat(), cv::Point(-1,-1), 2);
 }
 
@@ -161,27 +162,27 @@ void Classifier::SetTree(CvDTree* tree)
 }
 
 
-void Classifier::ImproveWithWatershed(cv::Mat* output)
+void Classifier::ImproveWithWatershed(cv::Mat& output)
 {
 	// Eliminate noise and smaller objects
+	cv::Mat gray;
+	cv::cvtColor(output, gray, CV_BGR2GRAY);
+
 	cv::Mat fg;
-	cv::erode(*output, fg, cv::Mat(), cv::Point(-1,-1), 2);
+	cv::erode(gray, fg, cv::Mat(), cv::Point(-1,-1), 2);
 
 	// Identify image pixels without objects
 	cv::Mat bg;
-	cv::dilate(*output, bg, cv::Mat(), cv::Point(-1,-1), 3);
+	cv::dilate(gray, bg, cv::Mat(), cv::Point(-1,-1), 3);
 	cv::threshold(bg, bg, 1, 128, THRESH_BINARY_INV);
 
 	// Create markers image
-	cv::Mat wshed = cv::Mat::zeros(output->size(), CV_8U);
+	cv::Mat wshed = cv::Mat::zeros(output.size(), CV_8U);
 	wshed = fg + bg;
 
 	wshed.convertTo(wshed, CV_32S);
 	cv::watershed(img, wshed);
 
-	cv::imshow("oi", wshed);
-	cv::waitKey();
-
-	wshed.convertTo(*output, CV_8U);
-	cv::threshold(*output, *output, 129, 255, CV_THRESH_BINARY);
+	wshed.convertTo(output, CV_8U);
+	cv::threshold(output, output, 129, 255, CV_THRESH_BINARY);
 }

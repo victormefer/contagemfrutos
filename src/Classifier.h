@@ -15,11 +15,11 @@ public:
 
 	void LoadIMG(std::string filename);
 
-	void Classify(cv::Mat* output);
+	cv::Mat Classify();
 
 	void SetTree(CvDTree* tree);
 
-	void ImproveWithWatershed(cv::Mat* output);
+	void ImproveWithWatershed(cv::Mat& output);
 
 private:
 	CvDTree* tree;

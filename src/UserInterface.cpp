@@ -322,7 +322,7 @@ void UserInterface::Classificar()
 	// }
 
 	Classifier classifier = Classifier(nomeImagem, trainer.GetTree(), trainer.GetNClasses(), espacosCores);
-	classifier.Classify(&resultClassif);
+	resultClassif = classifier.Classify();
 
 	imshow("Imagem original", imgOriginal);
 	imshow("Resultado classificacao", resultClassif);
@@ -551,7 +551,7 @@ void UserInterface::Watershed()
 {
 	// Mat markers = Mat::zeros(imgOriginal.size(), imgOriginal.type());
 
-	cv::cvtColor(resultClassif, resultClassif, CV_BGR2GRAY);
+	// cv::cvtColor(resultClassif, resultClassif, CV_BGR2GRAY);
 
 	// resultClassif.convertTo(resultClassif, CV_8U);
 
@@ -562,7 +562,7 @@ void UserInterface::Watershed()
 	#ifdef _DEBUG
 	cv::waitKey();
 	#else
-	cv::waitKey(500);
+	cv::waitKey(300);
 	#endif
 }
 
@@ -699,8 +699,9 @@ void UserInterface::TesteBatch()
 			}
 			imshow("Imagem original", imgOriginal);
 
+			resultClassif.release();
 			Classifier classifier = Classifier(imgDir + filenames[i], trainer.GetTree(), trainer.GetNClasses(), espacosCores);
-			classifier.Classify(&resultClassif);
+			resultClassif = classifier.Classify();
 
 			imshow("Resultado classificacao", resultClassif);
 

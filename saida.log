@@ -148,3 +148,53 @@ goiaba_5im_treino_canal_y_thresh_30_dist_transf_sem_erode_sem_dilate
 	Precision: 0.0258365
 	Recall: 0.897059
 	F-measure: 0.0502264
+
+acerola_1im_treino_canal_y_thresh_30_improve_watershed
+
+	True positives: 1866
+	False positives: 2614
+	False negatives: 211
+
+	Precision: 0.416518
+	Recall: 0.898411
+	F-measure: 0.569163
+
+acerola_1im_treino_canal_cr_thresh_20_improv_watersh
+
+	True positives: 1450
+	False positives: 735
+	False negatives: 627
+
+	Precision: 0.663616
+	Recall: 0.698122
+	F-measure: 0.680432
+
+laranja_1im_treino_canal_cr_thresh_20_improv_watersh
+
+	True positives: 1825
+	False positives: 3120
+	False negatives: 528
+
+	Precision: 0.36906
+	Recall: 0.775606
+	F-measure: 0.500137
+
+manga_5im_treino_canal_cr_thresh_20_improv_watersh
+
+	True positives: 280
+	False positives: 1443
+	False negatives: 102
+
+	Precision: 0.162507
+	Recall: 0.732984
+	F-measure: 0.266033
+
+pessego_5im_treino_canal_cr_thresh_20_improv_watersh
+
+	True positives: 329
+	False positives: 1276
+	False negatives: 16
+
+	Precision: 0.204984
+	Recall: 0.953623
+	F-measure: 0.337436
