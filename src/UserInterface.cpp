@@ -562,7 +562,7 @@ void UserInterface::Watershed()
 	#ifdef _DEBUG
 	cv::waitKey();
 	#else
-	cv::waitKey(300);
+	cv::waitKey();
 	#endif
 }
 

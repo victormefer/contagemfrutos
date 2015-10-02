@@ -198,3 +198,63 @@ pessego_5im_treino_canal_cr_thresh_20_improv_watersh
 	Precision: 0.204984
 	Recall: 0.953623
 	F-measure: 0.337436
+
+manga_base_limpa_5im_treino_canal_Cr_thresh_20_improv_watersh
+
+	True positives: 149
+	False positives: 1193
+	False negatives: 118
+
+	Precision: 0.111028
+	Recall: 0.558052
+	F-measure: 0.185208
+
+manga_base_limpa_5im_treino_canal_cr_thresh_30_improv_watersh
+
+	True positives: 149
+	False positives: 730
+	False negatives: 118
+
+	Precision: 0.169511
+	Recall: 0.558052
+	F-measure: 0.260035
+
+manga_base_limpa_5im_treino_sem_split
+
+	True positives: 149
+	False positives: 467
+	False negatives: 118
+
+	Precision: 0.241883
+	Recall: 0.558052
+	F-measure: 0.337486
+
+pessego_base_limpa_5im_treino_sem_split
+
+	True positives: 175
+	False positives: 657
+	False negatives: 11
+
+	Precision: 0.210337
+	Recall: 0.94086
+	F-measure: 0.343811
+
+manga_base_limpa_5im_treino_sem_split_improv_watersh_dist_transf
+
+	True positives: 82
+	False positives: 73
+	False negatives: 185
+
+	Precision: 0.529032
+	Recall: 0.307116
+	F-measure: 0.388626
+
+mesma_coisa_mas_com_split
+
+	True positives: 89
+	False positives: 119
+	False negatives: 178
+
+	Precision: 0.427885
+	Recall: 0.333333
+	F-measure: 0.374737

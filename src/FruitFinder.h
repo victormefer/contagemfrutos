@@ -7,7 +7,7 @@
 
 #define N_DIRECTIONS 8
 #define CHANNEL 1		// Canal Y
-#define THRESHOLD 20
+#define THRESHOLD 30
 
 class FruitFinder
 {

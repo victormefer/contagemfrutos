@@ -10,16 +10,16 @@ int FruitFinder::FindFruits(cv::Mat img, cv::Mat mask, cv::Mat& outputMarkers)
 	std::vector<std::vector<cv::Point>> contours;
 	bool hasSplit;
 
-	// cv::distanceTransform(mask, markers, CV_DIST_L2, CV_DIST_MASK_PRECISE);		// Aplicar em fg e bg para ver os resultados?
-	// cv::normalize(markers, markers, 0, 1, cv::NORM_MINMAX,-1);
+	cv::distanceTransform(mask, markers, CV_DIST_L2, CV_DIST_MASK_PRECISE);		// Aplicar em fg e bg para ver os resultados?
+	cv::normalize(markers, markers, 0, 1, cv::NORM_MINMAX,-1);
 
-	// cv::threshold(markers, markers, .4, 1., CV_THRESH_BINARY);
+	cv::threshold(markers, markers, .4, 1., CV_THRESH_BINARY);
 
-	// cv::Mat kernel1 = cv::Mat::ones(3, 3, CV_8UC1);
-	// cv::dilate(markers, markers, kernel1);
+	cv::Mat kernel1 = cv::Mat::ones(3, 3, CV_8UC1);
+	cv::dilate(markers, markers, kernel1);
 
-	// markers.convertTo(markers, CV_8U);
-	mask.convertTo(markers, CV_8U);
+	markers.convertTo(markers, CV_8U);
+	// mask.convertTo(markers, CV_8U);
 	outputMarkers = cv::Mat::zeros(markers.size(), CV_8UC3);
 
 	cv::cvtColor(img, imgYCbCr, CV_BGR2YCrCb);
