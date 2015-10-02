@@ -562,7 +562,7 @@ void UserInterface::Watershed()
 	#ifdef _DEBUG
 	cv::waitKey();
 	#else
-	cv::waitKey();
+	cv::waitKey(200);
 	#endif
 }
 
@@ -605,7 +605,8 @@ void UserInterface::TesteBatch()
 		<< "3. Morango" << std::endl
 		<< "4. Goiaba" << std::endl
 		<< "5. Manga Rosa" << std::endl
-		<< "6. Pessego" << std::endl;
+		<< "6. Pessego" << std::endl
+		<< "7. Cereja" << std::endl;
 
 	std::cout << std::endl << "Escolha uma opcao: ";
 	std::cin >> opcao;
@@ -641,6 +642,11 @@ void UserInterface::TesteBatch()
 			// nomeArqTreino = "treinos/morango.xml";
 			imgDir = "fruit-database/frutas/Pessego/";
 			groundTruthDir = "fruit-database/rotulamento/Pessego/";
+			break;
+		case 7:
+			// nomeArqTreino = "treinos/morango.xml";
+			imgDir = "fruit-database/frutas/Cereja/";
+			groundTruthDir = "fruit-database/rotulamento/Cereja/";
 			break;
 		default:
 			return;
@@ -680,7 +686,7 @@ void UserInterface::TesteBatch()
 	std::ifstream ifs;
 
 	// Retornar nomes dos arquivos
-	if (BuscarArquivos(imgDir, filenames))
+	if (BuscarArquivos(imgDir, filenames, ".jpg"))
 	{
 		std::cout << "Erro ao abrir os arquivos no diretorio." << std::endl;
 		getchar();

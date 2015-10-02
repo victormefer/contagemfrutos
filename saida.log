@@ -258,3 +258,33 @@ mesma_coisa_mas_com_split
 	Precision: 0.427885
 	Recall: 0.333333
 	F-measure: 0.374737
+
+cereja_5im_treino_improv_watersh_canal_cr_thresh_30
+
+	True positives: 198
+	False positives: 42
+	False negatives: 322
+
+	Precision: 0.825
+	Recall: 0.380769
+	F-measure: 0.521053
+
+cereja_3im_treino_canal_cr_thresh_30_improv_watersh
+
+	True positives: 189
+	False positives: 36
+	False negatives: 303
+
+	Precision: 0.84
+	Recall: 0.384146
+	F-measure: 0.527197
+
+cereja_3im_treino_improv_watersh_canal_y_thresh_30
+
+	True positives: 338
+	False positives: 542
+	False negatives: 154
+
+	Precision: 0.384091
+	Recall: 0.686992
+	F-measure: 0.492711

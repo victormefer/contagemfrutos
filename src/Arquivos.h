@@ -11,7 +11,7 @@
 using namespace std;
 
 void OrdenarArquivos(vector<string> &files);			// BubbleSort para ordenar o vetor com os nomes dos arquivos
-int BuscarArquivos(string dir, vector<string> &files);
+int BuscarArquivos(string dir, vector<string> &files, string optExt = "");
 void ListarArquivos(int fruit, string dir);
 
 #endif // ARQUIVOS_H

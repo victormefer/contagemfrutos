@@ -6,7 +6,7 @@
 #include <exception>
 
 #define N_DIRECTIONS 8
-#define CHANNEL 1		// Canal Y
+#define CHANNEL 0
 #define THRESHOLD 30
 
 class FruitFinder

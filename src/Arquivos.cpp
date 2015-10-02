@@ -24,7 +24,7 @@ void OrdenarArquivos(vector<string> &files)			// BubbleSort para ordenar o vetor
     }
 }
 
-int BuscarArquivos(string dir, vector<string> &files)
+int BuscarArquivos(string dir, vector<string> &files, string optExt)
 {
     DIR *dp;
     struct dirent *dirp;
@@ -34,7 +34,12 @@ int BuscarArquivos(string dir, vector<string> &files)
         cout << "Erro (" << errno << ") ao abrir " << dir << endl;
         return errno;
     }
-    while ((dirp = readdir(dp)) != NULL) files.push_back(string(dirp->d_name));
+    while ((dirp = readdir(dp)) != NULL)
+    {
+        string filename = string(dirp->d_name);
+        if ( filename.compare(".") != 0 && filename.compare("..") != 0 && !optExt.empty() && filename.substr(filename.length() - 4) == optExt )
+            files.push_back(filename);
+    }
     closedir(dp);
     OrdenarArquivos(files);
 
