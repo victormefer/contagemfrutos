@@ -10,16 +10,20 @@ int FruitFinder::FindFruits(cv::Mat img, cv::Mat mask, cv::Mat& outputMarkers)
 	std::vector<std::vector<cv::Point>> contours;
 	bool hasSplit;
 
-	cv::distanceTransform(mask, markers, CV_DIST_L2, CV_DIST_MASK_PRECISE);		// Aplicar em fg e bg para ver os resultados?
-	cv::normalize(markers, markers, 0, 1, cv::NORM_MINMAX,-1);
+	if (distTransf)
+	{
+		cv::distanceTransform(mask, markers, CV_DIST_L2, CV_DIST_MASK_PRECISE);		// Aplicar em fg e bg para ver os resultados?
+		cv::normalize(markers, markers, 0, 1, cv::NORM_MINMAX,-1);
 
-	cv::threshold(markers, markers, .4, 1., CV_THRESH_BINARY);
+		cv::threshold(markers, markers, .4, 1., CV_THRESH_BINARY);
 
-	cv::Mat kernel1 = cv::Mat::ones(3, 3, CV_8UC1);
-	cv::dilate(markers, markers, kernel1);
+		cv::Mat kernel1 = cv::Mat::ones(3, 3, CV_8UC1);
+		cv::dilate(markers, markers, kernel1);
 
-	markers.convertTo(markers, CV_8U);
-	// mask.convertTo(markers, CV_8U);
+		markers.convertTo(markers, CV_8U);
+	}
+	else
+		mask.convertTo(markers, CV_8U);
 	outputMarkers = cv::Mat::zeros(markers.size(), CV_8UC3);
 
 	cv::cvtColor(img, imgYCbCr, CV_BGR2YCrCb);
@@ -152,10 +156,10 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 				massCenterCol + (i*incX) >= 0 && massCenterCol + (i*incX) < markers.cols && 
 				markers.at<uchar>(massCenterRow + (i*incY), massCenterCol + (i*incX)) != 0 )
 			{
-				// Insere valor do canal CHANNEL da imagem no vetor da direção i
+				// Insere valor do canal channel da imagem no vetor da direção i
 				try
 				{
-					values[j].push_back( (int)channels[CHANNEL].at<uchar>(massCenterRow + (i*incY), massCenterCol + (i*incX)) );
+					values[j].push_back( (int)channels[channel].at<uchar>(massCenterRow + (i*incY), massCenterCol + (i*incX)) );
 				}
 				catch (std::exception& e)
 				{
@@ -164,7 +168,7 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 
 				#ifdef _DEBUG
 				std::cout << "Direcao: " << j << std::endl;
-				std::cout << "  Value: " << (int)channels[CHANNEL].at<uchar>(massCenterRow + (i*incY), massCenterCol + (i*incX)) << ", " << values[j][i] << std::endl;
+				std::cout << "  Value: " << (int)channels[channel].at<uchar>(massCenterRow + (i*incY), massCenterCol + (i*incX)) << ", " << values[j][i] << std::endl;
 				#endif
 				// Se não é o primeiro valor inserido, insere tbm derivada (variation)
 				if (i > 0)
@@ -213,12 +217,12 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 				massCenterCol + (j*incX) >= 0 && massCenterCol + (j*incX) < markers.cols && 
 				markers.at<uchar>(massCenterRow + (j*incY), massCenterCol + (j*incX)) != 0 )
 			{
-				// Insere valor do canal CHANNEL da imagem no vetor da direção j
-				values.push_back( (int)channels[CHANNEL].at<uchar>(massCenterRow + (j*incY), massCenterCol + (j*incX)) );
+				// Insere valor do canal channel da imagem no vetor da direção j
+				values.push_back( (int)channels[channel].at<uchar>(massCenterRow + (j*incY), massCenterCol + (j*incX)) );
 
 				#ifdef _DEBUG
 				std::cout << "Direcao: " << i << std::endl;
-				std::cout << "  Value: " << (int)channels[CHANNEL].at<uchar>(massCenterRow + (j*incY), massCenterCol + (j*incX)) << ", " << values[j] << std::endl;
+				std::cout << "  Value: " << (int)channels[channel].at<uchar>(massCenterRow + (j*incY), massCenterCol + (j*incX)) << ", " << values[j] << std::endl;
 				#endif
 				// Se não é o primeiro valor inserido, insere tbm derivada (variation)
 				if (j > 0)
@@ -296,7 +300,7 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 	absMaxPos = maxLoc[ absMaxDir.x ].x;
 
 	// Variação máxima acima do threshold, 
-	if ((int)absoluteMax > thresh)
+	if (cut && (int)absoluteMax > thresh)
 	{
 		#ifdef _DEBUG
 		std::cout << "Vai cortar na direcao " << absMaxDir.x << ", ponto " << absMaxPos << ", valor " << absoluteMax << std::endl;

@@ -562,7 +562,7 @@ void UserInterface::Watershed()
 	#ifdef _DEBUG
 	cv::waitKey();
 	#else
-	cv::waitKey(200);
+	cv::waitKey();
 	#endif
 }
 
@@ -750,6 +750,166 @@ void UserInterface::TesteBatch()
 
 	std::cout << "Informe uma descricao deste teste:" << std::endl;
 	std::cin >> nomeTeste;
+
+	std::ofstream ofs;
+	ofs.open("saida.log", std::ofstream::app);
+
+	ofs << std::endl << nomeTeste << std::endl << std::endl 
+		<< "\tTrue positives: " << TP << std::endl
+		<< "\tFalse positives: " << FP << std::endl
+		<< "\tFalse negatives: " << FN << std::endl << std::endl
+		<< "\tPrecision: " << precision << std::endl
+		<< "\tRecall: " << recall << std::endl
+		<< "\tF-measure: " << fmeasure << std::endl;
+
+	ofs.close();
+}
+
+
+
+void UserInterface::TesteBatch(int fruta, std::string arqTreino, int canal, int threshold, int cut, int distTransf)
+{
+	std::string imgDir, groundTruthDir;
+	int espacosCores;
+	int TP = 0, FP = 0, FN = 0;
+	double precision, recall, fmeasure;
+
+	switch(fruta)
+	{
+		case 1:
+			// nomeArqTreino = "treinos/acerola_01.xml";
+			imgDir = "fruit-database/frutas/Acerola/";
+			groundTruthDir = "fruit-database/rotulamento/Acerola/";
+			break;
+		case 2:
+			// nomeArqTreino = "treinos/laranja_01.xml";
+			imgDir = "fruit-database/frutas/Laranja/";
+			groundTruthDir = "fruit-database/rotulamento/Laranja/";
+			break;
+		case 3:
+			// nomeArqTreino = "treinos/morango.xml";
+			imgDir = "fruit-database/frutas/Morango/";
+			groundTruthDir = "fruit-database/rotulamento/Morango/";
+			break;
+		case 4:
+			// nomeArqTreino = "treinos/morango.xml";
+			imgDir = "fruit-database/frutas/Goiaba/";
+			groundTruthDir = "fruit-database/rotulamento/Goiaba/";
+			break;
+		case 5:
+			// nomeArqTreino = "treinos/morango.xml";
+			imgDir = "fruit-database/frutas/Manga_Rosa/";
+			groundTruthDir = "fruit-database/rotulamento/Manga_Rosa/";
+			break;
+		case 6:
+			// nomeArqTreino = "treinos/morango.xml";
+			imgDir = "fruit-database/frutas/Pessego/";
+			groundTruthDir = "fruit-database/rotulamento/Pessego/";
+			break;
+		case 7:
+			// nomeArqTreino = "treinos/morango.xml";
+			imgDir = "fruit-database/frutas/Cereja/";
+			groundTruthDir = "fruit-database/rotulamento/Cereja/";
+			break;
+		case 8:
+			// nomeArqTreino = "treinos/morango.xml";
+			imgDir = "fruit-database/frutas/Caju/";
+			groundTruthDir = "fruit-database/rotulamento/Caju/";
+			break;
+		default:
+			return;
+	}
+
+	// Carregar arquivo de treino
+	try
+	{
+		trainer.LoadTrainingData(arqTreino);
+	}
+	catch (std::string& ex)
+	{
+		std::cout << "Nao foi possivel abrir esse treino.";
+		getchar();
+		return;
+	}
+
+	trainer.Train();
+
+	switch(trainer.GetNAttributes())
+	{
+		case 6:
+			espacosCores = 3;
+			break;
+		case 9:
+			espacosCores = 7;
+			break;
+		case 12:
+			espacosCores = 15;
+			break;
+	}
+
+	std::vector<std::string> filenames;
+	std::ifstream ifs;
+
+	// Retornar nomes dos arquivos
+	if (BuscarArquivos(imgDir, filenames, ".jpg"))
+	{
+		std::cout << "Erro ao abrir os arquivos no diretorio." << std::endl;
+		getchar();
+		return;
+	}
+
+	for (int i = 0; i < filenames.size(); i++)
+	{
+		if( (filenames[i].compare(".") != 0) && (filenames[i].compare("..") != 0) )		// Filtra o '.' e o '..'
+		{
+			imgOriginal = imread(imgDir + filenames[i]);
+			if (imgOriginal.data == NULL)
+			{
+				std::cout << "Nao foi possivel abrir a imagem " << filenames[i] << std::endl;
+				continue;
+			}
+
+			resultClassif.release();
+			Classifier classifier = Classifier(imgDir + filenames[i], trainer.GetTree(), trainer.GetNClasses(), espacosCores);
+			resultClassif = classifier.Classify();
+
+			FruitFinder finder = FruitFinder(canal, threshold, cut, distTransf);
+			numFruits = finder.FindFruits(imgOriginal, resultClassif, resultBlobs);
+
+			ifs.open( groundTruthDir + filenames[i].substr(0, filenames[i].find('.')) + ".txt" );
+			if (!ifs.is_open())
+			{
+				std::cout << "Nao foi possivel abrir o arquivo de ground truth da imagem " << filenames[i] << std::endl;
+				continue;
+			}
+
+			int groundTruth;
+			ifs >> groundTruth;
+
+			ifs.close();
+
+			if (groundTruth == numFruits)
+				TP += numFruits;
+			else if (groundTruth > numFruits)
+			{
+				FN += groundTruth - numFruits;
+				TP += numFruits;
+			}
+			else
+			{
+				FP += numFruits - groundTruth;
+				TP += groundTruth;
+			}
+		}
+	}
+
+	precision = (double)TP / ((double)TP + (double)FP);
+	recall = (double)TP / ((double)TP + (double)FN);
+	fmeasure = 2 * precision * recall / (precision + recall);
+
+	std::string nomeTeste;
+
+	nomeTeste = "Fruta: " + std::to_string(fruta) + ", treino: " + arqTreino + ", canal: " + std::to_string(canal) + ", threshold: " + std::to_string(threshold) + ", cortar blobs: " + std::to_string(cut) + ", distance transform: " + std::to_string(distTransf);
 
 	std::ofstream ofs;
 	ofs.open("saida.log", std::ofstream::app);
