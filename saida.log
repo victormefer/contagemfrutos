@@ -2090,3 +2090,13 @@ Fruta: 2, treino: treinos/laranja_01.xml, canal: 2, threshold: 40, cortar blobs:
 	Precision: 0.961039
 	Recall: 0.414477
 	F-measure: 0.579169
+
+Fruta: 9, treino: treinos/ameixa_18im.xml, canal: 2
+
+	True positives: 155
+	False positives: 27
+	False negatives: 143
+
+	Precision: 0.851648
+	Recall: 0.520134
+	F-measure: 0.645833
