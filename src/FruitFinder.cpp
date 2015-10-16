@@ -26,7 +26,8 @@ int FruitFinder::FindFruits(cv::Mat img, cv::Mat mask, cv::Mat& outputMarkers)
 		mask.convertTo(markers, CV_8U);
 	outputMarkers = cv::Mat::zeros(markers.size(), CV_8UC3);
 
-	cv::cvtColor(img, imgYCbCr, CV_BGR2YCrCb);
+	// cv::cvtColor(img, imgYCbCr, CV_BGR2YCrCb);
+	cv::cvtColor(img, imgYCbCr, CV_BGR2Lab);
 	cv::split(imgYCbCr, channels);
 
 	cv::namedWindow("Marcadores de regiao", cv::WINDOW_NORMAL);

@@ -606,7 +606,8 @@ void UserInterface::TesteBatch()
 		<< "4. Goiaba" << std::endl
 		<< "5. Manga Rosa" << std::endl
 		<< "6. Pessego" << std::endl
-		<< "7. Cereja" << std::endl;
+		<< "7. Cereja" << std::endl
+		<< "8. Caju" << std::endl;
 
 	std::cout << std::endl << "Escolha uma opcao: ";
 	std::cin >> opcao;
@@ -647,6 +648,11 @@ void UserInterface::TesteBatch()
 			// nomeArqTreino = "treinos/morango.xml";
 			imgDir = "fruit-database/frutas/Cereja/";
 			groundTruthDir = "fruit-database/rotulamento/Cereja/";
+			break;
+		case 8:
+			// nomeArqTreino = "treinos/morango.xml";
+			imgDir = "fruit-database/frutas/Caju/";
+			groundTruthDir = "fruit-database/rotulamento/Caju/";
 			break;
 		default:
 			return;
