@@ -607,7 +607,12 @@ void UserInterface::TesteBatch()
 		<< "5. Manga Rosa" << std::endl
 		<< "6. Pessego" << std::endl
 		<< "7. Cereja" << std::endl
+<<<<<<< HEAD
 		<< "8. Caju" << std::endl;
+=======
+		<< "8. Caju" << std::endl
+		<< "9. Ameixa" << std::endl;
+>>>>>>> c9561aae5a5c23c38c25556cd655836ac5bd940d
 
 	std::cout << std::endl << "Escolha uma opcao: ";
 	std::cin >> opcao;
@@ -630,17 +635,17 @@ void UserInterface::TesteBatch()
 			groundTruthDir = "fruit-database/rotulamento/Morango/";
 			break;
 		case 4:
-			// nomeArqTreino = "treinos/morango.xml";
+			// nomeArqTreino = "treinos/goiaba.xml";
 			imgDir = "fruit-database/frutas/Goiaba/";
 			groundTruthDir = "fruit-database/rotulamento/Goiaba/";
 			break;
 		case 5:
-			// nomeArqTreino = "treinos/morango.xml";
+			// nomeArqTreino = "treinos/manga_rosa.xml";
 			imgDir = "fruit-database/frutas/Manga_Rosa/";
 			groundTruthDir = "fruit-database/rotulamento/Manga_Rosa/";
 			break;
 		case 6:
-			// nomeArqTreino = "treinos/morango.xml";
+			// nomeArqTreino = "treinos/pessego.xml";
 			imgDir = "fruit-database/frutas/Pessego/";
 			groundTruthDir = "fruit-database/rotulamento/Pessego/";
 			break;
@@ -650,10 +655,22 @@ void UserInterface::TesteBatch()
 			groundTruthDir = "fruit-database/rotulamento/Cereja/";
 			break;
 		case 8:
+<<<<<<< HEAD
 			// nomeArqTreino = "treinos/morango.xml";
 			imgDir = "fruit-database/frutas/Caju/";
 			groundTruthDir = "fruit-database/rotulamento/Caju/";
 			break;
+=======
+			// nomeArqTreino = "treinos/caju.xml";
+			imgDir = "fruit-database/frutas/Caju/";
+			groundTruthDir = "fruit-database/rotulamento/Caju/";
+			break;
+		case 9:
+			// nomeArqTreino = "treinos/ameixa.xml";
+			imgDir = "fruit-database/frutas/Ameixa/";
+			groundTruthDir = "fruit-database/rotulamento/Ameixa/";
+			break;
+>>>>>>> c9561aae5a5c23c38c25556cd655836ac5bd940d
 		default:
 			return;
 	}
@@ -798,29 +815,34 @@ void UserInterface::TesteBatch(int fruta, std::string arqTreino, int canal, int 
 			groundTruthDir = "fruit-database/rotulamento/Morango/";
 			break;
 		case 4:
-			// nomeArqTreino = "treinos/morango.xml";
+			// nomeArqTreino = "treinos/goiaba.xml";
 			imgDir = "fruit-database/frutas/Goiaba/";
 			groundTruthDir = "fruit-database/rotulamento/Goiaba/";
 			break;
 		case 5:
-			// nomeArqTreino = "treinos/morango.xml";
+			// nomeArqTreino = "treinos/manga_rosa.xml";
 			imgDir = "fruit-database/frutas/Manga_Rosa/";
 			groundTruthDir = "fruit-database/rotulamento/Manga_Rosa/";
 			break;
 		case 6:
-			// nomeArqTreino = "treinos/morango.xml";
+			// nomeArqTreino = "treinos/pessego.xml";
 			imgDir = "fruit-database/frutas/Pessego/";
 			groundTruthDir = "fruit-database/rotulamento/Pessego/";
 			break;
 		case 7:
-			// nomeArqTreino = "treinos/morango.xml";
+			// nomeArqTreino = "treinos/cereja.xml";
 			imgDir = "fruit-database/frutas/Cereja/";
 			groundTruthDir = "fruit-database/rotulamento/Cereja/";
 			break;
 		case 8:
-			// nomeArqTreino = "treinos/morango.xml";
+			// nomeArqTreino = "treinos/caju.xml";
 			imgDir = "fruit-database/frutas/Caju/";
 			groundTruthDir = "fruit-database/rotulamento/Caju/";
+			break;
+		case 9:
+			// nomeArqTreino = "treinos/ameixa.xml";
+			imgDir = "fruit-database/frutas/Ameixa/";
+			groundTruthDir = "fruit-database/rotulamento/Ameixa/";
 			break;
 		default:
 			return;

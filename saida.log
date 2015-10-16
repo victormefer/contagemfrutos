@@ -2362,3 +2362,15 @@ Fruta: 6, treino: treinos/pessego_5im.xml, canal: 2, threshold: 40, cortar blobs
 	Precision: 0.710938
 	Recall: 0.489247
 	F-measure: 0.579618
+
+==================================== AMEIXA ======================================
+
+Fruta: 9, treino: treinos/ameixa_18im.xml, canal: 2
+
+	True positives: 155
+	False positives: 27
+	False negatives: 143
+
+	Precision: 0.851648
+	Recall: 0.520134
+	F-measure: 0.645833
