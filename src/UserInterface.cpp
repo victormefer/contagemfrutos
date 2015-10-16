@@ -607,12 +607,8 @@ void UserInterface::TesteBatch()
 		<< "5. Manga Rosa" << std::endl
 		<< "6. Pessego" << std::endl
 		<< "7. Cereja" << std::endl
-<<<<<<< HEAD
-		<< "8. Caju" << std::endl;
-=======
 		<< "8. Caju" << std::endl
 		<< "9. Ameixa" << std::endl;
->>>>>>> c9561aae5a5c23c38c25556cd655836ac5bd940d
 
 	std::cout << std::endl << "Escolha uma opcao: ";
 	std::cin >> opcao;
@@ -655,12 +651,6 @@ void UserInterface::TesteBatch()
 			groundTruthDir = "fruit-database/rotulamento/Cereja/";
 			break;
 		case 8:
-<<<<<<< HEAD
-			// nomeArqTreino = "treinos/morango.xml";
-			imgDir = "fruit-database/frutas/Caju/";
-			groundTruthDir = "fruit-database/rotulamento/Caju/";
-			break;
-=======
 			// nomeArqTreino = "treinos/caju.xml";
 			imgDir = "fruit-database/frutas/Caju/";
 			groundTruthDir = "fruit-database/rotulamento/Caju/";
@@ -670,7 +660,6 @@ void UserInterface::TesteBatch()
 			imgDir = "fruit-database/frutas/Ameixa/";
 			groundTruthDir = "fruit-database/rotulamento/Ameixa/";
 			break;
->>>>>>> c9561aae5a5c23c38c25556cd655836ac5bd940d
 		default:
 			return;
 	}
