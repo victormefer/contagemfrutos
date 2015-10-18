@@ -3266,3 +3266,887 @@ Fruta: 8, treino: treinos/caju_20im.xml, canal: 2, threshold: 40, cortar blobs: 
 	Precision: 0.737931
 	Recall: 0.823077
 	F-measure: 0.778182
+
+==================================== CEREJA ======================================
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 10, cortar blobs: 0, distance transform: 0
+
+	True positives: 292
+	False positives: 200
+	False negatives: 114
+
+	Precision: 0.593496
+	Recall: 0.719212
+	F-measure: 0.650334
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 10, cortar blobs: 0, distance transform: 1
+
+	True positives: 151
+	False positives: 0
+	False negatives: 255
+
+	Precision: 1
+	Recall: 0.371921
+	F-measure: 0.54219
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 10, cortar blobs: 1, distance transform: 0
+
+	True positives: 406
+	False positives: 12435
+	False negatives: 0
+
+	Precision: 0.0316175
+	Recall: 1
+	F-measure: 0.0612969
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 15, cortar blobs: 1, distance transform: 0
+
+	True positives: 405
+	False positives: 7838
+	False negatives: 1
+
+	Precision: 0.0491326
+	Recall: 0.997537
+	F-measure: 0.0936524
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 20, cortar blobs: 1, distance transform: 0
+
+	True positives: 403
+	False positives: 5575
+	False negatives: 3
+
+	Precision: 0.0674139
+	Recall: 0.992611
+	F-measure: 0.126253
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 25, cortar blobs: 1, distance transform: 0
+
+	True positives: 396
+	False positives: 4178
+	False negatives: 10
+
+	Precision: 0.0865763
+	Recall: 0.975369
+	F-measure: 0.159036
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 30, cortar blobs: 1, distance transform: 0
+
+	True positives: 392
+	False positives: 3107
+	False negatives: 14
+
+	Precision: 0.112032
+	Recall: 0.965517
+	F-measure: 0.200768
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 35, cortar blobs: 1, distance transform: 0
+
+	True positives: 390
+	False positives: 2425
+	False negatives: 16
+
+	Precision: 0.138544
+	Recall: 0.960591
+	F-measure: 0.242161
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 40, cortar blobs: 1, distance transform: 0
+
+	True positives: 385
+	False positives: 1914
+	False negatives: 21
+
+	Precision: 0.167464
+	Recall: 0.948276
+	F-measure: 0.284658
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 10, cortar blobs: 1, distance transform: 0
+
+	True positives: 397
+	False positives: 2558
+	False negatives: 9
+
+	Precision: 0.134349
+	Recall: 0.977833
+	F-measure: 0.236239
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 15, cortar blobs: 1, distance transform: 0
+
+	True positives: 371
+	False positives: 1008
+	False negatives: 35
+
+	Precision: 0.269036
+	Recall: 0.913793
+	F-measure: 0.415686
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 20, cortar blobs: 1, distance transform: 0
+
+	True positives: 340
+	False positives: 466
+	False negatives: 66
+
+	Precision: 0.421836
+	Recall: 0.837438
+	F-measure: 0.561056
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 25, cortar blobs: 1, distance transform: 0
+
+	True positives: 321
+	False positives: 304
+	False negatives: 85
+
+	Precision: 0.5136
+	Recall: 0.79064
+	F-measure: 0.622696
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 30, cortar blobs: 1, distance transform: 0
+
+	True positives: 315
+	False positives: 249
+	False negatives: 91
+
+	Precision: 0.558511
+	Recall: 0.775862
+	F-measure: 0.649485
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 35, cortar blobs: 1, distance transform: 0
+
+	True positives: 311
+	False positives: 227
+	False negatives: 95
+
+	Precision: 0.578067
+	Recall: 0.76601
+	F-measure: 0.658898
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 40, cortar blobs: 1, distance transform: 0
+
+	True positives: 300
+	False positives: 214
+	False negatives: 106
+
+	Precision: 0.583658
+	Recall: 0.738916
+	F-measure: 0.652174
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 10, cortar blobs: 1, distance transform: 0
+
+	True positives: 388
+	False positives: 2453
+	False negatives: 18
+
+	Precision: 0.136572
+	Recall: 0.955665
+	F-measure: 0.23899
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 15, cortar blobs: 1, distance transform: 0
+
+	True positives: 345
+	False positives: 897
+	False negatives: 61
+
+	Precision: 0.277778
+	Recall: 0.849754
+	F-measure: 0.418689
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 20, cortar blobs: 1, distance transform: 0
+
+	True positives: 318
+	False positives: 466
+	False negatives: 88
+
+	Precision: 0.405612
+	Recall: 0.783251
+	F-measure: 0.534454
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 25, cortar blobs: 1, distance transform: 0
+
+	True positives: 303
+	False positives: 334
+	False negatives: 103
+
+	Precision: 0.475667
+	Recall: 0.746305
+	F-measure: 0.581016
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 30, cortar blobs: 1, distance transform: 0
+
+	True positives: 296
+	False positives: 276
+	False negatives: 110
+
+	Precision: 0.517483
+	Recall: 0.729064
+	F-measure: 0.605317
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 35, cortar blobs: 1, distance transform: 0
+
+	True positives: 295
+	False positives: 226
+	False negatives: 111
+
+	Precision: 0.566219
+	Recall: 0.726601
+	F-measure: 0.636462
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 40, cortar blobs: 1, distance transform: 0
+
+	True positives: 293
+	False positives: 212
+	False negatives: 113
+
+	Precision: 0.580198
+	Recall: 0.721675
+	F-measure: 0.643249
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 10, cortar blobs: 1, distance transform: 1
+
+	True positives: 363
+	False positives: 2322
+	False negatives: 43
+
+	Precision: 0.135196
+	Recall: 0.894089
+	F-measure: 0.234875
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 15, cortar blobs: 1, distance transform: 1
+
+	True positives: 347
+	False positives: 1406
+	False negatives: 59
+
+	Precision: 0.197946
+	Recall: 0.85468
+	F-measure: 0.321445
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 20, cortar blobs: 1, distance transform: 1
+
+	True positives: 325
+	False positives: 906
+	False negatives: 81
+
+	Precision: 0.264013
+	Recall: 0.800493
+	F-measure: 0.397068
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 25, cortar blobs: 1, distance transform: 1
+
+	True positives: 302
+	False positives: 585
+	False negatives: 104
+
+	Precision: 0.340474
+	Recall: 0.743842
+	F-measure: 0.467131
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 30, cortar blobs: 1, distance transform: 1
+
+	True positives: 291
+	False positives: 432
+	False negatives: 115
+
+	Precision: 0.40249
+	Recall: 0.716749
+	F-measure: 0.5155
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 35, cortar blobs: 1, distance transform: 1
+
+	True positives: 269
+	False positives: 325
+	False negatives: 137
+
+	Precision: 0.452862
+	Recall: 0.662562
+	F-measure: 0.538
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 0, threshold: 40, cortar blobs: 1, distance transform: 1
+
+	True positives: 253
+	False positives: 246
+	False negatives: 153
+
+	Precision: 0.507014
+	Recall: 0.623153
+	F-measure: 0.559116
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 10, cortar blobs: 1, distance transform: 1
+
+	True positives: 236
+	False positives: 299
+	False negatives: 170
+
+	Precision: 0.441121
+	Recall: 0.581281
+	F-measure: 0.501594
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 15, cortar blobs: 1, distance transform: 1
+
+	True positives: 198
+	False positives: 120
+	False negatives: 208
+
+	Precision: 0.622642
+	Recall: 0.487685
+	F-measure: 0.546961
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 20, cortar blobs: 1, distance transform: 1
+
+	True positives: 176
+	False positives: 36
+	False negatives: 230
+
+	Precision: 0.830189
+	Recall: 0.433498
+	F-measure: 0.569579
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 25, cortar blobs: 1, distance transform: 1
+
+	True positives: 163
+	False positives: 19
+	False negatives: 243
+
+	Precision: 0.895604
+	Recall: 0.401478
+	F-measure: 0.554422
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 30, cortar blobs: 1, distance transform: 1
+
+	True positives: 162
+	False positives: 6
+	False negatives: 244
+
+	Precision: 0.964286
+	Recall: 0.399015
+	F-measure: 0.56446
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 35, cortar blobs: 1, distance transform: 1
+
+	True positives: 159
+	False positives: 2
+	False negatives: 247
+
+	Precision: 0.987578
+	Recall: 0.391626
+	F-measure: 0.560847
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 1, threshold: 40, cortar blobs: 1, distance transform: 1
+
+	True positives: 157
+	False positives: 2
+	False negatives: 249
+
+	Precision: 0.987421
+	Recall: 0.3867
+	F-measure: 0.555752
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 10, cortar blobs: 1, distance transform: 1
+
+	True positives: 240
+	False positives: 453
+	False negatives: 166
+
+	Precision: 0.34632
+	Recall: 0.591133
+	F-measure: 0.436761
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 15, cortar blobs: 1, distance transform: 1
+
+	True positives: 180
+	False positives: 204
+	False negatives: 226
+
+	Precision: 0.46875
+	Recall: 0.44335
+	F-measure: 0.455696
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 20, cortar blobs: 1, distance transform: 1
+
+	True positives: 171
+	False positives: 113
+	False negatives: 235
+
+	Precision: 0.602113
+	Recall: 0.421182
+	F-measure: 0.495652
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 25, cortar blobs: 1, distance transform: 1
+
+	True positives: 166
+	False positives: 50
+	False negatives: 240
+
+	Precision: 0.768519
+	Recall: 0.408867
+	F-measure: 0.533762
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 30, cortar blobs: 1, distance transform: 1
+
+	True positives: 161
+	False positives: 33
+	False negatives: 245
+
+	Precision: 0.829897
+	Recall: 0.396552
+	F-measure: 0.536667
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 35, cortar blobs: 1, distance transform: 1
+
+	True positives: 157
+	False positives: 22
+	False negatives: 249
+
+	Precision: 0.877095
+	Recall: 0.3867
+	F-measure: 0.536752
+
+Fruta: 7, treino: treinos/cereja_15im.xml, canal: 2, threshold: 40, cortar blobs: 1, distance transform: 1
+
+	True positives: 157
+	False positives: 6
+	False negatives: 249
+
+	Precision: 0.96319
+	Recall: 0.3867
+	F-measure: 0.551845
+
+==================================== PESSEGO ======================================
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 10, cortar blobs: 0, distance transform: 0
+
+	True positives: 142
+	False positives: 577
+	False negatives: 44
+
+	Precision: 0.197497
+	Recall: 0.763441
+	F-measure: 0.313812
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 10, cortar blobs: 0, distance transform: 1
+
+	True positives: 90
+	False positives: 43
+	False negatives: 96
+
+	Precision: 0.676692
+	Recall: 0.483871
+	F-measure: 0.564263
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 10, cortar blobs: 1, distance transform: 0
+
+	True positives: 186
+	False positives: 16860
+	False negatives: 0
+
+	Precision: 0.0109117
+	Recall: 1
+	F-measure: 0.0215877
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 15, cortar blobs: 1, distance transform: 0
+
+	True positives: 186
+	False positives: 8981
+	False negatives: 0
+
+	Precision: 0.0202902
+	Recall: 1
+	F-measure: 0.0397733
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 20, cortar blobs: 1, distance transform: 0
+
+	True positives: 186
+	False positives: 5184
+	False negatives: 0
+
+	Precision: 0.0346369
+	Recall: 1
+	F-measure: 0.0669546
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 25, cortar blobs: 1, distance transform: 0
+
+	True positives: 181
+	False positives: 3387
+	False negatives: 5
+
+	Precision: 0.0507287
+	Recall: 0.973118
+	F-measure: 0.0964305
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 30, cortar blobs: 1, distance transform: 0
+
+	True positives: 181
+	False positives: 2259
+	False negatives: 5
+
+	Precision: 0.0741803
+	Recall: 0.973118
+	F-measure: 0.137852
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 35, cortar blobs: 1, distance transform: 0
+
+	True positives: 181
+	False positives: 1717
+	False negatives: 5
+
+	Precision: 0.0953635
+	Recall: 0.973118
+	F-measure: 0.173704
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 40, cortar blobs: 1, distance transform: 0
+
+	True positives: 180
+	False positives: 1266
+	False negatives: 6
+
+	Precision: 0.124481
+	Recall: 0.967742
+	F-measure: 0.220588
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 10, cortar blobs: 1, distance transform: 0
+
+	True positives: 169
+	False positives: 1648
+	False negatives: 17
+
+	Precision: 0.0930105
+	Recall: 0.908602
+	F-measure: 0.168747
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 15, cortar blobs: 1, distance transform: 0
+
+	True positives: 164
+	False positives: 849
+	False negatives: 22
+
+	Precision: 0.161895
+	Recall: 0.88172
+	F-measure: 0.273561
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 20, cortar blobs: 1, distance transform: 0
+
+	True positives: 157
+	False positives: 670
+	False negatives: 29
+
+	Precision: 0.189843
+	Recall: 0.844086
+	F-measure: 0.30997
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 25, cortar blobs: 1, distance transform: 0
+
+	True positives: 156
+	False positives: 611
+	False negatives: 30
+
+	Precision: 0.20339
+	Recall: 0.83871
+	F-measure: 0.327387
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 30, cortar blobs: 1, distance transform: 0
+
+	True positives: 151
+	False positives: 585
+	False negatives: 35
+
+	Precision: 0.205163
+	Recall: 0.811828
+	F-measure: 0.327549
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 35, cortar blobs: 1, distance transform: 0
+
+	True positives: 143
+	False positives: 583
+	False negatives: 43
+
+	Precision: 0.19697
+	Recall: 0.768817
+	F-measure: 0.313596
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 40, cortar blobs: 1, distance transform: 0
+
+	True positives: 143
+	False positives: 580
+	False negatives: 43
+
+	Precision: 0.197787
+	Recall: 0.768817
+	F-measure: 0.314631
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 10, cortar blobs: 1, distance transform: 0
+
+	True positives: 167
+	False positives: 1164
+	False negatives: 19
+
+	Precision: 0.12547
+	Recall: 0.897849
+	F-measure: 0.220171
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 15, cortar blobs: 1, distance transform: 0
+
+	True positives: 161
+	False positives: 746
+	False negatives: 25
+
+	Precision: 0.177508
+	Recall: 0.865591
+	F-measure: 0.294602
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 20, cortar blobs: 1, distance transform: 0
+
+	True positives: 157
+	False positives: 651
+	False negatives: 29
+
+	Precision: 0.194307
+	Recall: 0.844086
+	F-measure: 0.315895
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 25, cortar blobs: 1, distance transform: 0
+
+	True positives: 150
+	False positives: 614
+	False negatives: 36
+
+	Precision: 0.196335
+	Recall: 0.806452
+	F-measure: 0.315789
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 30, cortar blobs: 1, distance transform: 0
+
+	True positives: 148
+	False positives: 592
+	False negatives: 38
+
+	Precision: 0.2
+	Recall: 0.795699
+	F-measure: 0.319654
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 35, cortar blobs: 1, distance transform: 0
+
+	True positives: 148
+	False positives: 587
+	False negatives: 38
+
+	Precision: 0.201361
+	Recall: 0.795699
+	F-measure: 0.32139
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 40, cortar blobs: 1, distance transform: 0
+
+	True positives: 148
+	False positives: 581
+	False negatives: 38
+
+	Precision: 0.203018
+	Recall: 0.795699
+	F-measure: 0.323497
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 10, cortar blobs: 1, distance transform: 1
+
+	True positives: 180
+	False positives: 3939
+	False negatives: 6
+
+	Precision: 0.0436999
+	Recall: 0.967742
+	F-measure: 0.0836237
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 15, cortar blobs: 1, distance transform: 1
+
+	True positives: 153
+	False positives: 1652
+	False negatives: 33
+
+	Precision: 0.0847645
+	Recall: 0.822581
+	F-measure: 0.153692
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 20, cortar blobs: 1, distance transform: 1
+
+	True positives: 140
+	False positives: 818
+	False negatives: 46
+
+	Precision: 0.146138
+	Recall: 0.752688
+	F-measure: 0.244755
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 25, cortar blobs: 1, distance transform: 1
+
+	True positives: 132
+	False positives: 432
+	False negatives: 54
+
+	Precision: 0.234043
+	Recall: 0.709677
+	F-measure: 0.352
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 30, cortar blobs: 1, distance transform: 1
+
+	True positives: 118
+	False positives: 243
+	False negatives: 68
+
+	Precision: 0.32687
+	Recall: 0.634409
+	F-measure: 0.431444
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 35, cortar blobs: 1, distance transform: 1
+
+	True positives: 115
+	False positives: 188
+	False negatives: 71
+
+	Precision: 0.379538
+	Recall: 0.61828
+	F-measure: 0.470348
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 0, threshold: 40, cortar blobs: 1, distance transform: 1
+
+	True positives: 106
+	False positives: 147
+	False negatives: 80
+
+	Precision: 0.418972
+	Recall: 0.569892
+	F-measure: 0.482916
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 10, cortar blobs: 1, distance transform: 1
+
+	True positives: 125
+	False positives: 345
+	False negatives: 61
+
+	Precision: 0.265957
+	Recall: 0.672043
+	F-measure: 0.381098
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 15, cortar blobs: 1, distance transform: 1
+
+	True positives: 113
+	False positives: 131
+	False negatives: 73
+
+	Precision: 0.463115
+	Recall: 0.607527
+	F-measure: 0.525581
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 20, cortar blobs: 1, distance transform: 1
+
+	True positives: 107
+	False positives: 65
+	False negatives: 79
+
+	Precision: 0.622093
+	Recall: 0.575269
+	F-measure: 0.597765
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 25, cortar blobs: 1, distance transform: 1
+
+	True positives: 100
+	False positives: 46
+	False negatives: 86
+
+	Precision: 0.684932
+	Recall: 0.537634
+	F-measure: 0.60241
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 30, cortar blobs: 1, distance transform: 1
+
+	True positives: 96
+	False positives: 45
+	False negatives: 90
+
+	Precision: 0.680851
+	Recall: 0.516129
+	F-measure: 0.587156
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 35, cortar blobs: 1, distance transform: 1
+
+	True positives: 93
+	False positives: 44
+	False negatives: 93
+
+	Precision: 0.678832
+	Recall: 0.5
+	F-measure: 0.575851
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 1, threshold: 40, cortar blobs: 1, distance transform: 1
+
+	True positives: 93
+	False positives: 44
+	False negatives: 93
+
+	Precision: 0.678832
+	Recall: 0.5
+	F-measure: 0.575851
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 10, cortar blobs: 1, distance transform: 1
+
+	True positives: 108
+	False positives: 124
+	False negatives: 78
+
+	Precision: 0.465517
+	Recall: 0.580645
+	F-measure: 0.516746
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 15, cortar blobs: 1, distance transform: 1
+
+	True positives: 100
+	False positives: 70
+	False negatives: 86
+
+	Precision: 0.588235
+	Recall: 0.537634
+	F-measure: 0.561798
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 20, cortar blobs: 1, distance transform: 1
+
+	True positives: 98
+	False positives: 58
+	False negatives: 88
+
+	Precision: 0.628205
+	Recall: 0.526882
+	F-measure: 0.573099
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 25, cortar blobs: 1, distance transform: 1
+
+	True positives: 97
+	False positives: 49
+	False negatives: 89
+
+	Precision: 0.664384
+	Recall: 0.521505
+	F-measure: 0.584337
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 30, cortar blobs: 1, distance transform: 1
+
+	True positives: 96
+	False positives: 44
+	False negatives: 90
+
+	Precision: 0.685714
+	Recall: 0.516129
+	F-measure: 0.588957
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 35, cortar blobs: 1, distance transform: 1
+
+	True positives: 96
+	False positives: 44
+	False negatives: 90
+
+	Precision: 0.685714
+	Recall: 0.516129
+	F-measure: 0.588957
+
+Fruta: 6, treino: treinos/pessego_10im.xml, canal: 2, threshold: 40, cortar blobs: 1, distance transform: 1
+
+	True positives: 93
+	False positives: 43
+	False negatives: 93
+
+	Precision: 0.683824
+	Recall: 0.5
+	F-measure: 0.57764
