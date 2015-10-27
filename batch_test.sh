@@ -7,6 +7,7 @@ make release;
 # teste sem cortar blobs e com dist transf
 # ./segmenter 6 treinos/pessego_10im.xml 0 10 0 1
 
+
 # echo "================== ACEROLA ===================" >> saida.log;
 
 # for i in 0 1 # dist transf ou nao
@@ -54,7 +55,7 @@ do
 	do
 		for k in 10 20 30 40 50 60 70 80 90 100 # threshold de corte
 		do
-			./segmenter 6 treinos/pessego_10im.xml $j $k 1 $i
+			./segmenter 2 treinos/laranja_33im.xml $j $k 1 $i
 		done
 	done
 done
