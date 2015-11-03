@@ -779,7 +779,7 @@ void UserInterface::TesteBatch()
 
 
 
-void UserInterface::TesteBatch(int fruta, std::string arqTreino, int canal, int threshold, int cut, int distTransf)
+void UserInterface::TesteBatch(int fruta, int inicio, std::string arqTreino, int canal, int threshold, int cut, int distTransf)
 {
 	std::string imgDir, groundTruthDir;
 	int espacosCores;
@@ -875,7 +875,7 @@ void UserInterface::TesteBatch(int fruta, std::string arqTreino, int canal, int 
 		return;
 	}
 
-	for (int i = 0; i < filenames.size(); i++)
+	for (int i = inicio-1; i < filenames.size(); i++)
 	{
 		if( (filenames[i].compare(".") != 0) && (filenames[i].compare("..") != 0) )		// Filtra o '.' e o '..'
 		{

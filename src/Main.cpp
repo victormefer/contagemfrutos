@@ -6,17 +6,18 @@ int main(int argc, char** argv)
 	UserInterface interface;
 
 	std::string arqTreino;
-	int fruta, canal, threshold, cut, distTransf;
+	int fruta, inicio, canal, threshold, cut, distTransf;
 
-	if (argc == 7)
+	if (argc == 8)		/*Numero de parametros na linha de comando do programa*/
 	{
 		fruta = stoi(string(argv[1]));
-		arqTreino = string(argv[2]);
-		canal = stoi(string(argv[3]));
-		threshold = stoi(string(argv[4]));
-		cut = stoi(string(argv[5]));
-		distTransf = stoi(string(argv[6]));
-		interface.TesteBatch(fruta, arqTreino, canal, threshold, cut, distTransf);
+		inicio = stoi(string(argv[2]));
+		arqTreino = string(argv[3]);
+		canal = stoi(string(argv[4]));
+		threshold = stoi(string(argv[5]));
+		cut = stoi(string(argv[6]));
+		distTransf = stoi(string(argv[7]));
+		interface.TesteBatch(fruta, inicio, arqTreino, canal, threshold, cut, distTransf);
 	}
 	else
 		interface.MainMenu();

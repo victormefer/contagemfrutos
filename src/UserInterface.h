@@ -22,7 +22,7 @@ public:
 	~UserInterface(){}
 
 	void MainMenu();
-	void TesteBatch(int fruta, std::string arqTreino, int canal, int threshold, int cut, int distTransf);
+	void TesteBatch(int fruta, int inicio, std::string arqTreino, int canal, int threshold, int cut, int distTransf);
 
 private:
 	std::string CarregarImagem();
