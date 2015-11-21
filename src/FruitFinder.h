@@ -12,7 +12,7 @@
 class FruitFinder
 {
 public:
-	FruitFinder() { channel = CHANNEL; thresh = THRESHOLD; }
+	FruitFinder() { channel = CHANNEL; thresh = THRESHOLD; cut = 1; distTransf = 1; }
 	FruitFinder(int channel, int thresh, int cut, int distTransf) { this->channel = channel; this->thresh = thresh; this->cut = cut; this->distTransf = distTransf; }
 	
 	int FindFruits(cv::Mat img, cv::Mat mask, cv::Mat& outputMarkers);

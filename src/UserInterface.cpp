@@ -929,14 +929,14 @@ void UserInterface::TesteBatch(int fruta, int inicio, std::string arqTreino, int
 	nomeTeste = "Fruta: " + std::to_string(fruta) + ", treino: " + arqTreino + ", canal: " + std::to_string(canal) + ", threshold: " + std::to_string(threshold) + ", cortar blobs: " + std::to_string(cut) + ", distance transform: " + std::to_string(distTransf);
 
 	std::ofstream ofs;
-	ofs.open("saida.log", std::ofstream::app);
+	ofs.open("saida2.log", std::ofstream::app);
 
-	ofs << std::endl << nomeTeste << std::endl << std::endl 
-		<< "\tTrue positives: " << TP << std::endl
-		<< "\tFalse positives: " << FP << std::endl
-		<< "\tFalse negatives: " << FN << std::endl << std::endl
-		<< "\tPrecision: " << precision << std::endl
-		<< "\tRecall: " << recall << std::endl
+	ofs << std::endl << nomeTeste << std::endl //<< std::endl 
+		// << "\tTrue positives: " << TP << std::endl
+		// << "\tFalse positives: " << FP << std::endl
+		// << "\tFalse negatives: " << FN << std::endl << std::endl
+		// << "\tPrecision: " << precision << std::endl
+		// << "\tRecall: " << recall << std::endl
 		<< "\tF-measure: " << fmeasure << std::endl;
 
 	ofs.close();
