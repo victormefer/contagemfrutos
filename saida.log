@@ -8570,3 +8570,5 @@ Fruta: 7, treino: treinos/cereja_30im.xml, canal: 2, threshold: 40, cortar blobs
 	Precision: 1
 	Recall: 0.184049
 	F-measure: 0.310881
+
+================== MORANGO 30 sobre 70 ===================
