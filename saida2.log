@@ -2701,3 +2701,184 @@ Fruta: 2, treino: treinos/laranja_76im.xml, canal: 2, threshold: 90, cortar blob
 
 Fruta: 2, treino: treinos/laranja_76im.xml, canal: 2, threshold: 100, cortar blobs: 1, distance transform: 1
 	F-measure: 0.545278
+================== CEREJA 70 sobre 30 ===================
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 10, cortar blobs: 1, distance transform: 0
+	F-measure: 0.104078
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 20, cortar blobs: 1, distance transform: 0
+	F-measure: 0.193214
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 30, cortar blobs: 1, distance transform: 0
+	F-measure: 0.318542
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 40, cortar blobs: 1, distance transform: 0
+	F-measure: 0.458716
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 50, cortar blobs: 1, distance transform: 0
+	F-measure: 0.593472
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 60, cortar blobs: 1, distance transform: 0
+	F-measure: 0.725953
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 70, cortar blobs: 1, distance transform: 0
+	F-measure: 0.795082
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 80, cortar blobs: 1, distance transform: 0
+	F-measure: 0.768559
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 90, cortar blobs: 1, distance transform: 0
+	F-measure: 0.77027
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 100, cortar blobs: 1, distance transform: 0
+	F-measure: 0.767059
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 10, cortar blobs: 1, distance transform: 0
+	F-measure: 0.364592
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 20, cortar blobs: 1, distance transform: 0
+	F-measure: 0.721174
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 30, cortar blobs: 1, distance transform: 0
+	F-measure: 0.790476
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 40, cortar blobs: 1, distance transform: 0
+	F-measure: 0.768473
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 50, cortar blobs: 1, distance transform: 0
+	F-measure: 0.763092
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 60, cortar blobs: 1, distance transform: 0
+	F-measure: 0.765
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 70, cortar blobs: 1, distance transform: 0
+	F-measure: 0.765
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 80, cortar blobs: 1, distance transform: 0
+	F-measure: 0.765
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 90, cortar blobs: 1, distance transform: 0
+	F-measure: 0.765
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 100, cortar blobs: 1, distance transform: 0
+	F-measure: 0.765
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 10, cortar blobs: 1, distance transform: 0
+	F-measure: 0.431579
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 20, cortar blobs: 1, distance transform: 0
+	F-measure: 0.759091
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 30, cortar blobs: 1, distance transform: 0
+	F-measure: 0.764706
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 40, cortar blobs: 1, distance transform: 0
+	F-measure: 0.76808
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 50, cortar blobs: 1, distance transform: 0
+	F-measure: 0.765
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 60, cortar blobs: 1, distance transform: 0
+	F-measure: 0.765
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 70, cortar blobs: 1, distance transform: 0
+	F-measure: 0.765
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 80, cortar blobs: 1, distance transform: 0
+	F-measure: 0.765
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 90, cortar blobs: 1, distance transform: 0
+	F-measure: 0.765
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 100, cortar blobs: 1, distance transform: 0
+	F-measure: 0.765
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 10, cortar blobs: 1, distance transform: 1
+	F-measure: 0.339343
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 20, cortar blobs: 1, distance transform: 1
+	F-measure: 0.4846
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 30, cortar blobs: 1, distance transform: 1
+	F-measure: 0.569106
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 40, cortar blobs: 1, distance transform: 1
+	F-measure: 0.557185
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 50, cortar blobs: 1, distance transform: 1
+	F-measure: 0.503311
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 60, cortar blobs: 1, distance transform: 1
+	F-measure: 0.447552
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 70, cortar blobs: 1, distance transform: 1
+	F-measure: 0.434164
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 80, cortar blobs: 1, distance transform: 1
+	F-measure: 0.440299
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 90, cortar blobs: 1, distance transform: 1
+	F-measure: 0.441948
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 0, threshold: 100, cortar blobs: 1, distance transform: 1
+	F-measure: 0.418251
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 10, cortar blobs: 1, distance transform: 1
+	F-measure: 0.516129
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 20, cortar blobs: 1, distance transform: 1
+	F-measure: 0.42963
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 30, cortar blobs: 1, distance transform: 1
+	F-measure: 0.390805
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 40, cortar blobs: 1, distance transform: 1
+	F-measure: 0.393822
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 50, cortar blobs: 1, distance transform: 1
+	F-measure: 0.381323
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 60, cortar blobs: 1, distance transform: 1
+	F-measure: 0.381323
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 70, cortar blobs: 1, distance transform: 1
+	F-measure: 0.381323
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 80, cortar blobs: 1, distance transform: 1
+	F-measure: 0.381323
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 90, cortar blobs: 1, distance transform: 1
+	F-measure: 0.381323
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 1, threshold: 100, cortar blobs: 1, distance transform: 1
+	F-measure: 0.381323
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 10, cortar blobs: 1, distance transform: 1
+	F-measure: 0.522255
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 20, cortar blobs: 1, distance transform: 1
+	F-measure: 0.374101
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 30, cortar blobs: 1, distance transform: 1
+	F-measure: 0.392308
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 40, cortar blobs: 1, distance transform: 1
+	F-measure: 0.393822
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 50, cortar blobs: 1, distance transform: 1
+	F-measure: 0.381323
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 60, cortar blobs: 1, distance transform: 1
+	F-measure: 0.381323
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 70, cortar blobs: 1, distance transform: 1
+	F-measure: 0.381323
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 80, cortar blobs: 1, distance transform: 1
+	F-measure: 0.381323
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 90, cortar blobs: 1, distance transform: 1
+	F-measure: 0.381323
+
+Fruta: 7, treino: ../cereja_30im.xml, canal: 2, threshold: 100, cortar blobs: 1, distance transform: 1
+	F-measure: 0.381323
