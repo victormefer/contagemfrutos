@@ -153,7 +153,7 @@ make release;
 # 	done
 # done
 
-echo "================== AMEIXA 30 sobre 70 ===================" >> saida.log;
+echo "================== MORANGO 30 sobre 70 ===================" >> saida.log;
 
 for i in 0 1 # dist transf ou nao
 do
@@ -161,7 +161,7 @@ do
 	do
 		for k in 10 20 30 40 50 60 70 80 90 100 # threshold de corte
 		do
-			./segmenter 9 43 ../ameixa_18im.xml $j $k 1 $i
+			./segmenter 3 49 treinos/morango_48im.xml $j $k 1 $i
 		done
 	done
 done
