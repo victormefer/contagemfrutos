@@ -2518,3 +2518,363 @@ Fruta: 2, treino: treinos/laranja_76im.xml, canal: 2, threshold: 90, cortar blob
 
 Fruta: 2, treino: treinos/laranja_76im.xml, canal: 2, threshold: 100, cortar blobs: 1, distance transform: 1
 	F-measure: 0.545278
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 10, cortar blobs: 1, distance transform: 0
+	F-measure: 0.096563
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 20, cortar blobs: 1, distance transform: 0
+	F-measure: 0.158672
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 30, cortar blobs: 1, distance transform: 0
+	F-measure: 0.247861
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 40, cortar blobs: 1, distance transform: 0
+	F-measure: 0.321869
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 50, cortar blobs: 1, distance transform: 0
+	F-measure: 0.365693
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 60, cortar blobs: 1, distance transform: 0
+	F-measure: 0.376349
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 70, cortar blobs: 1, distance transform: 0
+	F-measure: 0.385566
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 80, cortar blobs: 1, distance transform: 0
+	F-measure: 0.396628
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 90, cortar blobs: 1, distance transform: 0
+	F-measure: 0.399682
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 100, cortar blobs: 1, distance transform: 0
+	F-measure: 0.407261
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 10, cortar blobs: 1, distance transform: 0
+	F-measure: 0.298507
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 20, cortar blobs: 1, distance transform: 0
+	F-measure: 0.376694
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 30, cortar blobs: 1, distance transform: 0
+	F-measure: 0.383821
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 40, cortar blobs: 1, distance transform: 0
+	F-measure: 0.395081
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 50, cortar blobs: 1, distance transform: 0
+	F-measure: 0.392735
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 60, cortar blobs: 1, distance transform: 0
+	F-measure: 0.391123
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 70, cortar blobs: 1, distance transform: 0
+	F-measure: 0.389247
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 80, cortar blobs: 1, distance transform: 0
+	F-measure: 0.385746
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 90, cortar blobs: 1, distance transform: 0
+	F-measure: 0.384307
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 100, cortar blobs: 1, distance transform: 0
+	F-measure: 0.384307
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 10, cortar blobs: 1, distance transform: 0
+	F-measure: 0.278583
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 20, cortar blobs: 1, distance transform: 0
+	F-measure: 0.350528
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 30, cortar blobs: 1, distance transform: 0
+	F-measure: 0.371555
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 40, cortar blobs: 1, distance transform: 0
+	F-measure: 0.375343
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 50, cortar blobs: 1, distance transform: 0
+	F-measure: 0.380248
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 60, cortar blobs: 1, distance transform: 0
+	F-measure: 0.383344
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 70, cortar blobs: 1, distance transform: 0
+	F-measure: 0.385848
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 80, cortar blobs: 1, distance transform: 0
+	F-measure: 0.384667
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 90, cortar blobs: 1, distance transform: 0
+	F-measure: 0.383946
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 100, cortar blobs: 1, distance transform: 0
+	F-measure: 0.383946
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 10, cortar blobs: 1, distance transform: 1
+	F-measure: 0.246733
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 20, cortar blobs: 1, distance transform: 1
+	F-measure: 0.316551
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 30, cortar blobs: 1, distance transform: 1
+	F-measure: 0.356703
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 40, cortar blobs: 1, distance transform: 1
+	F-measure: 0.35362
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 50, cortar blobs: 1, distance transform: 1
+	F-measure: 0.359055
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 60, cortar blobs: 1, distance transform: 1
+	F-measure: 0.347537
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 70, cortar blobs: 1, distance transform: 1
+	F-measure: 0.332296
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 80, cortar blobs: 1, distance transform: 1
+	F-measure: 0.31239
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 90, cortar blobs: 1, distance transform: 1
+	F-measure: 0.304157
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 0, threshold: 100, cortar blobs: 1, distance transform: 1
+	F-measure: 0.295341
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 10, cortar blobs: 1, distance transform: 1
+	F-measure: 0.318771
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 20, cortar blobs: 1, distance transform: 1
+	F-measure: 0.302429
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 30, cortar blobs: 1, distance transform: 1
+	F-measure: 0.29373
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 40, cortar blobs: 1, distance transform: 1
+	F-measure: 0.286677
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 50, cortar blobs: 1, distance transform: 1
+	F-measure: 0.273892
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 60, cortar blobs: 1, distance transform: 1
+	F-measure: 0.268398
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 70, cortar blobs: 1, distance transform: 1
+	F-measure: 0.265472
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 80, cortar blobs: 1, distance transform: 1
+	F-measure: 0.26453
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 90, cortar blobs: 1, distance transform: 1
+	F-measure: 0.26453
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 1, threshold: 100, cortar blobs: 1, distance transform: 1
+	F-measure: 0.26453
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 10, cortar blobs: 1, distance transform: 1
+	F-measure: 0.303834
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 20, cortar blobs: 1, distance transform: 1
+	F-measure: 0.282479
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 30, cortar blobs: 1, distance transform: 1
+	F-measure: 0.273313
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 40, cortar blobs: 1, distance transform: 1
+	F-measure: 0.268837
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 50, cortar blobs: 1, distance transform: 1
+	F-measure: 0.266239
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 60, cortar blobs: 1, distance transform: 1
+	F-measure: 0.26645
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 70, cortar blobs: 1, distance transform: 1
+	F-measure: 0.26453
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 80, cortar blobs: 1, distance transform: 1
+	F-measure: 0.26453
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 90, cortar blobs: 1, distance transform: 1
+	F-measure: 0.26453
+
+Fruta: 3, treino: treinos/morango_48im.xml, canal: 2, threshold: 100, cortar blobs: 1, distance transform: 1
+	F-measure: 0.26453
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 10, cortar blobs: 1, distance transform: 0
+	F-measure: 0.160468
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 20, cortar blobs: 1, distance transform: 0
+	F-measure: 0.271989
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 30, cortar blobs: 1, distance transform: 0
+	F-measure: 0.362222
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 40, cortar blobs: 1, distance transform: 0
+	F-measure: 0.407767
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 50, cortar blobs: 1, distance transform: 0
+	F-measure: 0.408704
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 60, cortar blobs: 1, distance transform: 0
+	F-measure: 0.381471
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 70, cortar blobs: 1, distance transform: 0
+	F-measure: 0.371072
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 80, cortar blobs: 1, distance transform: 0
+	F-measure: 0.358425
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 90, cortar blobs: 1, distance transform: 0
+	F-measure: 0.357331
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 100, cortar blobs: 1, distance transform: 0
+	F-measure: 0.353481
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 10, cortar blobs: 1, distance transform: 0
+	F-measure: 0.411332
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 20, cortar blobs: 1, distance transform: 0
+	F-measure: 0.443687
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 30, cortar blobs: 1, distance transform: 0
+	F-measure: 0.411111
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 40, cortar blobs: 1, distance transform: 0
+	F-measure: 0.372294
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 50, cortar blobs: 1, distance transform: 0
+	F-measure: 0.345231
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 60, cortar blobs: 1, distance transform: 0
+	F-measure: 0.333895
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 70, cortar blobs: 1, distance transform: 0
+	F-measure: 0.328257
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 80, cortar blobs: 1, distance transform: 0
+	F-measure: 0.326842
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 90, cortar blobs: 1, distance transform: 0
+	F-measure: 0.325424
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 100, cortar blobs: 1, distance transform: 0
+	F-measure: 0.325424
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 10, cortar blobs: 1, distance transform: 0
+	F-measure: 0.371876
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 20, cortar blobs: 1, distance transform: 0
+	F-measure: 0.3776
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 30, cortar blobs: 1, distance transform: 0
+	F-measure: 0.351194
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 40, cortar blobs: 1, distance transform: 0
+	F-measure: 0.329658
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 50, cortar blobs: 1, distance transform: 0
+	F-measure: 0.328291
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 60, cortar blobs: 1, distance transform: 0
+	F-measure: 0.327324
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 70, cortar blobs: 1, distance transform: 0
+	F-measure: 0.325897
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 80, cortar blobs: 1, distance transform: 0
+	F-measure: 0.325424
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 90, cortar blobs: 1, distance transform: 0
+	F-measure: 0.325424
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 100, cortar blobs: 1, distance transform: 0
+	F-measure: 0.325424
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 10, cortar blobs: 1, distance transform: 1
+	F-measure: 0.307524
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 20, cortar blobs: 1, distance transform: 1
+	F-measure: 0.365767
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 30, cortar blobs: 1, distance transform: 1
+	F-measure: 0.357128
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 40, cortar blobs: 1, distance transform: 1
+	F-measure: 0.354337
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 50, cortar blobs: 1, distance transform: 1
+	F-measure: 0.335438
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 60, cortar blobs: 1, distance transform: 1
+	F-measure: 0.311543
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 70, cortar blobs: 1, distance transform: 1
+	F-measure: 0.29381
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 80, cortar blobs: 1, distance transform: 1
+	F-measure: 0.278233
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 90, cortar blobs: 1, distance transform: 1
+	F-measure: 0.271581
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 0, threshold: 100, cortar blobs: 1, distance transform: 1
+	F-measure: 0.263743
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 10, cortar blobs: 1, distance transform: 1
+	F-measure: 0.32148
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 20, cortar blobs: 1, distance transform: 1
+	F-measure: 0.308646
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 30, cortar blobs: 1, distance transform: 1
+	F-measure: 0.286355
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 40, cortar blobs: 1, distance transform: 1
+	F-measure: 0.263591
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 50, cortar blobs: 1, distance transform: 1
+	F-measure: 0.248083
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 60, cortar blobs: 1, distance transform: 1
+	F-measure: 0.243397
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 70, cortar blobs: 1, distance transform: 1
+	F-measure: 0.239866
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 80, cortar blobs: 1, distance transform: 1
+	F-measure: 0.239866
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 90, cortar blobs: 1, distance transform: 1
+	F-measure: 0.239866
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 1, threshold: 100, cortar blobs: 1, distance transform: 1
+	F-measure: 0.239866
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 10, cortar blobs: 1, distance transform: 1
+	F-measure: 0.308656
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 20, cortar blobs: 1, distance transform: 1
+	F-measure: 0.279303
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 30, cortar blobs: 1, distance transform: 1
+	F-measure: 0.250882
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 40, cortar blobs: 1, distance transform: 1
+	F-measure: 0.242942
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 50, cortar blobs: 1, distance transform: 1
+	F-measure: 0.24008
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 60, cortar blobs: 1, distance transform: 1
+	F-measure: 0.239866
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 70, cortar blobs: 1, distance transform: 1
+	F-measure: 0.239866
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 80, cortar blobs: 1, distance transform: 1
+	F-measure: 0.239866
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 90, cortar blobs: 1, distance transform: 1
+	F-measure: 0.239866
+
+Fruta: 3, treino: treinos/morango_80im.xml, canal: 2, threshold: 100, cortar blobs: 1, distance transform: 1
+	F-measure: 0.239866

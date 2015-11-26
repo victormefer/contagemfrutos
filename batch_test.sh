@@ -161,7 +161,7 @@ do
 	do
 		for k in 10 20 30 40 50 60 70 80 90 100 # threshold de corte
 		do
-			./segmenter 3 49 treinos/morango_48im.xml $j $k 1 $i
+			./segmenter 3 81 treinos/morango_80im.xml $j $k 1 $i
 		done
 	done
 done
