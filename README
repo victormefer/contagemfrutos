@@ -1,0 +1,84 @@
+
+
+=============== COMPILANDO ============================
+
+- Utilize o comando 'make' ou 'make release' no terminal.
+	- O comando 'make' cria algumas pausas e janelas com mais informações detalhadas sobre o procedimento.
+	- O comando 'make release' não realiza pausas e é mais apropriado para execução em lote.
+
+
+=============== EXECUTANDO ===========================
+
+- Utilize o comando './segmenter' no terminal
+- Para realizar testes em lote, passar parâmetros pelo terminal da seguinte forma:
+
+	./segmenter <id_base> <id_primeira_imagem> <caminho_arquivo_treino> <canal_de_corte> <limiar_de_corte> <bool_realizar_corte> <bool_realizar_transf_dist>
+
+onde:
+
+	<id_base> :	1 (acerola)
+				2 (laranja)
+				3 (morango)
+				4 (goiaba)
+				5 (manga)
+				6 (pessego)
+				7 (cereja)
+				8 (caju)
+				9 (ameixa)
+
+	<id_primeira_imagem> : o número da primeira imagem a partir da qual serão feitos os testes em lote, por exemplo, 
+		com número 10, somente as imagens numeradas de 10 em diante na pasta da base serão testadas.
+
+	<caminho_arquivo_treino> : caminho do arquivo xml onde o treinamento foi salvo
+
+	<canal_de_corte> : canal para análise do corte de região, sendo 0 (L), 1 (a) ou 2 (b)
+
+	<limiar_de_corte> : valor do limiar para corte de região
+
+	<bool_realizar_corte> : booleano para a realização de corte de região (0/1)
+
+	<bool_realizar_transf_dist> : booleano para a realização da transformação de distância (0/1)
+
+
+============== UTILIZANDO O PROGRAMA ====================
+
+- O programa inicia no menu principal, com opções para realizar as etapas do método separadamente ou em sequência;
+- Ao utilizar os parâmetros da linha de comando, o programa não passa pelo menu e inicia diretamente o teste em lote;
+
+- Para realizar o treinamento da base, deve-se entrar na opção 1 do menu principal;
+	- Ínforme o caminho da primeira imagem de treinamento;
+	- Utilize as setas do teclado para mover o quadrado vermelho em um pixel, ou as teclas WASD para mover o quadrado em 10 pixels;
+	- Mova a trackbar para o indice da classe desejada, utilizamos 0 para a classe fruto e 1 para a classe não-fruto;
+	- Com o quadrado e a trackbar nas posições desejadas, tecle ENTER para selecionar a região, marcando-a de azul para referências;
+	- Ao final, tecle ESC para terminar a seleção de regiões naquela imagem;
+	- Você pode adicionar mais imagens ao mesmo treinamento;
+	- Quando tiver selecionado as regiões de todas as imagens desejadas, é possível salvar o treinamento em um arquivo xml;
+	- Informe o caminho do arquivo de saída sem a extensão.
+
+- Utilize a opção 5 do menu para realizar o procedimento completo do método, exceto o treinamento da base;
+	- Informe o caminho do arquivo xml com o treinamento, com a extensão;
+	- Informe o caminho da imagem a ser testada;
+	- A saída da tela mostrará primeiro o resultado da segmentação;
+	- Caso tenha sido compilado com 'make', as saídas mostrarão a imagem original, o resultado da segmentação e o resultado do corte de regiões;
+	- Utilize qualquer tecla quando uma janela de imagem estiver selecionada para avançar para o próximo passo do corte de regiões ou para a próxima imagem, caso não hajam mais cortes a serem feitos;
+	- Os parâmetros de canal de corte, limiar e realização da transformação de distância devem ser alterados nos defines do arquivo FruitFinder.h para este tipo de teste do método.
+
+- Utilize a opção 6 do menu para testar em lote todas as imagens de uma base;
+	- Selecione a base de frutos de acordo com as informações mostradas no terminal;
+	- Informe o caminho do arquivo xml com o treinamento;
+	- Utilize a tecla ENTER para avançar;
+	- Informe uma descrição para o teste, os resultados de F-measure serão salvos ao final do arquivo saida.log.
+
+- Executando teste em lote com parametros por linha de comando, os resultados de F-measure serão salvos ao final do arquivo saida.log.
+
+
+================= RESULTADOS =========================
+
+- Após execução em batch, os resultados de f-measure são adicionados ao final do arquivo saida.log, que é criado caso não exista;
+- O arquivo graficos_f-measure.ods contém uma planilha com todos os resultados obtidos dos testes que foram colocados na monografia.
+
+
+================= TREINAMENTOS =======================
+
+- A pasta treinos contém alguns arquivos xml de treinamento inicias e alguns usados para os testes finais, porém a maioria desses arquivos não
+	estão no repositório por limites de tamanho de arquivo do git.

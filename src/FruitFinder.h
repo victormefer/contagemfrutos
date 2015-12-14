@@ -6,13 +6,14 @@
 #include <exception>
 
 #define N_DIRECTIONS 8
-#define CHANNEL 1
-#define THRESHOLD 30
+#define CHANNEL 0
+#define THRESHOLD 70
+#define DIST_TRANSF 1
 
 class FruitFinder
 {
 public:
-	FruitFinder() { channel = CHANNEL; thresh = THRESHOLD; cut = 1; distTransf = 1; }
+	FruitFinder() { channel = CHANNEL; thresh = THRESHOLD; cut = 1; distTransf = DIST_TRANSF; }
 	FruitFinder(int channel, int thresh, int cut, int distTransf) { this->channel = channel; this->thresh = thresh; this->cut = cut; this->distTransf = distTransf; }
 	
 	int FindFruits(cv::Mat img, cv::Mat mask, cv::Mat& outputMarkers);

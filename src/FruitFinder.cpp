@@ -57,7 +57,7 @@ int FruitFinder::FindFruits(cv::Mat img, cv::Mat mask, cv::Mat& outputMarkers)
 		}
 
 		#ifdef _DEBUG
-		cv::imshow("Marcadores de regiao", outputMarkers);
+		cv::imshow("Marcadores de regiao", markers);
 		cv::waitKey();
 		#endif
 
@@ -77,10 +77,10 @@ int FruitFinder::FindFruits(cv::Mat img, cv::Mat mask, cv::Mat& outputMarkers)
 			// Nao achou o mesmo centro de massa, logo é uma nova regiao, tenta dividir ela
 			if (j == massCenters.size())
 			{
-				#ifdef _DEBUG
-				system("clear");
-				std::cout << "*** BLOB " << i << " ***" << std::endl;
-				#endif
+				// #ifdef _DEBUG
+				// system("clear");
+				// std::cout << "*** BLOB " << i << " ***" << std::endl;
+				// #endif
 
 				if ( SplitBlobs((int)newMassCenters[i].y, (int)newMassCenters[i].x) )
 				{
@@ -221,17 +221,17 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 				// Insere valor do canal channel da imagem no vetor da direção j
 				values.push_back( (int)channels[channel].at<uchar>(massCenterRow + (j*incY), massCenterCol + (j*incX)) );
 
-				#ifdef _DEBUG
-				std::cout << "Direcao: " << i << std::endl;
-				std::cout << "  Value: " << (int)channels[channel].at<uchar>(massCenterRow + (j*incY), massCenterCol + (j*incX)) << ", " << values[j] << std::endl;
-				#endif
+				// #ifdef _DEBUG
+				// std::cout << "Direcao: " << i << std::endl;
+				// std::cout << "  Value: " << (int)channels[channel].at<uchar>(massCenterRow + (j*incY), massCenterCol + (j*incX)) << ", " << values[j] << std::endl;
+				// #endif
 				// Se não é o primeiro valor inserido, insere tbm derivada (variation)
 				if (j > 0)
 				{
 					variation.push_back( values[j] - values[j-1] );
-					#ifdef _DEBUG
-					std::cout << "Variation: " << values[j] - values[j-1] << std::endl;
-					#endif
+					// #ifdef _DEBUG
+					// std::cout << "Variation: " << values[j] - values[j-1] << std::endl;
+					// #endif
 				}
 
 				inRegion = true;
@@ -271,12 +271,12 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 		if ( values.size() <= 0 || variation.size() <= 0 )
 			continue;
 
-		#ifdef _DEBUG
-		CvPlot::plot("Valores", &values[0], values.size(), 1);
-		CvPlot::label(label);
-		CvPlot::plot("Derivada", &variation[0], variation.size(), 1);
-		CvPlot::label(label);
-		#endif
+		// #ifdef _DEBUG
+		// CvPlot::plot("Valores", &values[0], values.size(), 1);
+		// CvPlot::label(label);
+		// CvPlot::plot("Derivada", &variation[0], variation.size(), 1);
+		// CvPlot::label(label);
+		// #endif
 
 		// Encontrar maximos da derivada em cada direção
 		// std::vector<int> absVariation (variation[i].size());
@@ -285,11 +285,11 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 			absVariation.at<double>(0, k) = (double)abs(variation[k]);
 		cv::minMaxLoc( absVariation, NULL, &maxValues[i], NULL, &maxLoc[i] );
 
-		#ifdef _DEBUG
-		std::cout << "Direcao " << label << ':' << std::endl
-			<< "\tValor máximo : " << maxValues[i] << "  Local: " << maxLoc[i].x << std::endl;
-			// << "Qt valores:" << values.size() << "  Qt derivada: " << absVariation.cols << std::endl;
-		#endif
+		// #ifdef _DEBUG
+		// std::cout << "Direcao " << label << ':' << std::endl
+		// 	<< "\tValor máximo : " << maxValues[i] << "  Local: " << maxLoc[i].x << std::endl;
+		// 	// << "Qt valores:" << values.size() << "  Qt derivada: " << absVariation.cols << std::endl;
+		// #endif
 
 		absVariation.release();
 		values.clear();
@@ -303,9 +303,9 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 	// Variação máxima acima do threshold, 
 	if (cut && (int)absoluteMax > thresh)
 	{
-		#ifdef _DEBUG
-		std::cout << "Vai cortar na direcao " << absMaxDir.x << ", ponto " << absMaxPos << ", valor " << absoluteMax << std::endl;
-		#endif
+		// #ifdef _DEBUG
+		// std::cout << "Vai cortar na direcao " << absMaxDir.x << ", ponto " << absMaxPos << ", valor " << absoluteMax << std::endl;
+		// #endif
 
 		// definir direçoes de distanciamento dos dois pontos dependendo da direção q vai ser cortada
 		int incX, incY;
@@ -362,10 +362,10 @@ bool FruitFinder::SplitBlobs(int massCenterRow, int massCenterCol)
 		hasSplit = true;
 	}
 
-	#ifdef _DEBUG
-	CvPlot::clear("Valores");
-	CvPlot::clear("Derivada");
-	#endif
+	// #ifdef _DEBUG
+	// CvPlot::clear("Valores");
+	// CvPlot::clear("Derivada");
+	// #endif
 
 	return hasSplit;
 }

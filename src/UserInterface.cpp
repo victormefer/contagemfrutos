@@ -21,8 +21,7 @@ void UserInterface::MainMenu()
 			<< "3. Classificar imagem" << std::endl
 			<< "4. Watershed" << std::endl
 			<< "5. Procedimento completo" << std::endl
-			<< "6. Superpixel" << std::endl
-			<< "7. Teste Batch" << std::endl
+			<< "6. Teste Batch" << std::endl
 			<< "0. Sair" << std::endl;
 
 		std::cout << std::endl << "Escolha uma opcao: ";
@@ -48,9 +47,6 @@ void UserInterface::MainMenu()
 				Watershed();
 				break;
 			case 6:
-				Superpixel(30,5);
-				break;
-			case 7:
 				TesteBatch();
 				break;
 			case 0:
@@ -70,7 +66,7 @@ std::string UserInterface::CarregarImagem()
 	std::string nomeImagem;
 	// Mat img;
 
-	system("clear");
+	// system("clear");
 	while (1)
 	{
 		std::cout << "Informe o nome da imagem: ";
@@ -99,43 +95,49 @@ void UserInterface::TreinoManual()
 	Mat dadosTreino = Mat();
 	Mat classesTreino = Mat();
 
+
+	system("clear");
+
+	// int nClasses;
+	// std::cout << std::endl << "Numero de classes: ";
+	// std::cin >> nClasses;
+	// trainer.SetNumberClasses(nClasses);
+
+	// bool flag = false;
+	// do
+	// {
+	// 	std::cout << std::endl << "1. RGB + Lab" << std::endl 
+	// 		<< "2. RGB + RGB equalizado + Lab" << std::endl 
+	// 		<< "3. RGB + Lab + RGB equal + Lab equal" << std::endl;
+	// 	std::cout << std::endl << "Escolha uma opção para os dados de treino: ";
+	// 	std::cin >> canaisTreino;
+
+	// 	switch (canaisTreino)
+	// 	{
+	// 		case 1:
+	// 		trainer.SetColorSpaces(RGB | LAB);
+	// 		break;
+	// 		case 2:
+	// 		trainer.SetColorSpaces(RGB | LAB | RGB_EQ);
+	// 		break;
+	// 		case 3:
+	// 		trainer.SetColorSpaces(RGB | LAB | RGB_EQ | LAB_EQ);
+	// 		break;
+	// 		default:
+	// 		flag = true;
+	// 	}
+	// } while (flag);
+
+	trainer.SetNumberClasses(2);
+	trainer.SetColorSpaces(RGB | LAB | RGB_EQ);
+
 	do
 	{
 		imgOriginal.release();
+		std::cout << "Selecione imagens para treinamento" << std::endl;
 		CarregarImagem();
-		system("clear");
 
-		int nClasses;
-		std::cout << std::endl << "Numero de classes: ";
-		std::cin >> nClasses;
-		trainer.SetNumberClasses(nClasses);
-
-		bool flag = false;
-		do
-		{
-			std::cout << std::endl << "1. RGB + Lab" << std::endl 
-				<< "2. RGB + RGB equalizado + Lab" << std::endl 
-				<< "3. RGB + Lab + RGB equal + Lab equal" << std::endl;
-			std::cout << std::endl << "Escolha uma opção para os dados de treino: ";
-			std::cin >> canaisTreino;
-
-			switch (canaisTreino)
-			{
-				case 1:
-					trainer.SetColorSpaces(RGB | LAB);
-					break;
-				case 2:
-					trainer.SetColorSpaces(RGB | LAB | RGB_EQ);
-					break;
-				case 3:
-					trainer.SetColorSpaces(RGB | LAB | RGB_EQ | LAB_EQ);
-					break;
-				default:
-					flag = true;
-			}
-		} while (flag);
-
-		SeletorROIs(imgOriginal, &dadosTreino, &classesTreino, nClasses);
+		SeletorROIs(imgOriginal, &dadosTreino, &classesTreino, 2);
 		trainer.AddTrainingData(&dadosTreino, &classesTreino);
 
 		std::cout << std::endl << "Deseja adicionar outra imagem ao treino? (S/N): ";
@@ -146,7 +148,7 @@ void UserInterface::TreinoManual()
 	trainer.Train();
 
 	char salvar;
-	std::cout << "Deseja salvar o treino realizado? (S/N): ";
+	std::cout << "Deseja salvar o treino realizado em um arquivo xml? (S/N): ";
 	std::cin >> salvar;
 	if (salvar == 's' || salvar == 'S')
 		SalvarTreino();
@@ -328,16 +330,16 @@ void UserInterface::Classificar()
 	imshow("Resultado classificacao", resultClassif);
 	waitKey();
 
-	char salvar;
-	std::cout << "Deseja salvar a imagem resultante? (S/N): ";
-	std::cin >> salvar;
-	if (salvar == 's' || salvar == 'S')
-	{
-		std::string nomeIm;
-		std::cout << "Digite o nome da imagem a ser salva: ";
-		std::cin >> nomeIm;
-		imwrite(nomeIm, resultClassif);
-	}
+	// char salvar;
+	// std::cout << "Deseja salvar a imagem resultante? (S/N): ";
+	// std::cin >> salvar;
+	// if (salvar == 's' || salvar == 'S')
+	// {
+	// 	std::string nomeIm;
+	// 	std::cout << "Digite o nome da imagem a ser salva: ";
+	// 	std::cin >> nomeIm;
+	// 	imwrite(nomeIm, resultClassif);
+	// }
 }
 
 
@@ -382,7 +384,7 @@ void UserInterface::CarregarTreino()
 	std::string nomeArq;
 
 	system("clear");
-	std::cout << "Informe o nome do arquivo: ";
+	std::cout << "Informe o nome do arquivo xml com o treinamento desejado: ";
 	std::cin >> nomeArq;
 
 	try
@@ -561,8 +563,6 @@ void UserInterface::Watershed()
 	cv::imshow("Resultado blobs", resultBlobs/* * 10000*/);
 	#ifdef _DEBUG
 	cv::waitKey();
-	#else
-	cv::waitKey();
 	#endif
 }
 
@@ -664,7 +664,7 @@ void UserInterface::TesteBatch()
 			return;
 	}
 
-	std::cout << std::endl << "Informe o arquivo de treino: ";
+	std::cout << std::endl << "Informe o arquivo xml de treinamento: ";
 	std::cin >> nomeArqTreino;
 
 	// Carregar arquivo de treino
@@ -786,6 +786,11 @@ void UserInterface::TesteBatch(int fruta, int inicio, std::string arqTreino, int
 	int TP = 0, FP = 0, FN = 0;
 	double precision, recall, fmeasure;
 
+
+	cv::namedWindow("Imagem original", WINDOW_NORMAL);
+	cv::namedWindow("Resultado segmentacao", WINDOW_NORMAL);
+	cv::namedWindow("Resultado blobs", WINDOW_NORMAL);
+
 	switch(fruta)
 	{
 		case 1:
@@ -890,6 +895,11 @@ void UserInterface::TesteBatch(int fruta, int inicio, std::string arqTreino, int
 			Classifier classifier = Classifier(imgDir + filenames[i], trainer.GetTree(), trainer.GetNClasses(), espacosCores);
 			resultClassif = classifier.Classify();
 
+			#ifdef _DEBUG
+			imshow("Imagem original", imgOriginal);
+			imshow("Resultado segmentacao", resultClassif);
+			#endif
+
 			FruitFinder finder = FruitFinder(canal, threshold, cut, distTransf);
 			numFruits = finder.FindFruits(imgOriginal, resultClassif, resultBlobs);
 
@@ -929,7 +939,7 @@ void UserInterface::TesteBatch(int fruta, int inicio, std::string arqTreino, int
 	nomeTeste = "Fruta: " + std::to_string(fruta) + ", treino: " + arqTreino + ", canal: " + std::to_string(canal) + ", threshold: " + std::to_string(threshold) + ", cortar blobs: " + std::to_string(cut) + ", distance transform: " + std::to_string(distTransf);
 
 	std::ofstream ofs;
-	ofs.open("saida2.log", std::ofstream::app);
+	ofs.open("saida.log", std::ofstream::app);
 
 	ofs << std::endl << nomeTeste << std::endl //<< std::endl 
 		// << "\tTrue positives: " << TP << std::endl
