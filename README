@@ -1,3 +1,10 @@
+Universidade de Brasilia - UnB
+Departamento de Ciencia da Computacao - CIC/UnB
+LISA - Laboratorio de Imagens, Sinais e Audio
+
+Sistema de contagem automatica de frutos - Versao 1
+Desenvolvido por: Victor Mesquita Ferreira e Gustavo Ribeiro Teixeira
+Orientador: Prof. Dr. Flavio de Barros Vidal
 
 
 =============== COMPILANDO ============================
@@ -69,7 +76,12 @@ onde:
 	- Utilize a tecla ENTER para avançar;
 	- Informe uma descrição para o teste, os resultados de F-measure serão salvos ao final do arquivo saida.log.
 
-- Executando teste em lote com parametros por linha de comando, os resultados de F-measure serão salvos ao final do arquivo saida.log.
+
+================= TESTE EM LOTE ============================================
+
+- O arquivo batch_test.sh foi criado para facilitar a execução de vários testes das bases;
+- Modifique o arquivo com os parâmetros desejados
+- Após a execução, os resultados de F-measure serão salvos ao final do arquivo saida.log.
 
 
 ================= RESULTADOS =========================
